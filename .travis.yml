@@ -1,1 +1,2 @@
 language: php
+rvm: 7.1.3
