@@ -20,5 +20,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Estudiantes
 Route::get('/Estudiantes','EstudianteController@index');
-Route::get('/estudiante/all', 'EstudianteController@all');
+Route::post('/estudiante/all', 'EstudianteController@all');
+Route::post('/estudiante/saveEstudiante','EstudianteController@saveEstudiante');
+Route::post('/estudiante/update/{id}','EstudianteController@update');
