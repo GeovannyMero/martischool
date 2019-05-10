@@ -135,6 +135,7 @@ app.controller('appController', function estudianteController($scope, $http){
         selection:{
             mode: "multiple"
         },
+        rowAlternationEnabled: true,
         
         //toolbar
         onToolbarPreparing: function(e){
