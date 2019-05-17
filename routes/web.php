@@ -29,3 +29,4 @@ Route::post('/estudiante/update/{id}','EstudianteController@update');
 //Empresa
 Route::get('/empresa', 'EmpresaController@index');
 Route::post('/empresa/all', 'EmpresaController@all');
+Route::post('/empresa/update/{id}', 'EmpresaController@update');

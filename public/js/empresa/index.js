@@ -12,25 +12,42 @@ app.controller('empresaController',function empresaController($scope, $http){
                 alert(JSON.stringify(response.data));
             });
         },
+        //Actualizar
+        update: function(key, values){
+            var id = JSON.stringify(key["id"]);
+            return $http.post('/empresa/update/' + id, values)
+            .then((response)=>{
+                DevExpress.ui.notify(response.data["mensaje"], "success", 6000);
+            }).catch((err)=>{
+                console.log(err.data);
+                DevExpress.ui.notify(err.data, 'error', 6000);
+            })
+        }
 
     });
 
     //opciones del grid
     $scope.dataGridOptions = {
         dataSource: {
-            store: empresas
+            store: empresas,
+            
         },
+        columnHidingEnabled: true,
+        columnAutoWidth: true,
         columns: [
             {
                 dataField: 'id',
                 caption: 'ID',
+                width: 50,
                 editorOptions:{
-                    disabled: true
+                    disabled: true,
+                   
                 }
             },
             {
                 dataField: 'nombre',
                 caption: 'Nombre', 
+                dataType: 'string',
                 validationRules: [
                     {
                         type: 'required',
@@ -51,6 +68,7 @@ app.controller('empresaController',function empresaController($scope, $http){
             {
                 dataField: 'telefono',
                 caption: 'Teléfono',
+                dataType: 'number',
                 validationRules: [
                     {
                         type: 'required',
@@ -58,6 +76,21 @@ app.controller('empresaController',function empresaController($scope, $http){
                     }
                 ]
 
+            },
+            {
+                dataField: 'direccion',
+                caption: 'Dirección',
+                visible: false
+            },
+            {
+                dataField: 'correo',
+                caption: 'Correo'
+            },
+            {
+                dataField: 'estado',
+                caption: 'Estado',
+                dataType: 'boolean'
+                
             }
         ],
         showBorders: true,
@@ -84,6 +117,10 @@ app.controller('empresaController',function empresaController($scope, $http){
             mode:'form',
             allowAdding: true,
             allowUpdating: true,
+            allowDeleting: true,
+            texts: {
+                saveRowChanges: 'Guardar',
+            },
             useIcons: true,
             form: {
                 
@@ -120,6 +157,9 @@ app.controller('empresaController',function empresaController($scope, $http){
                         disabled: true
                     }
                 },
+                {
+                    itemType: "empty"
+                },
             {
                 dataField: 'ruc',
                 editorOptions: {
@@ -129,7 +169,12 @@ app.controller('empresaController',function empresaController($scope, $http){
                             'X': /[0-9]/
                         }
 
-                }
+                },
+                
+
+            },
+            {
+                itemType: "empty"
             },
             {
                 dataField: 'nombre',
@@ -141,9 +186,22 @@ app.controller('empresaController',function empresaController($scope, $http){
                 dataField: 'telefono',
                 editorOptions: {
                     showClearButton: true
+                },
+
+            },
+            {
+                colSpan: 2,
+                dataField: 'direccion',
+                editorType: 'dxTextArea',
+                editorOptions: {
+                    //height: 30
                 }
+            },
+            {
+                dataField: 'estado',
+                caption: 'Estado'
             }
-            ]
+                ]
             }
         },
         selection: {
