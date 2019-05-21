@@ -14,13 +14,32 @@ app.controller('empresaController',function empresaController($scope, $http){
         },
         //Actualizar
         update: function(key, values){
+            debugger;
             var id = JSON.stringify(key["id"]);
             return $http.post('/empresa/update/' + id, values)
             .then((response)=>{
-                DevExpress.ui.notify(response.data["mensaje"], "success", 6000);
+                DevExpress.ui.notify({
+                    message: response.data["mensaje"],
+                    position: {
+                        my: 'center top',
+                        at: 'center top'
+                    }
+                },
+                     "success", 6000
+                    );
             }).catch((err)=>{
                 console.log(err.data);
                 DevExpress.ui.notify(err.data, 'error', 6000);
+            })
+        },
+        //insert
+        insert: (values)=>{
+            return $http.post('/empresa/insert', values)
+            .then((response)=>{
+                console.log(JSON.stringify(response));
+                DevExpress.ui.notify(response.data['mensaje'], 'success', 6000);
+            }).catch((err)=>{
+                DevExpress.ui.notify(err.data,'error',6000);
             })
         }
 
@@ -39,6 +58,7 @@ app.controller('empresaController',function empresaController($scope, $http){
                 dataField: 'id',
                 caption: 'ID',
                 width: 50,
+                visible:false,
                 editorOptions:{
                     disabled: true,
                    
@@ -151,15 +171,16 @@ app.controller('empresaController',function empresaController($scope, $http){
                 ]*/
                 colCount: 2,
                 items: [
-                {
+                /*{
                     dataField: 'id',
+                    visible: false,
                     editorOptions: {
                         disabled: true
                     }
                 },
                 {
                     itemType: "empty"
-                },
+                },*/
             {
                 dataField: 'ruc',
                 editorOptions: {
@@ -199,7 +220,8 @@ app.controller('empresaController',function empresaController($scope, $http){
             },
             {
                 dataField: 'estado',
-                caption: 'Estado'
+                caption: 'Estado',
+                dataType: 'boolean'
             }
                 ]
             }
