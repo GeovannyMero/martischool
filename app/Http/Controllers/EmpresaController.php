@@ -16,7 +16,7 @@ class EmpresaController extends Controller
     public function all(){
         try{
             if(Auth::check()){
-                $empresa = Empresa::all();
+                $empresa = Empresa::where('estado', true)->get();
             }
         }catch(Exception $e){
             return response()->json(["mensaje" => $e->getMessage()]);
@@ -71,6 +71,21 @@ class EmpresaController extends Controller
 
             }
 
+        }catch(Exception $e){
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+    }
+
+    //Eliminar o inactivar
+    public function delete($id){
+        try{
+            if($id != "" && $id != 0){
+                $empresa = Empresa::find($id);
+                $empresa->estado = false;
+                if($empresa->save()){
+                    return response()->json(['mensaje' => 'Se eliminó correctamente la empresa']);
+                }
+            }
         }catch(Exception $e){
             return response()->json(['mensaje' => $e->getMessage()]);
         }

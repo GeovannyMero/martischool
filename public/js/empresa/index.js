@@ -41,6 +41,17 @@ app.controller('empresaController',function empresaController($scope, $http){
             }).catch((err)=>{
                 DevExpress.ui.notify(err.data,'error',6000);
             })
+        },
+        //Delete
+        remove: (key)=>{
+            var id = JSON.stringify(key["id"]);
+            debugger;
+            return $http.post('/empresa/delete', id)
+            .then((response)=>{
+                DevExpress.ui.notify(response.data['mensaje'], 'success', 6000);
+            }).catch((err)=>{
+                DevExpress.ui.notify(err.data, 'error', 6000);
+            })
         }
 
     });
