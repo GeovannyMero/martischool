@@ -32,3 +32,7 @@ Route::post('/empresa/all', 'EmpresaController@all');
 Route::post('/empresa/update/{id}', 'EmpresaController@update');
 Route::post('/empresa/insert', 'EmpresaController@insert');
 Route::post('/empresa/delete/{id}', 'EmpresaController@delete');
+
+//escuela
+Route::get('/escuela', 'EscuelaController@index');
+Route::post('/escuela/all', 'EscuelaController@all');

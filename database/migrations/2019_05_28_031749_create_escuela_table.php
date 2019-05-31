@@ -17,7 +17,13 @@ class CreateEscuelaTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre', 100)->unique()->nullable($value = false);
             $table->string('descripcion',100);
+            $table->boolean('activo')->nullable($values=false);
+            //auditoria
+            $table->string('created_by',50);
+            $table->string('update_by', 50);
             $table->timestamps();
+
+
         });
     }
 

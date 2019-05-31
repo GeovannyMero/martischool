@@ -19,9 +19,23 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            //nuevos campos
+            $table->boolean('activo')->nullable($values=false);
+            $table->integer('id_escuela')->unsigned();
+            $table->integer('id_rol');
+
+            //auditoria
             $table->rememberToken();
             $table->timestamps();
+            $table->string('created_by',50);
+            $table->string('update_by',50);
+
+            //claves foraneas
+            //$table->foreign('id_escuela')->references('id')->on('escuela');
+            //$table->foreign('id_rol')->references('id')->on('rol');
         });
+
     }
 
     /**

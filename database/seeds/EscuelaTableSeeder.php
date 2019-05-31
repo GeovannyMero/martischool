@@ -12,8 +12,12 @@ class EscuelaTableSeeder extends Seeder
     public function run()
     {
         DB::table('escuela')->insert([
-            'nombre' => '',
-            'descripcion' => ''
+            'nombre' => 'Escuela José Marti',
+            'descripcion' => 'Escuela',
+            'activo' => true,
+            'created_by' => 'default',
+            'update_by' => 'default'
+
         ]);
     }
 }
