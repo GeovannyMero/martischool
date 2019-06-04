@@ -60,7 +60,7 @@ app.controller('empresaController',function empresaController($scope, $http){
     $scope.dataGridOptions = {
         dataSource: {
             store: empresas,
-            
+
         },
         columnHidingEnabled: true,
         columnAutoWidth: true,
@@ -72,12 +72,12 @@ app.controller('empresaController',function empresaController($scope, $http){
                 visible:false,
                 editorOptions:{
                     disabled: true,
-                   
+
                 }
             },
             {
                 dataField: 'nombre',
-                caption: 'Nombre', 
+                caption: 'Nombre',
                 dataType: 'string',
                 validationRules: [
                     {
@@ -121,7 +121,7 @@ app.controller('empresaController',function empresaController($scope, $http){
                 dataField: 'estado',
                 caption: 'Estado',
                 dataType: 'boolean'
-                
+
             }
         ],
         showBorders: true,
@@ -134,7 +134,7 @@ app.controller('empresaController',function empresaController($scope, $http){
             showNavegationButtons: true,
             visible: true,
             showPageSizeSelector: true,
-            alloedPageSizes: [5,10,15]
+            allowedPageSizes: [5,10,15]
         },
         paging:{
             enable: true,
@@ -154,16 +154,16 @@ app.controller('empresaController',function empresaController($scope, $http){
             },
             useIcons: true,
             form: {
-                
+
                /* items: [
                     {
                         colCount: 2,
                         itemType: 'group',
                         //caption: 'Empresa',
-                        
+
                         items:[
-                            { 
-                                dataField: 'id'                         
+                            {
+                                dataField: 'id'
                             },
                             {
                                 dataField: 'ruc',
@@ -176,7 +176,7 @@ app.controller('empresaController',function empresaController($scope, $http){
 
                                 }
                             }
-                            
+
                         ]
                     }
                 ]*/
@@ -202,7 +202,7 @@ app.controller('empresaController',function empresaController($scope, $http){
                         }
 
                 },
-                
+
 
             },
             {
@@ -241,7 +241,7 @@ app.controller('empresaController',function empresaController($scope, $http){
             mode: 'multiple'
         },
         rowAlternationEnabled: true,
-      
+
     }
-   
+
 });

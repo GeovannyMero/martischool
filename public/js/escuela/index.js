@@ -9,6 +9,35 @@ app.controller('escuelaController', function escuelaController($scope, $http){
             }).catch((err)=>{
                 console.log(err);
             })
+        },
+        //Actualizar
+        update: (key, values)=>{
+            let id = JSON.stringify(key['id']);
+            if(id !== 0){
+                return $http.post('/escuela/update/'+ id, values)
+                .then((response) => {
+                    DevExpress.ui.notify({
+                        message: response.data['mensaje'],
+                        position: {
+                            my: 'center top',
+                            at: 'center top'
+                        }
+                    }, 'success', 5000);
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+            }
+
+        },
+        remove: (key)=>{
+            let id = JSON.stringify(key['id']);
+            return $http.post('/escuela/delete/'+id)
+            .then((response)=>{
+                DevExpress.ui.notify(response.data['mensaje', 'success', 5000]);
+            }).catch((err)=>{
+                DevExpress.ui.notify(err.data, 'error', 5000);
+            });
         }
     });
 
@@ -19,13 +48,49 @@ app.controller('escuelaController', function escuelaController($scope, $http){
         },
     columnHidingEnabled: true,
     columnAutoWidth: true,
-    column: [
+    columns: [
         {
             dataField: 'id',
+            caption: 'Id',
+            width: 50
 
         },
         {
-            dataField: 'name'
+            dataField: 'nombre',
+            caption: 'Nombre',
+            validationRules: [
+                {
+                    type: 'required',
+                    message: 'Nombre es requerido'
+                }
+            ]
+
+        },
+        {
+            dataField: 'descripcion',
+            caption: 'Descripción',
+            width: 150
+        },
+        {
+            dataField: 'activo',
+            caption: 'Estado',
+            width: 70
+        },
+        {
+            dataField: 'created_by',
+            visible: false
+        },
+        {
+            dataField: 'updated_by',
+            visible: false,
+        },
+        {
+            dataField: 'created_at',
+            visible:false,
+        },
+        {
+            dataField: 'updated_at',
+            visible: false,
         }
     ],
         showBorders: true,
@@ -38,7 +103,7 @@ app.controller('escuelaController', function escuelaController($scope, $http){
             showNavegationButtons: true,
             visible: true,
             ShowPageSizeSelector: true,
-            allowedPageSize: [5,10,1]
+            allowedPageSizes: [5,10,15]
         },
         paging: {
             enable: true,
@@ -52,6 +117,41 @@ app.controller('escuelaController', function escuelaController($scope, $http){
             mode: 'form',
             allowAdding: true,
             allowUpdating: true,
+            allowDeleting: true,
+            useIcons: true,
+            texts: {
+                saveRowChanges: 'Guardar'
+            },
+            form: {
+                colCount: 2,
+                items: [
+                    {
+                        dataField: 'id',
+                        disabled: true
+                    },
+                    {
+                        itemType: 'empty'
+                    },
+                    {
+                        dataField: 'nombre',
+                        editorOptions: {
+                            showClearButton: true
+                        }
+                    },
+                    {
+                        dataField: 'descripcion',
+                        editorOptions: {
+                            showClearButton: true
+                        }
+                    },
+                    {
+                        dataField: 'activo',
+                        caption: 'Estado',
+                        dataType: 'boolean',
+
+                    }
+                ]
+            }
         }
     }
 })
