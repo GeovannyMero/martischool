@@ -30,15 +30,27 @@ app.controller('escuelaController', function escuelaController($scope, $http){
             }
 
         },
+        //eliminar
         remove: (key)=>{
             let id = JSON.stringify(key['id']);
             return $http.post('/escuela/delete/'+id)
             .then((response)=>{
-                DevExpress.ui.notify(response.data['mensaje', 'success', 5000]);
+                DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
             }).catch((err)=>{
                 DevExpress.ui.notify(err.data, 'error', 5000);
             });
+        },
+        //insertar
+        insert: (values)=>{
+            return $http.post('/escuela/insertar/', values)
+            .then((response)=>{
+                DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
+            }).catch((err)=>{
+                console.log(err.data);
+                DevExpress.ui.notify(err.data, 'error',5000);
+            })
         }
+
     });
 
     ///Option
@@ -46,6 +58,7 @@ app.controller('escuelaController', function escuelaController($scope, $http){
         dataSource: {
             store: escuela,
         },
+    rowAlternationEnabled: true,
     columnHidingEnabled: true,
     columnAutoWidth: true,
     columns: [
@@ -74,7 +87,13 @@ app.controller('escuelaController', function escuelaController($scope, $http){
         {
             dataField: 'activo',
             caption: 'Estado',
-            width: 70
+            width: 70,
+            validationRules: [
+                {
+                    type: 'required',
+                    message: 'Estado es requerido'
+                }
+            ]
         },
         {
             dataField: 'created_by',
@@ -102,7 +121,7 @@ app.controller('escuelaController', function escuelaController($scope, $http){
             showInfo: true,
             showNavegationButtons: true,
             visible: true,
-            ShowPageSizeSelector: true,
+            showPageSizeSelector: true,
             allowedPageSizes: [5,10,15]
         },
         paging: {
@@ -120,7 +139,10 @@ app.controller('escuelaController', function escuelaController($scope, $http){
             allowDeleting: true,
             useIcons: true,
             texts: {
-                saveRowChanges: 'Guardar'
+                saveRowChanges: 'Guardar',
+                cancelRowChanges: 'Cancelar',
+                confirmDeleteTitle: 'Eliminar Registro',
+                confirmDeleteMessage: "¿Está ud. seguro que desea eliminar este registro?"
             },
             form: {
                 colCount: 2,
@@ -154,4 +176,9 @@ app.controller('escuelaController', function escuelaController($scope, $http){
             }
         }
     }
+
+});
+
+app.controller('title', function title($scope){
+    $scope.modulo = 'Escuela';
 })

@@ -36,6 +36,11 @@ Route::post('/empresa/delete/{id}', 'EmpresaController@delete');
 //escuela
 Route::get('/escuela', 'EscuelaController@index');
 Route::post('/escuela/all', 'EscuelaController@all');
+Route::post('/escuela/insertar', 'EscuelaController@insertar');
 Route::post('/escuela/update/{id}', 'EscuelaController@update');
 Route::post('/escuela/delete/{id}', 'EscuelaController@delete');
+
+//Roles
+Route::get('/rol', 'RolController@index');
+
 

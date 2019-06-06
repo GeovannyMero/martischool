@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Modelos\Escuela;
 use  \App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class EscuelaController extends Controller
 {
     public function index(){
         try{
 
-                return view('General.Escuela.index');
+            return view('General.Escuela.index');
 
         }catch(Exception $e){
 
@@ -56,6 +57,33 @@ class EscuelaController extends Controller
                 $escuela->activo = false;
                 if($escuela->save()){
                     return response()->json(["mensaje"=>"Se desactivo la escuela correctamente."]);
+                }
+            }
+        }catch(Exception $e)
+        {
+            return response()->json(["mensaje" => $e->getMessage()]);
+        }
+    }
+
+    //insertar
+    public function insertar(Request $request)
+    {
+        try
+        {
+            if(Auth::check())//valida si esta login
+            {
+                if($request != null)
+                {
+                    $escuela = new Escuela;
+                    $escuela->nombre = $request->nombre;
+                    $escuela->descripcion = $request->descripcion;
+                    $escuela->activo = $request->activo;
+                    $escuela->created_by = Auth::user()->name;
+                    $escuela->update_by = Auth::user()->name;
+                    if($escuela->save()){
+                        return response()->json(['mensaje'=> 'Se guardo correctamente']);
+                    }
+
                 }
             }
         }catch(Exception $e)
