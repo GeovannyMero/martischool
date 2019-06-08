@@ -42,5 +42,13 @@ Route::post('/escuela/delete/{id}', 'EscuelaController@delete');
 
 //Roles
 Route::get('/rol', 'RolController@index');
+Route::post('/rol/all', 'RolController@all');
+Route::post('/rol/insert', 'RolController@insert');
+Route::post('/rol/update/{id}', 'RolController@update');
+Route::post('/rol/delete/{id}', 'RolController@delete');
+
+//Permiso
+Route::get('/permiso', 'PermisoController@index');
+Route::post('permiso/all', 'PermisoController@all');
 
 
