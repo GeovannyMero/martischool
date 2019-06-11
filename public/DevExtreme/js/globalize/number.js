@@ -1,5 +1,5 @@
 /**
- * Globalize v1.4.0
+ * Globalize v1.4.2
  *
  * http://github.com/jquery/globalize
  *
@@ -7,10 +7,10 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2018-07-17T20:38Z
+ * Date: 2019-03-07T13:47Z
  */
 /*!
- * Globalize v1.4.0 2018-07-17T20:38Z Released under the MIT license
+ * Globalize v1.4.2 2019-03-07T13:47Z Released under the MIT license
  * http://git.io/TrdQbw
  */
 (function( root, factory ) {
@@ -967,11 +967,11 @@ var numberFormatProperties = function( pattern, cldr, options ) {
 		// the value to be formatted, though we're always using 1 as a simplification, because the
 		// number won't be zero-padded since we chose the right format based on the scale, i.e.,
 		// we'd never see something like `003M` anyway.
-		properties[ 2 ] = negativeSuffix[ 2 ] = 1; // minimumIntegerDigits
-		properties[ 3 ] = negativeSuffix[ 3 ] = 0; // minimumFractionDigits
-		properties[ 4 ] = negativeSuffix[ 4 ] = 0; // maximumFractionDigits
-		properties[ 5 ] = negativeSuffix[ 5 ] = // minimumSignificantDigits &
-			properties[ 6 ] = negativeSuffix[ 6 ] = undefined ; // maximumSignificantDigits
+		properties[ 2 ] = 1; // minimumIntegerDigits
+		properties[ 3 ] = 0; // minimumFractionDigits
+		properties[ 4 ] = 0; // maximumFractionDigits
+		properties[ 5 ] = // minimumSignificantDigits &
+			properties[ 6 ] = undefined ; // maximumSignificantDigits
 
 		properties[20] = numberCompact( options.compact, cldr );
 	}

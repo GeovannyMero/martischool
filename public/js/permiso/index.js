@@ -5,32 +5,54 @@ app.controller('title', function($scope, $http){
 })
 
 app.controller('permisoController', function($scope, $http){
-    var permisos = new DevExpress.data.CustomStore({
-        load: () => {
-            return $http.post('/permiso/all')
-            .then((response) => {
-                console.log(response.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-        }
-    });
-
-    //opciones
     $scope.treeListOptions = {
-        dataSource: permisos,
-       // keyExpr: "id",
+        dataSource: {
+            load: function(){
+                return $http.post('/permiso/all')
+                .then((response) => {
+                    return response.data;
+                }).catch((err) => {
+                    console.log(err);
+                })
+
+            }
+        },
+        //remoteOperations: {
+        //    filtering: true
+       // },
+        keyExpr: 'id',
         parentIdExpr: 'id_padre',
+        //rootValue: '',
+        showBorders: true,
         columns: [
             {
-                dataField: "id",
-                caption: "ID"
+                dataField: 'id',
+                caption: 'Id',
+                width: 50
             },
-        "nombre", "link", "activo",
-    ],
+            {
+                dataField: 'nombre',
+                caption: 'Nombre',
 
+            },
+            {
+                dataField: 'link',
+                caption: 'Link',
+                width: 150
+            },
+            {
+                dataField: 'activo',
+                caption: 'Estado',
+                width: 70
+            }
+        ],
+        editing: {
+            mode: 'row',
+            allowUpdating: true,
+            allowDeleting: true,
+            allowAdding: true,
+            useIcons: true
+        }
     }
-
 
 });

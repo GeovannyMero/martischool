@@ -1,5 +1,5 @@
 /*!
- * Globalize v1.4.0
+ * Globalize v1.4.2
  *
  * http://github.com/jquery/globalize
  *
@@ -7,7 +7,7 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2018-07-17T20:38Z
+ * Date: 2019-03-07T13:47Z
  */
 (function( root, factory ) {
 

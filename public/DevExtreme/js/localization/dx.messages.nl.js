@@ -1,9 +1,9 @@
 /*!
 * DevExtreme (dx.messages.nl.js)
-* Version: 18.2.3
-* Build date: Wed Nov 07 2018
+* Version: 19.1.3
+* Build date: Tue May 14 2019
 *
-* Copyright (c) 2012 - 2018 Developer Express Inc. ALL RIGHTS RESERVED
+* Copyright (c) 2012 - 2019 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 "use strict";
@@ -75,7 +75,7 @@
             "dxFileUploader-Mb": "Mb",
             "dxFileUploader-Gb": "Gb",
             "dxFileUploader-upload": "Uploaden",
-            "dxFileUploader-uploaded": "Geüpload",
+            "dxFileUploader-uploaded": "Ge\xfcpload",
             "dxFileUploader-readyToUpload": "Klaar om te uploaden",
             "dxFileUploader-uploadFailedMessage": "Uploaden is mislukt",
             "dxFileUploader-invalidFileExtension": "Dit bestandstype is niet toegestaan",
@@ -198,7 +198,8 @@
             "dxScheduler-recurrenceWeekly": "Wekelijks",
             "dxScheduler-recurrenceMonthly": "Maandelijks",
             "dxScheduler-recurrenceYearly": "Jaarlijks",
-            "dxScheduler-recurrenceEvery": "Elke",
+            "dxScheduler-recurrenceRepeatEvery": "Elke",
+            "dxScheduler-recurrenceRepeatOn": "Repeat On",
             "dxScheduler-recurrenceEnd": "Einde herhaling",
             "dxScheduler-recurrenceAfter": "Na",
             "dxScheduler-recurrenceOn": "Op",
@@ -261,19 +262,19 @@
             "dxFilterBuilder-filterOperationBetween": "Is tussen",
             "dxFilterBuilder-filterOperationAnyOf": "Is een van",
             "dxFilterBuilder-filterOperationNoneOf": "Is geen van",
-            "dxHtmlEditor-dialogColorCaption": "!TODO!",
-            "dxHtmlEditor-dialogBackgroundCaption": "!TODO!",
-            "dxHtmlEditor-dialogLinkCaption": "!TODO!",
-            "dxHtmlEditor-dialogLinkUrlField": "!TODO!",
-            "dxHtmlEditor-dialogLinkTextField": "!TODO!",
-            "dxHtmlEditor-dialogLinkTargetField": "!TODO!",
-            "dxHtmlEditor-dialogImageCaption": "!TODO!",
-            "dxHtmlEditor-dialogImageUrlField": "!TODO!",
-            "dxHtmlEditor-dialogImageAltField": "!TODO!",
-            "dxHtmlEditor-dialogImageWidthField": "!TODO!",
-            "dxHtmlEditor-dialogImageHeightField": "!TODO!",
-            "dxHtmlEditor-heading": "!TODO!",
-            "dxHtmlEditor-normalText": "!TODO!"
+            "dxHtmlEditor-dialogColorCaption": "Tekstkleur",
+            "dxHtmlEditor-dialogBackgroundCaption": "Achtergrondkleur",
+            "dxHtmlEditor-dialogLinkCaption": "Link",
+            "dxHtmlEditor-dialogLinkUrlField": "URL",
+            "dxHtmlEditor-dialogLinkTextField": "Tekst",
+            "dxHtmlEditor-dialogLinkTargetField": "Open link in een nieuw venster",
+            "dxHtmlEditor-dialogImageCaption": "Afbeelding",
+            "dxHtmlEditor-dialogImageUrlField": "URL",
+            "dxHtmlEditor-dialogImageAltField": "Alternatieve tekst",
+            "dxHtmlEditor-dialogImageWidthField": "Breedte (px)",
+            "dxHtmlEditor-dialogImageHeightField": "Hoogte (px)",
+            "dxHtmlEditor-heading": "Titel",
+            "dxHtmlEditor-normalText": "Normale tekst"
         }
     })
 });
