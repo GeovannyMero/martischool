@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \App\Modelos\Rol;
-
+use \App\Modelos\Permiso;
 class RolController extends Controller
 {
     public function index()
@@ -21,7 +21,9 @@ class RolController extends Controller
         {
             if(Auth::check())
             {
-                $roles = Rol::all();
+               $roles = Rol::where('activo', true)->get();
+            //    $roles = Rol::find(1);
+            //    dd($roles->permiso->get());
             }
         }catch(Exception $e)
         {

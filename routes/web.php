@@ -51,4 +51,15 @@ Route::post('/rol/delete/{id}', 'RolController@delete');
 Route::get('/permiso', 'PermisoController@index');
 Route::post('permiso/all', 'PermisoController@all');
 
+//Niveles Educativos
+Route::get('/niveleducativo', 'NivelEducativoController@index');
+Route::post('/niveleducativo/all', 'NivelEducativoController@all');
+Route::post('/niveleseducativo/update/{id}','NivelEducativoController@update');
+Route::post('/niveleducativo/insert', 'NivelEducativoController@insert');
+
+//Cursos
+Route::get('/curso','CursoController@index');
+ROute::post('/curso/all','CursoController@all');
+Route::get('/cursoNiveleducativo/niveles', 'CursoController@niveles');
+
 

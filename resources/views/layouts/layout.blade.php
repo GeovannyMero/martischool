@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}"/>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
-    
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -50,7 +50,7 @@
                                 <li class="user-header">
                                     <img src="{{ asset('AdminLTE/dist/img/avatar5.png')}}" class="user-image" alt="User Image" />
                                     <p>
-                                        Administrador
+                                    ROL
                                         <small>Rol</small>
                                     </p>
                                 </li>
@@ -85,22 +85,56 @@
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-shopping-cart"></i>
-                            <span>Inventario</span>
+                            <span>ROL</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull right"></i>
                             </span>
                         </a>
                             <ul class="treeview-menu">
                                 <li class="">
-                                    <a href="{{ url('/persona')}}">
-                                        <i class="fa fa-circle-o"></i>Mantenimiento
+                                    <a href="{{ url('/rol')}}">
+                                        <i class="fa fa-circle-o"></i>Rol
                                         <span class="pull-right-container"></span>
                                     </a>
                                 </li>
                             </ul>
                     </li>
+
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>Academico</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="treeview menu-open">
+                                <a href="#">
+                                    <i class="fa fa-circle-o"></i>Administración Básica
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="">
+                                    <a href="{{ url('/niveleducativo')}}">
+                                            <i class="fa fa-circle-o"></i>Nivel Educativo
+
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                            <a href="{{ url('/curso')}}">
+                                                    <i class="fa fa-circle-o"></i>Cursos
+
+                                                </a>
+                                            </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-            
+
             </section>
         </aside>
         <div class="content-wrapper">
