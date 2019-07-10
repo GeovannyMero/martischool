@@ -27,7 +27,32 @@ app.controller('cursoController', function cursoController($scope, $http){
                 .catch((err) => {
                     DevExpress.ui.notify(err.data, 'error', 5000);
                 });
+            },
+            update: (key, values) => {
+                let id = JSON.stringify(key['id']);
+                if(id !== 0)
+                {
+                    return $http.post('/curso/update/' + id, values)
+                    .then((response) => {
+                        console.log(response.data);
+                        DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                    })
+                    .catch((err) => {
+                        DevExpress.ui.notify(err.data, 'error', 5000);
+                    })
+                }
+            },
+            insert: (values) => {
+                return $http.post('/curso/insert', values)
+                .then((response) => {
+                    DevExpress.ui.notify(response.data['mensaje'], 'success', 5000)
+                })
+                .catch((err) => {
+                    DevExpress.ui.notify(err.data, 'error', 5000);
+                });
+
             }
+
         }
     );
 
@@ -50,6 +75,17 @@ app.controller('cursoController', function cursoController($scope, $http){
             {
                 dataField: 'nombre',
                 caption: 'Nombre',
+                validationRules: [
+                    {
+                        type: 'required',
+                        message: 'El nombre es requerido'
+                    },
+                    {
+                        type: 'stringLength',
+                        max: 10,
+                        message: 'Debe tener al menos 10 caracteres'
+                    }
+                ]
 
             },
             {
@@ -59,11 +95,25 @@ app.controller('cursoController', function cursoController($scope, $http){
             {
                 dataField: 'curso_numero',
                 caption: 'Curso en Numero',
-
+                editorType: 'dxNumberBox',
+                width: 130,
+                validationRules: [
+                    {
+                        type: 'required',
+                        message: 'El campo es requerido'
+                    }
+                ]
             },
             {
                 dataField: 'curso_siguiente',
-                caption: 'Curso a promover'
+                caption: 'Curso a promover',
+                validationRules: [
+                {
+                    type: 'required',
+                    message: 'El campo es requerido'
+                }
+
+                ]
             },
             {
                 dataField: 'id_nivel',
@@ -72,7 +122,13 @@ app.controller('cursoController', function cursoController($scope, $http){
                     dataSource: niveles,
                     displayExpr: 'nombre',
                     valueExpr: 'id'
-                }
+                },
+                validationRules: [
+                    {
+                        type: 'required',
+                        message: 'El campo es requerido'
+                    }
+                ]
 
 
             },
@@ -82,7 +138,7 @@ app.controller('cursoController', function cursoController($scope, $http){
             }
         ],
         onEditingStrart: e => e.component.columnOption('id', 'allowEditing', false),
-        showborder: true,
+        showBorders: true,
         filterRow: {
             visible: false
         },
@@ -100,7 +156,7 @@ app.controller('cursoController', function cursoController($scope, $http){
             pageIndex: 0,
             pageSize: 5
         },
-        searchPane: {
+        searchPanel: {
             visible: true,
             placeholder: 'Buscar'
         },
@@ -135,7 +191,7 @@ app.controller('cursoController', function cursoController($scope, $http){
                         }
                     },
                     {
-                        dataField: 'curso_letras',
+                        dataField: 'curso_letra',
                         caption: 'Curso en Letras',
                         editorOptions: {
                             showClearButton: true
@@ -152,7 +208,8 @@ app.controller('cursoController', function cursoController($scope, $http){
                         dataField: 'curso_siguiente',
                         caption: 'Curso a promover',
                         editorOptions: {
-                            showClearButton: true
+                            showClearButton: true,
+
                         }
                     },
                     {
@@ -185,7 +242,7 @@ app.controller('cursoController', function cursoController($scope, $http){
                     options: {
                         icon: 'refresh',
                         type: 'success',
-                        onclick: function() {
+                        onClick: function() {
                             dataGrid.refresh();
                         }
                     }
@@ -196,8 +253,11 @@ app.controller('cursoController', function cursoController($scope, $http){
                     options: {
                         icon:'trash',
                         type: 'danger',
-                        onclick: () => {
-                            console.log('REmove');
+                        onClick: function() {
+                            if(cursos.update());
+                            {
+                                console.log('OK');
+                            }
                         }
 
                     }

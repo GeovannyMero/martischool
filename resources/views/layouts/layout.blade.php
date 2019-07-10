@@ -124,11 +124,16 @@
                                         </a>
                                     </li>
                                     <li class="">
-                                            <a href="{{ url('/curso')}}">
-                                                    <i class="fa fa-circle-o"></i>Cursos
+                                        <a href="{{ url('/curso')}}">
+                                            <i class="fa fa-circle-o"></i>Cursos
 
-                                                </a>
-                                            </li>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ url('/paralelo')}}">
+                                            <i class="fa fa-circle-o"></i>Paralelos
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
