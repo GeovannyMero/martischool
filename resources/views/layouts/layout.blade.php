@@ -135,7 +135,27 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li><!--Fin Administracion basica-->
+                            <li class="treeview menu-open">
+                                <a href="#">
+                                    <i class="fa fa-circle-o"></i>Administración Periodos
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{{ url('/periodos')}}">
+                                            <i class="fa fa-circle-o"></i>Periodos Lectivos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/planificacion_curso')}}">
+                                            <i class="fa fa-circle-o"></i>Planificación/Cursos
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li><!--fin Administracion Periodo-->
                         </ul>
                     </li>
                 </ul>

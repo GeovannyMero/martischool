@@ -16,7 +16,7 @@ class CursoController extends Controller
 
     public function all()
     {
-        $curso;
+
         try
         {
             if(Auth::check())
@@ -40,7 +40,7 @@ class CursoController extends Controller
             }
         }catch(Exception $ex)
         {
-            return response()->json(['mensaje' => $e->getMessage()]);
+            return response()->json(['mensaje' => $ex->getMessage()]);
         }
 
     }
@@ -72,7 +72,7 @@ class CursoController extends Controller
             }
         }catch(Exception $ex)
         {
-            return response()->json(['mensaje' => $e->getMessage()]);
+            return response()->json(['mensaje' => $ex->getMessage()]);
         }
     }
     public function insert(Request $request)

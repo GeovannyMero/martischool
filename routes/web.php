@@ -67,5 +67,12 @@ Route::post('/curso/insert','CursoController@insert');
 //Paralelos
 Route::get('/paralelo', 'ParaleloController@Index');
 Route::post('/paralelo/all', 'ParaleloController@all');
+Route::post('/paralelo/update/{id}', 'ParaleloController@update');
+Route::post('/paralelo/insert', 'ParaleloController@insert');
+
+Route::get('/periodos', 'PeriodoController@index');
+Route::post('/periodos/all', 'PeriodoController@all');
+Route::post('/periodos/insert', 'PeriodoController@insert');
+
 
 

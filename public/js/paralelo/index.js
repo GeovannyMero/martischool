@@ -15,6 +15,28 @@ app.controller('paraleloController', function paraleloController($scope, $http){
          .catch((err) => {
             DevExpress.ui.notify(err.data,'error',5000);
          })
+     },
+     update: (key, values) => {
+         let id = JSON.stringify(key['id']);
+         if(id !== 0)
+         {
+             return $http.post('/paralelo/update/' + id, values)
+             .then((response) => {
+                DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+             })
+             .catch((err) => {
+                DevExpress.ui.notify(err.data, 'error', 5000);
+             })
+         }
+     },
+     insert: (values) => {
+         return $http.post('/paralelo/insert', values)
+         .then((response) => {
+            DevExpress.ui.notify(response.data['mensaje'], 'success', 5000)
+         })
+         .catch((err) => {
+            DevExpress.ui.notify(err.data, 'error', 5000);
+         })
      }
 
  });
@@ -60,6 +82,9 @@ app.controller('paraleloController', function paraleloController($scope, $http){
         enable: true,
         pageIndex: 0,
         pageSize: 5
+    },
+    selection: {
+        mode: "multiple"
     },
     searchPanel: {
         visible: true,
@@ -129,10 +154,9 @@ app.controller('paraleloController', function paraleloController($scope, $http){
                     icon:'trash',
                     type: 'danger',
                     onClick: function() {
-                        if(cursos.update());
-                        {
-                            console.log('OK');
-                        }
+                        console.log(dataGrid);
+
+
                     }
 
                 }
