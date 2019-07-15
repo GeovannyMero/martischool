@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class NivelEducativoController extends Controller
 {
     public function index(){
-        return view('General.NivelEducativo.Index');
+        return view('General.NivelEducativo.index');
     }
 
     public function all()
