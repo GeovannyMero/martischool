@@ -20,7 +20,7 @@ class UserTableSeeder extends Seeder
             'remember_token' => Str::random(10),
             //add new thing
             'activo' => true,
-            'id_escuela' => 3,
+            'id_escuela' => 1,
             'id_rol' => 1,
             'created_by' => '',
             'update_by' => '',
