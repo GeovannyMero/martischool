@@ -13,7 +13,7 @@ class NivelEducativoController extends Controller
 
     public function all()
     {
-        $nivel_educativo;
+
         try
         {
             if(Auth::check())
@@ -49,7 +49,7 @@ class NivelEducativoController extends Controller
                     }
                 }
             }
-        }catch(Exception $ex)
+        }catch(Exception $e)
         {
             return response()->json(['mensaje' => $e->getMessage()]);
         }
