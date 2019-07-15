@@ -11,7 +11,7 @@ class CursoController extends Controller
 {
     public function index()
     {
-        return view('General.Curso.Index');
+        return view('General.Curso.index');
     }
 
     public function all()
