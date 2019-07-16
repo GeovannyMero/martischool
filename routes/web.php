@@ -73,6 +73,7 @@ Route::post('/paralelo/insert', 'ParaleloController@insert');
 Route::get('/periodos', 'PeriodoController@index');
 Route::post('/periodos/all', 'PeriodoController@all');
 Route::post('/periodos/insert', 'PeriodoController@insert');
+Route::post('/periodos/update/{id}', 'PeriodoController@update');
 
 
 

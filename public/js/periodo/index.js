@@ -5,7 +5,8 @@ app.controller('title', function title($scope){
 });
 
 app.controller('periodoController', function($scope, $http){
-    var periodos = new DevExpress.data.CustomStore({
+    var periodos = new DevExpress.data.CustomStore(
+    {
         load:() => {
             return $http.post('/periodos/all')
             .then((response) => {
@@ -24,6 +25,20 @@ app.controller('periodoController', function($scope, $http){
             .catch((err) => {
                 DevExpress.ui.notify(err.data, 'error', 5000);
             })
+        },
+        update: (key, values) => {
+            let id = JSON.stringify(key['id']);
+                if(id !== 0)
+                {
+                    return $http.post('/periodos/update/'+ id, values)
+                    .then((response) => {
+                        console.log(response);
+                        DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
+                    })
+                    .catch((err) => {
+                        DevExpress.ui.notify(err.data, 'error', 5000);
+                    })
+                }
         }
     });//Fin de Store
 
@@ -151,6 +166,51 @@ app.controller('periodoController', function($scope, $http){
                     },
                     {
                         dataField: 'periodo_inicio',
+                        caption: 'Año Incio',
+                        editorOptions: {
+                            showClearButton: true
+                        }
+                    },
+                    {
+                        dataField: 'fecha_inicio',
+                        caption: 'Fecha Incio',
+                        editorOptions: {
+                            showClearButton: true
+                        }
+                    },
+                    {
+                        dataField: 'periodo_fin',
+                        caption: 'Año Fin',
+                        editorOptions: {
+                            showClearButton: true
+                        }
+                    },
+                    {
+                        dataField: 'fecha_fin',
+                        caption: 'Año Fin',
+                        editorOptions: {
+                            showClearButton: true
+                        }
+                    },
+                    {
+                        dataField: 'activo',
+                        caption: 'Activo'
+                    }
+                ]
+            }
+           /* form: {
+                colCount: 2,
+                items:
+                [
+                    {
+                        dataField: 'id',
+                        caption: 'ID'
+                    },
+                    {
+                        itemType: 'empty'
+                    },
+                    {
+                        dataField: 'periodo_inicio',
                         caption: 'Año Inicio',
                         editorOptions: {
                             showClearButton: true
@@ -185,7 +245,7 @@ app.controller('periodoController', function($scope, $http){
                         caption: 'Activo'
                     }
                 ]
-            }
+            }*/
         }
     }
 
