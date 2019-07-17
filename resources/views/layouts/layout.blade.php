@@ -150,7 +150,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('/planificacion_curso')}}">
+                                        <a href="{{ url('/planificacion')}}">
                                             <i class="fa fa-circle-o"></i>Planificación/Cursos
                                         </a>
                                     </li>

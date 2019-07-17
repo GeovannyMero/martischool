@@ -24,6 +24,9 @@ class CreateCursoTable extends Migration
             $table->string('created_by',50);
             $table->string('updated_by',50);
             $table->timestamps();
+
+            //relaciones
+            $table->foreign('id_nivel')->references('id')->on('nivel_educativo');
         });
     }
 
