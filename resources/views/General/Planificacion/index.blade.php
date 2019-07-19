@@ -17,11 +17,11 @@
     <div class="box-header with-border">
         <h3 class="box-title">@{{modulo}}</h3>
     </div>
-    {{-- <div class="box-body">
-        <div class="gridRol demo-containder"  ng-controller='cursoController'>
+    <div class="box-body">
+        <div class="gridRol demo-containder"  ng-controller='planificacionController'>
         <div id="gridContainer" dx-data-grid="dataGridOptions"></div>
         </div>
-    </div> --}}
+    </div>
 
 </div>
 @endsection

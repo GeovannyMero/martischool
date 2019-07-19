@@ -77,6 +77,8 @@ Route::post('/periodos/update/{id}', 'PeriodoController@update');
 
 //Planificaciones de cursos
 Route::get('/planificacion', 'PlanificacionController@index');
+Route::post('/planificacion/all', 'PlanificacionController@all');
+Route::post('/planificacion/prePlanificacion', 'PlanificacionController@prePlanificacion');
 
 
 
