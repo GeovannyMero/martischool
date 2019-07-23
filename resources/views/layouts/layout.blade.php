@@ -134,6 +134,11 @@
                                             <i class="fa fa-circle-o"></i>Paralelos
                                         </a>
                                     </li>
+                                    <li>
+                                    <a href="{{ url('/profesor')}}">
+                                        <i class="fa fa-circle-o"></i>Profesor
+                                    </a>
+                                    </li>
                                 </ul>
                             </li><!--Fin Administracion basica-->
                             <li class="treeview menu-open">

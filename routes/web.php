@@ -86,4 +86,8 @@ Route::post('/planificacion/paralelos', 'PlanificacionController@paralelos');
 Route::post('/planificacion/periodos', 'PlanificacionController@periodos');
 
 
+Route::get('/profesor', 'ProfesorController@index');
+Route::post('/profesor/all', 'ProfesorController@all');
+
+
 
