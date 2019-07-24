@@ -88,6 +88,7 @@ Route::post('/planificacion/periodos', 'PlanificacionController@periodos');
 
 Route::get('/profesor', 'ProfesorController@index');
 Route::post('/profesor/all', 'ProfesorController@all');
+Route::post('/profesor/rol', 'ProfesorController@getRolProfesor');
 
 
 
