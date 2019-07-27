@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -89,6 +88,12 @@ Route::post('/planificacion/periodos', 'PlanificacionController@periodos');
 Route::get('/profesor', 'ProfesorController@index');
 Route::post('/profesor/all', 'ProfesorController@all');
 Route::post('/profesor/rol', 'ProfesorController@getRolProfesor');
+Route::post('/profesor/update/{id}', 'ProfesorController@update');
+Route::post('/profesor/insert', 'ProfesorController@insert');
+
+//Personal Educativo
+Route::get('/personal', 'PersonalController@index');
+Route::post('/personal/all', 'PersonalController@all');
 
 
 

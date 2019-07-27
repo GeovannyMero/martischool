@@ -10,7 +10,7 @@
 <!--script-->
 <script type="text/javascript" src="{{ asset('DevExtreme/js/dx.all.js')}}"></script>
 
-<script type="text/javascript" src="{{ asset('js/profesor/index.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/personal/index.js')}}"></script>
 
 <section class="content-header">
     <ol class="breadcrumb">
@@ -23,12 +23,12 @@
 </section>
 </br>
 </br>
-<div class="box box-primary" ng-app='profesorModule' ng-controller='title'>
+<div class="box box-primary" ng-app='personalModule' ng-controller='title'>
     <div class="box-header with-border">
         <h3 class="box-title">@{{modulo}}</h3>
     </div>
     <div class="box-body">
-        <div class="gridRol demo-containder"  ng-controller='profesorController'>
+        <div class="gridRol demo-containder"  ng-controller='personalController'>
         <div id="gridContainer" dx-data-grid="dataGridOptions"></div>
         </div>
     </div>

@@ -45,4 +45,63 @@ class ProfesorController extends Controller
         }
         return $rol;
     }
+
+    public function update(int $id, Request $request)
+    {
+        try{
+            if(Auth::check())
+            {
+                if($id != null)
+                {
+                    $profesor = Profesor::find($id);
+                    if($profesor != null)
+                    {
+                        $profesor->cedula = $request->cedula != null ? $request->cedula : $profesor->cedula;
+                        $profesor->nombre = $request->nombre != null ? $request->nombre : $profesor->nombre;
+                        $profesor->apellidos = $request->apellidos != null ? $request->apellidos : $profesor->apellidos;
+                        $profesor->id_rol = $request->id_rol != null ? $request->id_rol : $profesor->id_rol;
+                        $profesor->correo = $request->correo != null ? $request->correo : $profesor->correo;
+                        $profesor->activo = $request->activo != true ? false : true;
+                        $profesor->updated_by = Auth::user()->name;
+                        if($profesor->save())
+                        {
+                            return response()->json(["mensaje"=>"Se actualizó correctamente."]);
+                        }
+                    }
+                }
+            }
+        }catch(Exception $e)
+        {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+    }
+
+    public function insert(Request $request)
+    {
+        try
+        {
+            if(Auth::check()){
+                if($request != null)
+                {
+                    $profesor = new Profesor();
+                    $profesor->cedula = $request->cedula;
+                    $profesor->nombre = $request->nombre;
+                    $profesor->apellidos = $request->apellidos;
+                    $profesor->id_rol = $request->id_rol;
+                    $profesor->correo = $request->correo;
+                    $profesor->activo = true;
+                    $profesor->created_by = Auth::user()->name;
+                    $profesor->updated_by = Auth::user()->name;
+                    $profesor->id_user = 3;//TODO: Se debe crear el usuario
+                    if($profesor->save())
+                    {
+                        return response()->json(["mensaje"=>"Se guardó correctamente."]);
+                    }
+                }
+            }
+        }catch(Exception $e)
+        {
+
+        }
+    }
 }

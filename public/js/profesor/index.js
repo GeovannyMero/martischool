@@ -6,6 +6,8 @@ app.controller('title', function title($scope){
 
 app.controller('profesorController', function profesorController($http, $scope){
 var rol  = new DevExpress.data.CustomStore({
+    key: 'id',
+    loadMode: 'raw',
     load: () => {
         return $http.post('/profesor/rol')
         .then((response) => {
@@ -14,7 +16,8 @@ var rol  = new DevExpress.data.CustomStore({
         .catch((err) => {
             DevExpress.ui.notify(err.data, 'error',5000);
         })
-    }
+    },
+
 });
 
     var profesores = new DevExpress.data.CustomStore({
@@ -26,6 +29,30 @@ var rol  = new DevExpress.data.CustomStore({
             .catch((err) => {
                 DevExpress.ui.notify(err.data, 'error',5000);
             })
+        },
+        update: (key, values) => {
+            let id = JSON.stringify(key['id']);
+            if(id != 0)
+            {
+                return $http.post('/profesor/update/'+ id, values)
+                .then((response) => {
+                    DevExpress.ui.notify(response.data['mensaje'], 'success', 5000 );
+                })
+                .catch((err) => {
+                    DevExpress.ui.notify(err.data, 'error', 5000);
+                })
+            }
+        }, insert: (values) => {
+            if(values != null)
+            {
+                return $http.post('/profesor/insert', values)
+                .then((response) => {
+                    DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
+                })
+                .catch((err) => {
+                    DevExpress.ui.notify(err.data, 'error', 5000);
+                })
+            }
         }
     });
 
@@ -127,11 +154,19 @@ var rol  = new DevExpress.data.CustomStore({
                         }
                     },
                     {
-                       dataField: 'id_rol',
-                       caption: 'Rol',
-                       editorType: 'dxTagBox'
-
+                        dataField: 'id_rol',
+                        caption: 'Rol',
+                        //editorType: 'dxTagBox',
+                        // editorOptions: {
+                        //     showClearButton: true
+                        // }
                     },
+                    // {
+                    //    dataField: 'id_rol',
+                    //    caption: 'Rol',
+                    //   //editorType: 'dxTagBox'
+
+                    // },
                     {
                         dataField: 'nombre',
                         caption: 'Nombre',

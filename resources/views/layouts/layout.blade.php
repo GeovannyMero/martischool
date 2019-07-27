@@ -135,7 +135,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                    <a href="{{ url('/profesor')}}">
+                                    <a href="{{ url('/personal')}}">
                                         <i class="fa fa-circle-o"></i>Profesor
                                     </a>
                                     </li>
