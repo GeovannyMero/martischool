@@ -94,6 +94,9 @@ Route::post('/profesor/insert', 'ProfesorController@insert');
 //Personal Educativo
 Route::get('/personal', 'PersonalController@index');
 Route::post('/personal/all', 'PersonalController@all');
+Route::post('/personal/update/{id}', 'PersonalController@update');
+Route::post('/personal/insert', 'PersonalController@insert');
+Route::post('/personal/remove/{id}', 'PersonalController@remove');
 
 
 

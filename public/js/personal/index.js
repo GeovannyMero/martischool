@@ -33,6 +33,49 @@ app.controller('personalController', function($scope, $http){
             {
                 DevExpress.ui.notify(err.data, 'error',5000);
             });
+        },
+        update: (key, values) => {
+            let id = JSON.stringify(key['id']);
+            if(id !== 0)
+            {
+                return $http.post('/personal/update/' + id, values)
+                .then((response) => {
+                    DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                })
+                .catch((err) => {
+                    DevExpress.ui.notify(err.data, 'error',5000);
+                })
+            }
+
+        },
+        //Insertar
+        insert: (values) => {
+            if(values !== null)
+            {
+                return $http.post('/personal/insert', values)
+                .then((response) => {
+                    DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                })
+                .catch((err) => {
+                    DevExpress.ui.notify(err.data, 'error',5000);
+                })
+
+            }
+
+        },
+        remove: (key) => {
+            let id = key;
+            if(id !== 0)
+            {
+                debugger;
+               return $http.post('/personal/remove/' +id)
+               .then((response) => {
+                    DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+               })
+               .catch((err) => {
+                    DevExpress.ui.notify(err.data, 'error',5000);
+               })
+            }
         }
     });//fin data store
 
@@ -179,7 +222,13 @@ app.controller('personalController', function($scope, $http){
                 visible: false
             }
         ],
-
+        summary: {
+            totalItems: [{
+                column: "cedula",
+                summaryType: "count",
+                displayFormat: 'Total: {0}'
+            }]
+        },
         showBorders: true,
         filterRow: {
             visible: false
@@ -365,10 +414,19 @@ app.controller('personalController', function($scope, $http){
                         icon:'trash',
                         type: 'danger',
                         onClick: function() {
-                            if(cursos.update());
-                            {
-                                console.log('OK');
-                            }
+                            console.log(dataGrid.getSelectedRowsData());
+                            //Obtiene el o los dato(s) seleccionados
+                            let selectedData = dataGrid.getSelectedRowsData();
+                            let idData = selectedData[0].id;
+                            //TODO: Realizar un dialog de confirmación de la eliminación de registros
+                            //Mejorar pra cuando se selecciones más de un registro
+
+                            // personal.store().remove(idData);
+                            //var ds = $("#gridContainer").dxDataGrid("getDataSource");
+                            var ds = document.getElementById('gridcontainer').dxDataGrid('getDataSource');
+                           ds.store().remove(idData);
+                           ds.reload();
+
                         }
 
                     }
