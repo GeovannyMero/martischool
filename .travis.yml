@@ -9,3 +9,10 @@ before_script:
 
 script:
   - vendor/bin/phpunit
+deploy:
+provider: heroku
+api_key:
+  secure: KEY
+app: martischool
+on:
+  repo: GeovannyMero/martischool
