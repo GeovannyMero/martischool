@@ -2,17 +2,26 @@ language: php
 php: 
 - 7.1.3
 
-before_script:
+install:
 - cp .env.travis env
 - composer self-update
 - composer install --no-interaction
 
 script:
   - vendor/bin/phpunit
+  
+before_script:
+  - php artisan migrate --force --seed
+
+script:
+- vendor/bin/phpcs
+- vendor/bin/phpunit
+  
 deploy:
-provider: heroku
+ provider: heroku
 api_key:
   secure: KEY
 app: martischool
 on:
   repo: GeovannyMero/martischool
+  branch: master
