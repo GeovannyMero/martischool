@@ -414,17 +414,15 @@ app.controller('personalController', function($scope, $http){
                         icon:'trash',
                         type: 'danger',
                         onClick: function() {
-                            console.log(dataGrid.getSelectedRowsData());
+                            //console.log(dataGrid.getSelectedRowsData());
                             //Obtiene el o los dato(s) seleccionados
                             let selectedData = dataGrid.getSelectedRowsData();
                             let idData = selectedData[0].id;
                             //TODO: Realizar un dialog de confirmación de la eliminación de registros
                             //Mejorar pra cuando se selecciones más de un registro
-
                             // personal.store().remove(idData);
-                            //var ds = $("#gridContainer").dxDataGrid("getDataSource");
-                            var ds = document.getElementById('gridcontainer').dxDataGrid('getDataSource');
-                           ds.store().remove(idData);
+                            var ds = $("#gridContainer").dxDataGrid("getDataSource");
+                            ds.store().remove(idData);
                            ds.reload();
 
                         }

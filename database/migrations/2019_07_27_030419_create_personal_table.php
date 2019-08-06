@@ -34,6 +34,9 @@ class CreatePersonalTable extends Migration
             $table->string('created_by')->nullable($value=false);
             $table->string('update_by')->nullable($value=false);
             $table->timestamps();
+
+            //foreign key
+            $table->foreign('id_rol')->references('id')->on('rol');
         });
     }
 

@@ -89,10 +89,16 @@ var periodos = new DevExpress.data.CustomStore({
         },
         rowAlternationEnabled: true,
         columnHidingEnabled: true,
-        columnAutoWidth: true,
+       // columnAutoWidth: true,
+       allowColumnResizing: true,
+       columnResizingMode: 'widget',
         groupPanel: {
             visible: true
         },
+        grouping: {
+            autoExpandAll: false,
+        },
+
         columns:
         [
             {
@@ -122,6 +128,7 @@ var periodos = new DevExpress.data.CustomStore({
             {
                 dataField: 'id_curso',
                 caption: 'Curso',
+                groupIndex: 0,
                 lookup: {
                     dataSource: datosJson,
                     displayExpr: data => data.nombre,
