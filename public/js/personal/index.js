@@ -222,6 +222,7 @@ app.controller('personalController', function($scope, $http){
                 visible: false
             }
         ],
+
         summary: {
             totalItems: [{
                 column: "cedula",

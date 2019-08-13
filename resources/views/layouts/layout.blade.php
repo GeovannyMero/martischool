@@ -97,6 +97,12 @@
                                         <span class="pull-right-container"></span>
                                     </a>
                                 </li>
+                                <li class="">
+                                    <a href="{{ url('/estudiante')}}">
+                                        <i class="fa fa-circle-o"></i>Estudiante
+                                        <span class="pull-right-container"></span>
+                                    </a>
+                                </li>
                             </ul>
                     </li>
 

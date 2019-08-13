@@ -10,7 +10,7 @@
 <!--script-->
 <script type="text/javascript" src="{{ asset('DevExtreme/js/dx.all.js')}}"></script>
 
-<script type="text/javascript" src="{{ asset('js/planificacion/index.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/Planificacion/index.js')}}"></script>
 
 
 <div class="box box-primary" ng-app='planificacionModule' ng-controller='title'>

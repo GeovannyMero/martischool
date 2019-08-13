@@ -24,7 +24,7 @@ app.controller('appController', function estudianteController($scope, $http){
                 DevExpress.ui.notify(err.data,"error",6000);
                 //return err;
             })
-                    
+
             },
         //Update
         update: function(key, values){
@@ -47,60 +47,205 @@ app.controller('appController', function estudianteController($scope, $http){
             store: estudiantes
         },
         columns:[
+            // {
+            //     dataField: 'id',
+            //     caption: "ID",
+            //     editorOptions:{
+            //         disabled: true
+            //     }
+
+            // },
             {
-                dataField: 'id',
-                caption: "ID",
-                editorOptions:{
-                    disabled: true
+                dataField: 'codigo',
+                caption: 'Código',
+                width: 80,
+                editorOptions: {
+                    showClearButton: true
                 }
-                
+
             },
+
             {
-                dataField: 'identificacion',
+                dataField: 'cedula',
                 caption: "Identificación",
+                dataType: 'number',
+                editorOptions: {
+                    showClearButton: true
+                },
                 validationRules: [
                     {
                         type: "required",
                         message: "Identificación es requerida"
                     }
                 ]
-                
+
             },
-            {
-                dataField: 'tipoidentificacion',
-                caption: "Tipo Identificación",
+           {
+               dataField:   'primerNombre',
+               caption: 'Primer Nombre',
+               dataType:    'string',
+               editorOptions: {
+                showClearButton: true
+            },
+               validationRules: [
+                   {
+                       type: 'required',
+                       message: 'El nombre es requerido'
+                   }
+               ]
+           },
+           {
+               dataField: 'primerApellido',
+               caption: 'Apellido Paterno',
+               validationRules: [
+                   {
+                       type: 'required',
+                       message: 'El Apellido Paterno es requerido'
+                   }
+               ]
+           },
+           {
+               dataField: 'segundoApellido',
+               caption: 'Apellido Materno',
+               visible: false,
+               validationRules: [
+                   {
+                       type: 'required',
+                       message: 'El apellido materno es requerido'
+                   }
+               ]
+           },
+           {
+               dataField: 'genero',
+               caption: 'Genero',
+               visible: false,
+               lookup:{
+                dataSource: [
+                    {
+                        "ID": 'M',
+                        "desc": "Masculino",
+                    },
+                    {
+                        'ID': 'F',
+                        'desc': 'Femenino'
+                    }
+                ],
+                displayExpr: 'desc',
+                valueExpr: 'ID'
+            },
+               validationRules: [
+                   {
+                       type: 'required',
+                       message: 'El genero es requerido'
+                   }
+               ]
+           },
+           {
+                dataField: 'telefono',
+                caption: 'Teléfono',
+                visible: false,
+                dataType: 'number',
+                editorOptions: {
+                    showClearButton: true,
+                     //mask: "0000000000",
+                    // maskRules: { "X": /[0-9]/ }
+                },
                 validationRules: [
                     {
-                        type: "required"
-                    }
+                        type: 'required',
+                        message: 'El teléfono es requerido'
+                    },
+
                 ]
-               
-            },
-            {
-                dataField: 'primernombre',
-                
-            },
-            {
-                dataField: 'segundonombre',
-                
-            },
-            {
-                dataField: 'apellidopaterno',
-                
-            },
-            {
-                dataField: 'apellidomaterno',
-                
-            },
-            {
-                dataField: 'fechanacimiento',
-                dataType: "date"
-                
-            },
-            {
-                dataField: 'genero'
+           },
+           {
+               dataField: 'activo',
+               caption: 'Activo',
+               dataType: 'boolean',
+
+           },
+           {
+               dataField: 'fechaNacimiento',
+               caption: 'Fecha de Nacimiento',
+               dataType: 'date',
+               visible: false,
+               format: 'dd/MM/yyyy'
+           },
+           {
+                dataField: 'lugarNacimiento',
+                caption: 'Lugar de Nacimiento',
+                visible:false
+           },
+           {
+               dataField: 'nacionalidad',
+               caption: 'Nacionalidad',
+               visible: false
+           },
+           {
+               dataField: 'direccion',
+               caption: 'Dirección',
+               editorType: "dxTextArea",
+               visible: false
+                // editorOptions: {
+                //     height: 140
+                // }
+           },
+           {
+                dataField: 'codigoMatricula',
+                caption: 'Código de Matricula',
+                visible: false
+
+           },
+           {
+               dataField: 'fechaMatricula',
+               caption: 'Fecha de Matricula',
+               dataType: 'date',
+               visible: false,
+               format: 'dd/MM/yyyy',
+               validationRules: [
+                   {
+                       type: 'required',
+                       message: 'La fecha de matricula es requerida'
+                   }
+               ]
+
+           },
+           {
+               dataField: 'idCurso',
+               caption: 'Curso',
+               validationRules: [
+                   {
+                       type: 'required',
+                       message: 'El curso es requerido'
+                   }
+               ]
+           },
+           {
+               dataField: 'idParalelo',
+               caption: 'Paralelo',
+               validationRules: [
+                   {
+                       type: 'required',
+                       message: 'El paralelo es requerido'
+                   }
+               ]
+           }
+        ],
+
+        onEditorPrepared: function(e)
+        {
+            if (e.dataType == 'date' && e.dataField == 'fechaMatricula') {
+                var dateNow = Date.now();
+                e.editorElement.dxDateBox("instance").option("value", dateNow);
             }
-        ], 
+        },
+        summary: {
+            totalItems: [{
+                column: "codigo",
+                summaryType: "count",
+                displayFormat: 'Total: {0}'
+            }]
+        },
         showBorders: true,
         filterRow: {
             visible: true,
@@ -117,10 +262,10 @@ app.controller('appController', function estudianteController($scope, $http){
             enable: true,
             pageIndex: 0,
             pageSize: 5
-        }, 
+        },
         searchPanel: {
             visible: true
-        }, 
+        },
         editing:{
             mode: 'form',
             allowAdding: true,
@@ -130,13 +275,177 @@ app.controller('appController', function estudianteController($scope, $http){
             texts: {
                 saveRowChanges: 'Guardar',
                 cancelRowChnages: 'Cancelar'
+            },
+            form: {
+                colCount: 1,
+                items: [
+                    {
+                        itemType: 'group',
+                        caption: 'Información del Estudiante',
+                        colCount: 2,
+                        items: [
+                            {
+                                dataField: 'codigo',
+                                caption: 'Codigo'
+                            },
+                            {
+                                itemType: 'empty'
+                            },
+                            {
+                                dataField: 'cedula',
+                                caption: 'Cédula'
+                            },
+                            {
+                                itemType: 'empty'
+                            },
+                            {
+                                dataField: 'primerNombre',
+                                caption: 'Primer Nombre'
+                            },
+                            {
+                                dataField: 'segundoNombre',
+                                caption: 'Segundo Nombre'
+                            },
+                            {
+                                dataField: 'primerApellido',
+                                caption: 'Apellido Paterno'
+                            },
+                            {
+                                dataField: 'segundoApellido',
+                                caption: 'Apellido Materno'
+                            },
+                            {
+                                dataField: 'genero',
+                                caption: 'Genero'
+                            },
+                            {
+                                dataField: 'telefono',
+                                caption: 'Teléfono',
+
+
+                            },
+                            {
+                                dataField:'activo',
+                                caption: 'Activo',
+                                editorType:  'dxCheckBox',
+                                editorOptions: {
+                                    value: true
+                                }
+                            }
+
+
+
+                        ]
+                    },
+                    {
+                        itemType: 'group',
+                        caption: 'Nacimiento',
+                        colCount: 2,
+                        items: [
+
+                            {
+                                dataField: 'fechaNacimiento',
+                                caption: 'Fecha'
+                            },
+                            {
+                                dataField: 'lugarNacimiento',
+                                caption: 'Lugar'
+                            },
+                            {
+                                dataField: 'nacionalidad',
+                                caption: 'Nacionalidad'
+                            }
+
+                        ]
+                    },
+                    {
+
+                            itemType: "tabbed",
+                            tabPanelOptions: {
+                                deferRendering: false
+                            },
+                            tabs: [
+                                {
+                                title: "Domicilio",
+                                items: [
+                                    {
+                                        dataField: 'direccion',
+                                        caption: 'Dirección'
+                                    }
+                                ]
+                            },
+                            {
+                                title: "Familiares",
+                                items: ["Skype"]
+                            },
+                            {
+                                title: "Periodo",
+                                colCount: 2,
+                                items: [
+
+                                    {
+                                        dataField: 'codigoMatricula',
+                                        caption: 'Código de Matricula'
+                                    },
+                                    {
+                                        dataField: 'fechaMatricula',
+                                        caption: 'Fecha de Matricula',
+
+                                    },
+                                    {
+                                        dataField: 'idCurso',
+                                        caption: 'Curso'
+                                    },
+                                    {
+                                        dataField: 'idParalelo',
+                                        caption: 'Paralelo'
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Emergencia',
+                                items:[]
+
+                            }
+                        ]
+
+                    }
+                ]
+                // items: [
+                //     {
+                //         itemType: "tabbed",
+                //         tabPanelOptions: {
+                //         deferRendering: false
+                //     },
+                //     tabs: [{
+                //         title: "Estudiante",
+                //         colCount: 2,
+                //         items: [
+
+                //             {
+                //                 dataField: 'caption',
+                //             },
+                //             {
+                //                 dataField: 'cedula'
+                //             }
+                //         ]
+                //     }, {
+                //         title: "Skype",
+                //         items: ["Skype"]
+                //     }, {
+                //         title: "Email",
+                //         items: ["Email"]
+                //     }]
+                //     }
+                // ]
             }
+
         },
         selection:{
             mode: "multiple"
         },
         rowAlternationEnabled: true,
-        
+
         //toolbar
         onToolbarPreparing: function(e){
             var dataGrid = e.component;
