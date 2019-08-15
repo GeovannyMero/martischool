@@ -232,7 +232,20 @@ app.controller('personalController', function($scope, $http){
         },
         showBorders: true,
         filterRow: {
-            visible: false
+            visible: true,
+            applyFilter: "auto"
+        },
+        headerFilter: {
+            visible: true
+        },
+        filterPanel: { visible: true },
+        scrolling: {
+            columnRenderingMode: "virtual"
+        },
+        export: {
+            enabled: true,
+            fileName: "Estudiantes",
+            allowExportSelectedData: true
         },
         pager: {
             infoText: 'Página {0} de {1}',
@@ -395,7 +408,7 @@ app.controller('personalController', function($scope, $http){
 
             e.toolbarOptions.items.unshift(
                 {
-                    location: 'before',
+                    location: 'after',
                 },
                 {
                     location: 'after',

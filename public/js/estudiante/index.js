@@ -46,6 +46,7 @@ app.controller('appController', function estudianteController($scope, $http){
         dataSource: {
             store: estudiantes
         },
+        columnHidingEnabled: true,
         columns:[
             // {
             //     dataField: 'id',
@@ -108,6 +109,9 @@ app.controller('appController', function estudianteController($scope, $http){
                dataField: 'segundoApellido',
                caption: 'Apellido Materno',
                visible: false,
+               editorOptions: {
+                showClearButton: true
+            },
                validationRules: [
                    {
                        type: 'required',
@@ -119,6 +123,9 @@ app.controller('appController', function estudianteController($scope, $http){
                dataField: 'genero',
                caption: 'Genero',
                visible: false,
+               editorOptions: {
+                showClearButton: true
+            },
                lookup:{
                 dataSource: [
                     {
@@ -229,6 +236,16 @@ app.controller('appController', function estudianteController($scope, $http){
                        message: 'El paralelo es requerido'
                    }
                ]
+           },
+           {
+               type: 'buttons',
+               width: 80,
+               buttons: [
+                   {
+                       icon: 'remove',
+                       visible: true
+                   }
+               ]
            }
         ],
 
@@ -249,6 +266,19 @@ app.controller('appController', function estudianteController($scope, $http){
         showBorders: true,
         filterRow: {
             visible: true,
+            applyFilter: "auto"
+        },
+        headerFilter: {
+            visible: true
+        },
+        filterPanel: { visible: true },
+        scrolling: {
+            columnRenderingMode: "virtual"
+        },
+        export: {
+            enabled: true,
+            fileName: "Estudiantes",
+            allowExportSelectedData: true
         },
         pager: {
             infoText: 'Pagina {0} de {1}',
@@ -274,7 +304,8 @@ app.controller('appController', function estudianteController($scope, $http){
             useIcons: true,
             texts: {
                 saveRowChanges: 'Guardar',
-                cancelRowChnages: 'Cancelar'
+                cancelRowChnages: 'Cancelar',
+                addRow: 'Agregar Nuevo'
             },
             form: {
                 colCount: 1,
