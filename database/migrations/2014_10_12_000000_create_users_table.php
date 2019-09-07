@@ -21,21 +21,20 @@ class CreateUsersTable extends Migration
             $table->string('password');
 
             //nuevos campos
-            $table->boolean('activo')->nullable($values=false);
-            $table->integer('id_escuela')->unsigned();
-            $table->integer('id_rol');
+            $table->boolean('activo')->nullable($values = false);
+            $table->integer('escuela_id')->unsigned();
+            $table->integer('rol_id');
 
             //auditoria
             $table->rememberToken();
             $table->timestamps();
-            $table->string('created_by',50);
-            $table->string('update_by',50);
+            $table->string('created_by', 50);
+            $table->string('update_by', 50);
 
             //claves foraneas
-            //$table->foreign('id_escuela')->references('id')->on('escuela');
-            //$table->foreign('id_rol')->references('id')->on('rol');
+            // $table->foreign('escuela_id')->references('id')->on('escuela');
+            // $table->foreign('rol_id')->references('id')->on('rol');
         });
-
     }
 
     /**

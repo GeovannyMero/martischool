@@ -8,15 +8,23 @@ use \App\Modelos\Rol;
 use \App\Modelos\Permiso;
 class RolController extends Controller
 {
+
     public function index()
     {
-        return view('General.Rol.Index');
+        if(Auth::check()){
+            if(Auth::user()->hasRol('Master')){
+                return view('General.Rol.Index');
+            }else{
+                return abort(403, 'Acceso No Autorizado');
+            }
+        }
+
 
     }
 
     public function all()
     {
-        $roles;
+
         try
         {
             if(Auth::check())

@@ -27,7 +27,18 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                 {
                     return $http.post('/niveleseducativo/update/' + id, values)
                     .then((response) => {
-                        DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
+                        //DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
+                        DevExpress.ui.notify({
+                            message: response.data['mensaje'],
+                            position: {
+                                my: 'center top',
+                                at: 'center top',
+                                offset: '50 60'
+
+                            },
+                            width: 600,
+
+                        }, 'success', 5000)
                     })
                     .catch((err) => {
                         DevExpress.ui.notify(err.data, 'error', 5000);
@@ -42,6 +53,22 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                 .catch((err) => {
                     DevExpress.ui.notify(err.data, 'error', 5000);
                 })
+            },
+            remove: (key) => {
+                let id = key;
+                // let nivel = nombre;
+                // console.log(`${nivel}`);
+                if(id !== 0)
+                {
+                    DevExpress.ui.dialog.confirm(`<i>Está ud. seguro de eliminar el registro</i><strong>[${id}]</strong>`, "Eliminar Nivel Academico");
+                    // return $http.post('/niveleducativo/remove/' + id)
+                    // .then((response) => {
+                    //     DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                    // })
+                    // .catch((error) => {
+                    //     DevExpress.ui.notify(err.data, 'error',5000);
+                    // })
+                }
             }
 
         }
@@ -60,11 +87,14 @@ app.controller('nivel_educativoController', function nivel_educativoController($
             {
                 dataField: 'id',
                 caption: 'ID',
-                width: 50
+                width: 50,
+                visible:false
+
             },
             {
                 dataField: 'nombre',
                 caption: 'Nombre',
+                width: 250,
                 validationRules: [
                     {
                         type: 'required',
@@ -74,19 +104,33 @@ app.controller('nivel_educativoController', function nivel_educativoController($
             },
             {
                 dataField: 'descripcion',
-                caption: 'Descripción'
+                caption: 'Descripción',
+                //width: 200
             },
             {
                 dataField: 'activo',
                 caption: 'Activo',
-                width: '70'
+                width: 80,
+                dataType: 'boolean'
             }
         ],
+        summary: {
+            totalItems: [{
+                column: "nombre",
+                summaryType: "count",
+                displayFormat: 'Total: {0}'
+            }]
+        },
         onEditingStart: e => e.component.columnOption('id','allowEditing', false),
+
         showBorders: true,
         filterRow: {
-            visible: false
+            visible: true
         },
+        // headerFilter: {
+        //     visible: true
+        // },
+        //filterPanel: { visible: true },
         pager: {
             infoText: 'Página {0} de {1}',
             showInfo: true,
@@ -148,7 +192,11 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                     {
                         dataField: 'activo',
                         caption: 'Estado',
-                        dataType: 'boolean'
+                        dataType: 'boolean',
+                        editorType:  'dxCheckBox',
+                                editorOptions: {
+                                    //value: true
+                                }
 
                     }
 
@@ -170,7 +218,7 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                     options: {
                         icon: 'refresh',
                         type: 'success',
-                        onclick: function() {
+                        onClick: function() {
                             dataGrid.refresh();
                         }
                     }
@@ -181,8 +229,18 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                     options: {
                         icon:'trash',
                         type: 'danger',
-                        onclick: () => {
-                            console.log('REmove');
+                        onClick: () => {
+                            let selectedData = dataGrid.getSelectedRowsData();
+                            console.log(selectedData.length);
+                            if(selectedData.length > 0){
+                                let idData = selectedData[0].id;
+                            console.log(JSON.stringify(selectedData[0].nombre));
+                            var ds = $("#gridContainer").dxDataGrid("getDataSource");
+                            console.log(ds.store());
+                            ds.store().remove(idData);
+                            //ds.reload();
+                            }
+
                         }
 
                     }

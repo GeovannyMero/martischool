@@ -15,10 +15,14 @@ class CreateRolPermisoTable extends Migration
     {
         Schema::create('rol_permiso', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->Integer('id_rol')->nullable($value=false);
-            $table->Integer('id_permiso')->nullable($value=false);
+            $table->Integer('rol_id')->nullable($value = false);
+            $table->Integer('permiso_id')->nullable($value = false);
 
 
+            $table->foreign('rol_id')->references('id')->on('rol');
+
+
+            $table->foreign('permiso_id')->references('id')->on('permiso');
         });
     }
 

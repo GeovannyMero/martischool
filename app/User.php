@@ -39,9 +39,9 @@ class User extends Authenticatable
     ];
 
 
-    public function roles()
+    public function rol()
     {
-        return $this->hasToMany('App\Modelos\Rol');
+        return $this->belongsTo('App\Modelos\Rol');
     }
     public function authorizeRoles($roles)
     {
@@ -49,5 +49,19 @@ class User extends Authenticatable
             return true;
         }
         abort(401, 'Esta acción no está autorizada.');
+    }
+
+    public function getRolUser($rol_id){
+
+         $rolUser = $this->rol()->find($rol_id);
+         return $rolUser->nombre;
+
+    }
+
+    public function hasRol($rol){
+        if ($this->rol()->where('nombre', $rol)->first()) {
+            return true;
+        }
+        return false;
     }
 }

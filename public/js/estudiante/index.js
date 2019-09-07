@@ -41,6 +41,38 @@ app.controller('appController', function estudianteController($scope, $http){
     }
 
     );
+
+    //lookup curso
+    var curso = new DevExpress.data.CustomStore({
+        key: 'id',
+        loadMode: 'raw',
+        load: () => {
+            return $http.post('/curso/all')
+            .then((response) => {
+                return response.data;
+            })
+            .catch((err) => {
+                DevExpress.ui.notify(err.data, 'error',5000);
+            })
+        }
+    })
+
+    //planificacion paralelos
+    var paralelo = new DevExpress.data.CustomStore({
+        key: 'id',
+        loadMode: 'raw',
+        load: () => {
+            return $http.post('/planificacion/all')
+            .then((response) => {
+                console.log(response.data);
+                return response.data;
+            })
+            .catch((err) => {
+                DevExpress.ui.notify(err.data, 'error',5000);
+            })
+        }
+    });
+
 //Opciones del Grid
     $scope.dataGridOptions = {
         dataSource: {
@@ -225,11 +257,35 @@ app.controller('appController', function estudianteController($scope, $http){
                        type: 'required',
                        message: 'El curso es requerido'
                    }
-               ]
+               ],
+            //    setCellValue: function(rowData, value) {
+            //        debugger;
+            //     rowData.idCurso = value;
+            //     //rowData.CityID = null;
+            //  },
+               lookup:{
+                dataSource: curso,
+                displayExpr: 'nombre',
+                valueExpr: 'id'
+            }
            },
+
            {
                dataField: 'idParalelo',
                caption: 'Paralelo',
+               lookup: {
+                   dataSource: (options) => {
+                        return {
+                            store: paralelo,
+                            filter: options.data ? ["idCurso", "=", options.data.idCurso] : null
+                        }
+                   },
+                   displayExpr: 'idCurso',
+                   valueExpr: 'id'
+
+
+
+               },
                validationRules: [
                    {
                        type: 'required',
@@ -237,16 +293,16 @@ app.controller('appController', function estudianteController($scope, $http){
                    }
                ]
            },
-           {
-               type: 'buttons',
-               width: 80,
-               buttons: [
-                   {
-                       icon: 'remove',
-                       visible: true
-                   }
-               ]
-           }
+        //    {
+        //        type: 'buttons',
+        //        width: 80,
+        //        buttons: [
+        //            {
+        //                icon: 'exportpdf',
+        //                visible: true
+        //            }
+        //        ]
+        //    }
         ],
 
         onEditorPrepared: function(e)
@@ -256,6 +312,13 @@ app.controller('appController', function estudianteController($scope, $http){
                 e.editorElement.dxDateBox("instance").option("value", dateNow);
             }
         },
+        // onEditorPreparing: function(e) {
+        //     debugger;
+        //     if (e.parentType == 'dataRow' && e.dataField == 'idCurso') {
+        //         var onValueChanged = e.editorOptions.onValueChanged;
+        //         e.editorOptions.onValueChanged = () => console.log('value changed')
+        //     }
+        // },
         summary: {
             totalItems: [{
                 column: "codigo",

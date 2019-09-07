@@ -13,10 +13,10 @@ class RolTableSeeder extends Seeder
     {
         DB::table('rol')->insert([
             'nombre' => 'Administrador',
-            'descripcion' => 'Admin',
+            'descripcion' => 'Administrador',
             'activo' => true,
-            'created_by' => 'admin',
-            'updated_by' => 'admin'
+            'created_by' => 'default',
+            'updated_by' => 'default'
         ]);
     }
 }

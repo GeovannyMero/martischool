@@ -40,7 +40,7 @@ Route::post('/escuela/update/{id}', 'EscuelaController@update');
 Route::post('/escuela/delete/{id}', 'EscuelaController@delete');
 
 //Roles
-Route::get('/rol', 'RolController@index');
+Route::get('/rol', 'RolController@index')->middleware('auth');;
 Route::post('/rol/all', 'RolController@all');
 Route::post('/rol/insert', 'RolController@insert');
 Route::post('/rol/update/{id}', 'RolController@update');
@@ -55,6 +55,8 @@ Route::get('/niveleducativo', 'NivelEducativoController@index');
 Route::post('/niveleducativo/all', 'NivelEducativoController@all');
 Route::post('/niveleseducativo/update/{id}','NivelEducativoController@update');
 Route::post('/niveleducativo/insert', 'NivelEducativoController@insert');
+Route::post('/niveleducativo/remove/{id}', 'NivelEducativoController@remove');
+
 
 //Cursos
 Route::get('/curso','CursoController@index');
@@ -79,6 +81,8 @@ Route::get('/planificacion', 'PlanificacionController@index');
 Route::post('/planificacion/all', 'PlanificacionController@all');
 Route::post('/planificacion/insert', 'PlanificacionController@insert');
 Route::post('/planificacion/update/{id}', 'PlanificacionController@update');
+Route::post('/planificacion/findByCourse/{id}', 'PlanificacionController@findByCourse');
+Route::get('/planificacion/findParalelo/{id}', 'PlanificacionController@findParalelo');
 
 Route::post('/planificacion/prePlanificacion', 'PlanificacionController@prePlanificacion');
 Route::post('/planificacion/paralelos', 'PlanificacionController@paralelos');

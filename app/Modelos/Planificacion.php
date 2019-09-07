@@ -10,3 +10,5 @@ class Planificacion extends Model
     protected $primarykey = 'id';
     public $timestamps = 'false';
 }
+
+

@@ -51,14 +51,14 @@
                                     <img src="{{ asset('AdminLTE/dist/img/avatar5.png')}}" class="user-image" alt="User Image" />
                                     <p>
                                     ROL
-                                        <small>Rol</small>
+                                    <small>{{Auth::user()->getRolUser(Auth::user()->rol_id)}}</small>
                                     </p>
                                 </li>
                                 <li class="user-footer">
                                     <div class="pull-right">
                                         <a href="{{ route('logout') }}" class="btn btn-default btn-flat" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                     </div>
@@ -84,31 +84,50 @@
 
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-shopping-cart"></i>
-                            <span>ROL</span>
+                            <i class="fa fa-cog"></i>
+                            <span>Seguridad</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull right"></i>
                             </span>
                         </a>
                             <ul class="treeview-menu">
+                                @if(Auth::user()->hasRol("Administrador"))
                                 <li class="">
                                     <a href="{{ url('/rol')}}">
                                         <i class="fa fa-circle-o"></i>Rol
                                         <span class="pull-right-container"></span>
                                     </a>
                                 </li>
-                                <li class="">
+                                @endif
+                                <!--<li class="">
                                     <a href="{{ url('/estudiante')}}">
                                         <i class="fa fa-circle-o"></i>Estudiante
                                         <span class="pull-right-container"></span>
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                     </li>
 
+                    <!--Estudiante-->
+                    <li>
+                        <a href="/estudiante">
+                            <i class="fa fa-users"></i>
+                            <span>Estudiantes</span>
+
+                        </a>
+                    </li>
+                    <!--Personal-->
+                    <li>
+                        <a href="{{ url('/personal')}}">
+                            <i class="fa fa-users"></i>
+                            <span>Personal</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
+                    <!--Academico-->
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-shopping-cart"></i>
+                            <i class="fa fa-book"></i>
                             <span>Academico</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull right"></i>
@@ -140,11 +159,11 @@
                                             <i class="fa fa-circle-o"></i>Paralelos
                                         </a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                     <a href="{{ url('/personal')}}">
                                         <i class="fa fa-circle-o"></i>Profesor
                                     </a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li><!--Fin Administracion basica-->
                             <li class="treeview menu-open">
@@ -168,6 +187,22 @@
                                 </ul>
                             </li><!--fin Administracion Periodo-->
                         </ul>
+                    </li>
+                    <!--Calificaciones-->
+                    <li class="treeview">
+                        <a href="{{ url('/notas')}}">
+                            <i class="fa fa-pencil"></i>
+                            <span>Notas</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
+                    <!--Reportes-->
+                    <li class="treeview">
+                        <a href="{{ url('/notas')}}">
+                            <i class="fa fa-file-text-o"></i>
+                            <span>Reportes</span>
+                            <span class="pull-right-container"></span>
+                        </a>
                     </li>
                 </ul>
 

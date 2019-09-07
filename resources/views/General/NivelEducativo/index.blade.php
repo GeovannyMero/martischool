@@ -12,7 +12,17 @@
 
 <script type="text/javascript" src="{{ asset('js/niveleducativo/index.js')}}"></script>
 
-
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">
+                <i class="fa fa-dashboard"></i>Dashboard
+            </a>
+        </li>
+    </ol>
+</section>
+</br>
+</br>
 <div class="box box-primary" ng-app='NivelModule' ng-controller='title'>
     <div class="box-header with-border">
         <h3 class="box-title">@{{modulo}}</h3>

@@ -118,4 +118,22 @@ class PlanificacionController extends Controller
         }
         return $periodos;
     }
+
+    public function findByCourse(int $idCurso){
+        try{
+            if($idCurso != null)
+            {
+                $paralelos = Planificacion::where('id_curso',$idCurso)->get();
+
+            }
+        }catch(Exception $e){
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+        return $paralelos;
+    }
+
+    public function findParalelo(int $idCurso){
+        $paralelos = Curso::find($idCurso)->paralelos()->get();
+        return $paralelos;
+    }
 }

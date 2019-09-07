@@ -20,7 +20,7 @@ class Rol extends Model
     //     return $this->hasMany('App\Modelos\Permiso')->using('App\Modelos\Rol_Permiso');
     // }
 
-    public function user()
+    public function users()
     {
         return $this->hasMany('App\User');
     }

@@ -10,4 +10,10 @@ class Curso extends Model
     protected $primarykey = 'id';
     public $timestamps = 'false';
 
+
+    public function paralelos(){
+        return $this->belongsToMany('App\Modelos\Paralelos');
+    }
 }
+
+

@@ -16,8 +16,8 @@ class CreatePlanificacionTable extends Migration
         Schema::create('planificacion', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('id_periodo')->nullable($value = false);
-            $table->integer('id_curso')->nullable($value = false);
-            $table->integer('id_paralelo')->nullable($value = false);
+            $table->integer('curso_id')->nullable($value = false);
+            $table->integer('paralelo_id')->nullable($value = false);
             $table->boolean('activo')->nullable($value = false);
             $table->string('created_by')->nullable($value = false);
             $table->string('updated_by')->nullable($value = false);
@@ -25,8 +25,8 @@ class CreatePlanificacionTable extends Migration
 
             //relaciones
             $table->foreign('id_periodo')->references('id')->on('periodo');
-            $table->foreign('id_curso')->references('id')->on('curso');
-            $table->foreign('id_paralelo')->references('id')->on('paralelo');
+            $table->foreign('curso_id')->references('id')->on('curso');
+            $table->foreign('paralelo_id')->references('id')->on('paralelo');
         });
     }
 

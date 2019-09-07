@@ -40,7 +40,7 @@ class NivelEducativoController extends Controller
                     {
                         $nivel_educativo->nombre = $request->nombre != null ? $request->nombre : $nivel_educativo->nombre;
                         $nivel_educativo->descripcion = $request->descripcion != null ? $request->descripcion : $nivel_educativo->descripcion;
-                        $nivel_educativo->activo = $request->activo == false ? true : true;
+                        $nivel_educativo->activo = $request->activo != null ? $request->activo : $nivel_educativo->activo;
                         $nivel_educativo->updated_by = Auth::user()->name;
                         if($nivel_educativo->save())
                         {
@@ -79,6 +79,32 @@ class NivelEducativoController extends Controller
         {
             return response()->json(['mensaje' => $e->getMessage()]);
         }
+    }
+
+    public function remove(int $id)
+    {
+        try
+        {
+            if(Auth::check())
+            {
+                if($id !== 0)
+                {
+                    $nivel_educativo = NivelEducativo::find($id);
+                    if($nivel_educativo != null)
+                    {
+                        $nivel_educativo->activo = false;
+                        if($nivel_educativo->save())
+                        {
+                            return response()->json(["mensaje"=>"Se eliminó correctamente."]);
+                        }
+                    }
+                }
+            }
+
+        }catch(Exception $e){
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+
     }
 
 
