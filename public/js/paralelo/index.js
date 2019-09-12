@@ -52,20 +52,35 @@ app.controller('paraleloController', function paraleloController($scope, $http){
          {
              dataField: 'id',
              caption: 'ID',
-             width: 50
+             width: 50,
+             visible: false
          },
          {
              dataField: 'nombre',
-             caption: 'Paralelos',
+             caption: 'Paralelo',
+             validationRules: [
+                 {
+                     type: 'required',
+                     message: 'El nombre es obligatorio'
+                 }
+             ]
 
          },
          {
              dataField: 'activo',
              caption: 'Activo',
+             dataType: 'boolean',
              width: 70
          }
      ],
-     onEditingStart: e => e.component.columnOption('id', 'allowEditing', false),
+     summary: {
+        totalItems: [{
+            column: "nombre",
+            summaryType: "count",
+            displayFormat: 'Total: {0}'
+        }]
+    },
+    onEditingStart: e => e.component.columnOption('id','allowEditing', false),
      showBorders: true,
      filterRow: {
          visible: false
@@ -140,7 +155,7 @@ app.controller('paraleloController', function paraleloController($scope, $http){
                 widget: 'dxButton',
                 options: {
                     icon: 'refresh',
-                    type: 'success',
+                    //type: 'success',
                     onClick: function(){
                         dataGrid.refresh();
                     }
@@ -152,7 +167,7 @@ app.controller('paraleloController', function paraleloController($scope, $http){
                 widget: 'dxButton',
                 options: {
                     icon:'trash',
-                    type: 'danger',
+                    //type: 'danger',
                     onClick: function() {
                         console.log(dataGrid);
 

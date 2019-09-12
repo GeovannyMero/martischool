@@ -61,7 +61,7 @@ class CursoController extends Controller
                         $curso->curso_numero = $request->curso_numero != null ? $request->curso_numero : $curso->curso_numero;
                         $curso->curso_siguiente = $request->curso_siguiente != null ? $request->curso_siguiente : $curso->curso_siguiente;
                         $curso->id_nivel = $request->id_nivel != null ? $request->id_nivel : $curso->id_nivel;
-                        $curso->activo = $request->activo == false ? false : true;
+                        $curso->activo = $request->activo != null ? $request->activo : $curso->activo;
                         $curso->updated_by = Auth::user()->name;
                         if($curso->save())
                         {
@@ -75,6 +75,7 @@ class CursoController extends Controller
             return response()->json(['mensaje' => $ex->getMessage()]);
         }
     }
+
     public function insert(Request $request)
     {
         try
@@ -98,6 +99,29 @@ class CursoController extends Controller
                     }
                 }
             }
+        }catch(Exception $e)
+        {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+    }
+
+    public function remove (int $id)
+    {
+        try
+        {   if(Auth::check()){
+                if($id > 0){
+                    $curso = Curso::find($id);
+                    if($curso != null)
+                    {
+                        $curso->activo = false;
+                        if($curso->save())
+                        {
+                            return response()->json(['mensaje'=> 'Se eliminó correctamente']);
+                        }
+                    }
+                }
+        }
+
         }catch(Exception $e)
         {
             return response()->json(['mensaje' => $e->getMessage()]);

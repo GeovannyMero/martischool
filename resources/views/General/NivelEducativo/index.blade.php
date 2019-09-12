@@ -12,12 +12,20 @@
 
 <script type="text/javascript" src="{{ asset('js/niveleducativo/index.js')}}"></script>
 
+
+<link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
+
+
 <section class="content-header">
     <ol class="breadcrumb">
         <li>
-            <a href="#">
+            <a href="/home">
                 <i class="fa fa-dashboard"></i>Dashboard
             </a>
+        </li>
+        <li class='active'>
+           Nivel Educativo
+
         </li>
     </ol>
 </section>
@@ -34,4 +42,5 @@
     </div>
 
 </div>
+
 @endsection

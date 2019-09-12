@@ -37,7 +37,7 @@ class ParaleloController extends Controller
                     if($paralelo != null)
                     {
                         $paralelo->nombre = $request->nombre != null ? $request->nombre : $paralelo->nombre;
-                        $paralelo->activo = $request->activo == false ? false : true;
+                        $paralelo->activo = $request->activo != null ? $request->activo : $paralelo->activo;
                         $paralelo->updated_by = Auth::user()->name;
                         if($paralelo->save())
                         {

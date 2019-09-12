@@ -13,8 +13,7 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                 return $http.post('/niveleducativo/all')
                 .then((response)=>
                 {
-                    console.log(response.data);
-                    return response.data;
+                   return response.data;
                 })
                 .catch((err) => {
                     DevExpress.ui.notify(err.data, 'error', 5000);
@@ -55,19 +54,34 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                 })
             },
             remove: (key) => {
-                let id = key;
-                // let nivel = nombre;
-                // console.log(`${nivel}`);
+                debugger;
+                let id = key.id;
                 if(id !== 0)
                 {
-                    DevExpress.ui.dialog.confirm(`<i>Está ud. seguro de eliminar el registro</i><strong>[${id}]</strong>`, "Eliminar Nivel Academico");
-                    // return $http.post('/niveleducativo/remove/' + id)
-                    // .then((response) => {
-                    //     DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                    //result = DevExpress.ui.dialog.confirm(`<i>Está ud. seguro de eliminar el registro:</i></br><strong> [${id}] ${key.nombre}</strong>`, "Eliminar Nivel Academico");
+                    return $http.post('/niveleducativo/remove/' + id)
+                    .then((response) => {
+                        DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                    })
+                    .catch((err) => {
+                        DevExpress.ui.notify(err.data, 'error',5000);
+                    })
+
+
+                    // result.done(function(dialogResult){
+                    //     //alert(dialogResult ? "Confirmed" : "Canceled");
+                    //     if(dialogResult){
+                    //         return $http.post('/niveleducativo/remove/' + id)
+                    //             .then((response) => {
+                    //                 DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+
+                    //             })
+                    //             .catch((err) => {
+                    //                  DevExpress.ui.notify(err.data, 'error',5000);
+                    //              })
+                    //     }
                     // })
-                    // .catch((error) => {
-                    //     DevExpress.ui.notify(err.data, 'error',5000);
-                    // })
+
                 }
             }
 
@@ -155,7 +169,7 @@ app.controller('nivel_educativoController', function nivel_educativoController($
             mode: 'form',
             allowAdding: true,
             allowUpdating: true,
-            //allowDeleting: true,
+            allowDeleting: true,
             useIcons: true,
             texts: {
                 saveRowChanges: 'Guardar',
@@ -217,7 +231,7 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                     widget: 'dxButton',
                     options: {
                         icon: 'refresh',
-                        type: 'success',
+                        //type: 'success',
                         onClick: function() {
                             dataGrid.refresh();
                         }
@@ -228,17 +242,16 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                     widget: 'dxButton',
                     options: {
                         icon:'trash',
-                        type: 'danger',
+                        //type: 'danger',
                         onClick: () => {
                             let selectedData = dataGrid.getSelectedRowsData();
-                            console.log(selectedData.length);
                             if(selectedData.length > 0){
-                                let idData = selectedData[0].id;
-                            console.log(JSON.stringify(selectedData[0].nombre));
-                            var ds = $("#gridContainer").dxDataGrid("getDataSource");
-                            console.log(ds.store());
-                            ds.store().remove(idData);
-                            //ds.reload();
+                                let idData = selectedData[0];
+                                var ds = $("#gridContainer").dxDataGrid("getDataSource");
+                                ds.store().remove(idData);
+                                //debugger;
+                                //ds.reload();
+                                dataGrid.refresh();
                             }
 
                         }

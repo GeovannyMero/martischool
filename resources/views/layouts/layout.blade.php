@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; chartset=utf-8" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Escuela Jose Marti</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
@@ -75,7 +75,7 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">Main Navegation</li>
                     <li class="treeview">
-                        <a href="#">
+                        <a href="/home">
                             <i class="fa fa-dashboard"></i>
                             <span>Dashboard</span>
                             <span class="pull-right-container"></span>

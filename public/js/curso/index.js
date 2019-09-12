@@ -51,6 +51,18 @@ app.controller('cursoController', function cursoController($scope, $http){
                     DevExpress.ui.notify(err.data, 'error', 5000);
                 });
 
+            },
+            remove: (key) => {
+                let id = key.id;
+                if(id > 0){
+                    return $http.post('/curso/remove/' + id)
+                    .then((response) => {
+                        DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                    }).catch((err) => {
+                        DevExpress.ui.notify(err.data, 'error',5000);
+                    })
+                }
+
             }
 
         }
@@ -69,12 +81,14 @@ app.controller('cursoController', function cursoController($scope, $http){
             {
                 dataField: 'id',
                 caption: 'ID',
-                width: 50
+                width: 50,
+                visible: false
 
             },
             {
                 dataField: 'nombre',
                 caption: 'Nombre',
+                width: 150,
                 validationRules: [
                     {
                         type: 'required',
@@ -89,8 +103,9 @@ app.controller('cursoController', function cursoController($scope, $http){
 
             },
             {
-                dataField: 'curso_letra',
-                caption: 'Curso en Letras'
+                dataField:  'curso_letra',
+                caption:    'Curso en Letras',
+                visible:    false
             },
             {
                 dataField: 'curso_numero',
@@ -118,6 +133,7 @@ app.controller('cursoController', function cursoController($scope, $http){
             {
                 dataField: 'id_nivel',
                 caption: 'Nivel',
+                width: 150,
                 lookup: {
                     dataSource: niveles,
                     displayExpr: 'nombre',
@@ -134,13 +150,23 @@ app.controller('cursoController', function cursoController($scope, $http){
             },
             {
                 dataField: 'activo',
-                caption: 'Activo'
+                caption: 'Activo',
+                dataType: 'boolean',
+                width: 80
             }
         ],
-        onEditingStrart: e => e.component.columnOption('id', 'allowEditing', false),
+        summary: {
+            totalItems: [{
+                column: "nombre",
+                summaryType: "count",
+                displayFormat: 'Total: {0}'
+            }]
+        },
+        onEditingStart: e => e.component.columnOption('id','allowEditing', false),
+
         showBorders: true,
         filterRow: {
-            visible: false
+            visible: true
         },
         pager: {
             infoText: 'Página {0} de {1}',
@@ -167,10 +193,13 @@ app.controller('cursoController', function cursoController($scope, $http){
             mode: "form",
             allowAdding: true,
             allowUpdating: true,
+            allowDeleting: true,
             useIcons: true,
             texts: {
                 saveRowChanges: 'Guardar',
-                cancelRowChanges: 'Cancelar'
+                cancelRowChanges: 'Cancelar',
+                confirmDeleteTitle: 'Eliminar Registro',
+                confirmDeleteMessage: '¿Desea eliminar el registro?'
             },
             form: {
                 colCount: 2,
@@ -241,7 +270,7 @@ app.controller('cursoController', function cursoController($scope, $http){
                     widget: 'dxButton',
                     options: {
                         icon: 'refresh',
-                        type: 'success',
+                        //type: 'success',
                         onClick: function() {
                             dataGrid.refresh();
                         }
@@ -252,7 +281,7 @@ app.controller('cursoController', function cursoController($scope, $http){
                     widget: 'dxButton',
                     options: {
                         icon:'trash',
-                        type: 'danger',
+                        //type: 'danger',
                         onClick: function() {
                             if(cursos.update());
                             {
