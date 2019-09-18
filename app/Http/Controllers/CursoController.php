@@ -36,7 +36,7 @@ class CursoController extends Controller
         {
             if(Auth::check())
             {
-                return NivelEducativo::all();
+                return NivelEducativo::where('activo', true)->get();
             }
         }catch(Exception $ex)
         {

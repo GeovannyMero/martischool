@@ -62,7 +62,7 @@ class PeriodoController extends Controller
                         $periodo->periodo_fin = $request->periodo_fin != null ? $request->periodo_fin : $periodo->periodo_fin;
                         $periodo->fecha_inicio = $request->fecha_inicio != null ? $request->fecha_inicio : $periodo->fecha_inicio;
                         $periodo->fecha_fin = $request->fecha_fin != null ? $request->fecha_fin : $periodo->fecha_fin;
-                        $periodo->activo = $request->activo != true ? false : true;
+                        $periodo->activo = $request->activo != null ? $request->activo : $periodo->activo;
                         $periodo->updated_by = Auth::user()->name;
                         if ($periodo->save()) {
                             return response()->json(['mensaje' => 'Se guardo correctamente']);
@@ -71,6 +71,31 @@ class PeriodoController extends Controller
                 }
             }
         } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+    }
+
+    public function remove(int $id)
+    {
+        try
+        {
+            if(Auth::check()){
+                if($id > 0)
+                {
+                    $periodo = Periodo::find($id);
+                    if($periodo != null)
+                    {
+                        $periodo->activo = false;
+                        if($periodo->save())
+                        {
+                            return response()->json(['mensaje' => 'Se eliminó correctamente']);
+                        }
+                    }
+
+                }
+            }
+        }catch(Exception $e)
+        {
             return response()->json(['mensaje' => $e->getMessage()]);
         }
     }

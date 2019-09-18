@@ -8,9 +8,12 @@
 <!--Angular -->
 <script type="text/javascript" src="{{ asset('DevExtreme/js/angular.min.js')}}"></script>
 <!--script-->
+<script type="text/javascript" src="{{ asset('DevExtreme/js/jszip.js')}}"></script>
 <script type="text/javascript" src="{{ asset('DevExtreme/js/dx.all.js')}}"></script>
 
 <script type="text/javascript" src="{{ asset('js/personal/index.js')}}"></script>
+
+<link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
 
 <section class="content-header">
     <ol class="breadcrumb">
@@ -33,5 +36,15 @@
         </div>
     </div>
 
+</div>
+
+<div id='tabs'>
+    <div class='caption'></div>
+    <div dx-tabs="{
+        dataSource: [{id: 0}],
+        bindingOptions: {
+            selectedIndex: 'selectedTab'
+        }
+    }"></div>
 </div>
 @endsection

@@ -18,11 +18,13 @@ app.controller('planificacionController', function planificacionController($scop
             })
         },
         insert: (values) => {
+           // debugger;
             return $http.post('/planificacion/insert', values)
             .then((response) => {
                 DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
             })
             .catch((err) => {
+                console.log(err);
                 DevExpress.ui.notify(err.data, 'error', 5000);
             })
 
@@ -32,6 +34,20 @@ app.controller('planificacionController', function planificacionController($scop
             if(id !== 0)
             {
                 return $http.post('/planificacion/update/' + id, values)
+                .then((response) => {
+                    DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
+                })
+                .catch((err) => {
+                    DevExpress.ui.notify(err.data, 'error', 5000);
+                })
+            }
+        },
+        remove: (key) => {
+
+            let id = key.id;
+            if(id > 0)
+            {
+                return $http.post('/planificacion/remove/' + id)
                 .then((response) => {
                     DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
                 })
@@ -126,9 +142,9 @@ var periodos = new DevExpress.data.CustomStore({
 
             },
             {
-                dataField: 'id_curso',
+                dataField: 'curso_id',
                 caption: 'Curso',
-                groupIndex: 0,
+                //groupIndex: 0,
                 lookup: {
                     dataSource: datosJson,
                     displayExpr: data => data.nombre,
@@ -143,7 +159,7 @@ var periodos = new DevExpress.data.CustomStore({
 
             },
             {
-                dataField: 'id_paralelo',
+                dataField: 'paralelo_id',
                 caption: 'Paralelo',
                 lookup: {
                     dataSource: paralelos,
@@ -161,13 +177,21 @@ var periodos = new DevExpress.data.CustomStore({
             {
                 dataField: 'activo',
                 caption: 'Activo',
-                width: 80
+                width: 80,
+                dataType: 'boolean'
             }
 
         ],
+        summary: {
+            totalItems: [{
+                column: "id_periodo",
+                summaryType: "count",
+                displayFormat: 'Total: {0}'
+            }]
+        },
         showBorders: true,
         filterRow: {
-            visible: false
+            visible: true
         },
         pager: {
             infoText: 'Página {0} de {1}',
@@ -194,6 +218,7 @@ var periodos = new DevExpress.data.CustomStore({
             mode: 'batch',
             allowAdding: true,
             allowUpdating: true,
+            allowDeleting: true,
             useIcons: true
         }
     }

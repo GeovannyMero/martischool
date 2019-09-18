@@ -76,6 +76,7 @@ class PersonalController extends Controller
     {
         try
         {
+            //dd($request->id_rol[0]);
             if(Auth::check())
             {
                 if($request != null)

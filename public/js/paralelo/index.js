@@ -110,6 +110,7 @@ app.controller('paraleloController', function paraleloController($scope, $http){
         mode: 'form',
         allowAdding: true,
         allowUpdating: true,
+        allowDeleting: true,
         useIcons: true,
         texts : {
             saveRowChanges: 'Guardar',
@@ -162,20 +163,20 @@ app.controller('paraleloController', function paraleloController($scope, $http){
                 }
 
             },
-            {
-                location: 'after',
-                widget: 'dxButton',
-                options: {
-                    icon:'trash',
-                    //type: 'danger',
-                    onClick: function() {
-                        console.log(dataGrid);
+            // {
+            //     location: 'after',
+            //     widget: 'dxButton',
+            //     options: {
+            //         icon:'trash',
+            //         //type: 'danger',
+            //         onClick: function() {
+            //             console.log(dataGrid);
 
 
-                    }
+            //         }
 
-                }
-            }
+            //     }
+            // }
         )
     }
 

@@ -76,12 +76,14 @@ Route::get('/periodos', 'PeriodoController@index');
 Route::post('/periodos/all', 'PeriodoController@all');
 Route::post('/periodos/insert', 'PeriodoController@insert');
 Route::post('/periodos/update/{id}', 'PeriodoController@update');
+Route::post('/periodos/remove/{id}', 'PeriodoController@remove');
 
 //Planificaciones de cursos
 Route::get('/planificacion', 'PlanificacionController@index');
 Route::post('/planificacion/all', 'PlanificacionController@all');
 Route::post('/planificacion/insert', 'PlanificacionController@insert');
 Route::post('/planificacion/update/{id}', 'PlanificacionController@update');
+Route::post('/planificacion/remove/{id}', 'PlanificacionController@remove');
 Route::post('/planificacion/findByCourse/{id}', 'PlanificacionController@findByCourse');
 Route::get('/planificacion/findParalelo/{id}', 'PlanificacionController@findParalelo');
 

@@ -10,8 +10,7 @@ app.controller('periodoController', function($scope, $http){
         load:() => {
             return $http.post('/periodos/all')
             .then((response) => {
-                console.log("H");
-                return response.data;
+               return response.data;
             })
             .catch((err) => {
                 DevExpress.ui.notify(err.data, 'error', 5000);
@@ -39,6 +38,20 @@ app.controller('periodoController', function($scope, $http){
                         DevExpress.ui.notify(err.data, 'error', 5000);
                     })
                 }
+        },
+        remove: (key) => {
+            debugger;
+            let id =  key.id;
+            if(id > 0)
+            {
+                return $http.post('/periodos/remove/' + id)
+                .then((response) => {
+                    DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                })
+                .catch((err) => {
+                    DevExpress.ui.notify(err.data, 'error',5000);
+                })
+            }
         }
     });//Fin de Store
 
@@ -95,6 +108,7 @@ app.controller('periodoController', function($scope, $http){
                 dataField: 'fecha_inicio',
                 caption: 'Fecha Inicio',
                 dataType: 'date',
+                format: 'dd/MM/yyyy',
                 validationRules: [
                     {
                         type: 'required',
@@ -106,6 +120,7 @@ app.controller('periodoController', function($scope, $http){
                 dataField: 'fecha_fin',
                 caption: 'Fecha Fin',
                 dataType: 'date',
+                format: 'dd/MM/yyyy',
                 validationRules: [
                     {
                         type: 'required',
@@ -148,10 +163,13 @@ app.controller('periodoController', function($scope, $http){
             mode: 'form',
             allowAdding: true,
             allowUpdating: true,
+            allowDeleting: true,
             useIcons: true,
             texts: {
                 saveRowChanges: 'Guardar',
-                cancelRowChanges: 'Cancelar'
+                cancelRowChanges: 'Cancelar',
+                confirmDeleteTitle: 'Eliminar Registro',
+                confirmDeleteMessage: '¿Desea eliminar el registro?'
             },
             form: {
                 colCount: 2,

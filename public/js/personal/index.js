@@ -27,6 +27,7 @@ app.controller('personalController', function($scope, $http){
         load: () => {
             return $http.post('/personal/all')
             .then((response) => {
+                //console.log(JSON.stringify(response.data));
                 return response.data;
             })
             .catch((err) =>
@@ -50,6 +51,7 @@ app.controller('personalController', function($scope, $http){
         },
         //Insertar
         insert: (values) => {
+            //debugger;
             if(values !== null)
             {
                 return $http.post('/personal/insert', values)
@@ -64,7 +66,7 @@ app.controller('personalController', function($scope, $http){
 
         },
         remove: (key) => {
-            let id = key;
+            let id = key.id;
             if(id !== 0)
             {
                 debugger;
@@ -96,7 +98,7 @@ app.controller('personalController', function($scope, $http){
                         type: 'stringLength',
                         max : 10,
                         min: 10,
-                        message: 'debe se 10'
+                        message: 'La longitud debe ser igual a 10.'
                     },
                     {
                         type: 'required',
@@ -164,6 +166,7 @@ app.controller('personalController', function($scope, $http){
             {
                 dataField: 'activo',
                 caption: 'Activo',
+                dataType: 'boolean',
                 validationRules:[
                     {
                         type: 'required',
@@ -215,7 +218,13 @@ app.controller('personalController', function($scope, $http){
             },
             {
                 dataField: 'direccion',
-                visible: false
+                visible: false,
+                validationRules: [
+                    {
+                        type: 'required',
+                        message: "El campo es requerido."
+                    }
+                ]
             },
             {
                 dataField: 'telefono',
@@ -230,6 +239,27 @@ app.controller('personalController', function($scope, $http){
                 displayFormat: 'Total: {0}'
             }]
         },
+        onCellPrepared: function(e){
+            if(e.rowType === 'data'){
+                var $links = e.cellElement.find(".dx-link");
+                if(e.row.data.activo === false) {
+                    $links.filter(".dx-link-delete").remove();
+                }
+            }
+        },
+        //TODO: cambiar el color de ROW
+        // onRowPrepared: function(e){
+        //     if(e.rowType === 'data'){
+        //         // var $links = e.cellElement.find(".dx-link");
+        //         if(e.data.activo === false) {
+        //             debugger;
+
+        //             e.rowElement.css("background-color", "#f7b5b5");
+        //            // e.rowElement.className.remove("dx-row-alt", "");
+
+        //         }
+        //     }
+        // },
         showBorders: true,
         filterRow: {
             visible: true,
@@ -245,7 +275,10 @@ app.controller('personalController', function($scope, $http){
         export: {
             enabled: true,
             fileName: "Estudiantes",
-            allowExportSelectedData: true
+            texts: {
+                exportAll: 'Exportar'
+            }
+            //allowExportSelectedData: true
         },
         pager: {
             infoText: 'Página {0} de {1}',
@@ -268,14 +301,18 @@ app.controller('personalController', function($scope, $http){
         selection: {
             mode: "multiple"
         },
+
         editing: {
             mode: 'form',
             allowAdding: true,
             allowUpdating: true,
+            allowDeleting: true,
             useIcons: true,
             texts: {
                 saveRowChanges: 'Guardar',
-                cancelRowChanges: 'Cancelar'
+                cancelRowChanges: 'Cancelar',
+                confirmDeleteTitle: 'Eliminar Registro',
+                confirmDeleteMessage: "¿Está ud. seguro que desea eliminar este registro?"
             },
             form: {
                 colCount: 2,
@@ -284,8 +321,9 @@ app.controller('personalController', function($scope, $http){
                         dataField: 'id_rol',
                         caption: 'Rol',
                         editorOptions: {
-                            showClearButton: true
-                        }
+                            showClearButton: true,
+                            placeholder: 'Seleccionar'
+                        },
                         //editorType: 'dxTagBox'
                     },
                     {
@@ -295,8 +333,14 @@ app.controller('personalController', function($scope, $http){
                         dataField: 'cedula',
                         caption: 'Cedula',
                         editorOptions: {
-                            showClearButton: true
-                        }
+                            showClearButton: true,
+                            maxLength: 10,
+                            placeholder: 'Cédula',
+                            //showSpinButtons: true,
+                            mask: "0000000000",
+                            maskRules: {"X": /[0-9]/}
+                        },
+                       //editorType: 'dxNumberBox'
                     },
                     {
                         itemType: 'empty'
@@ -341,9 +385,12 @@ app.controller('personalController', function($scope, $http){
                         dataField: 'Genero',
                         caption: 'Genero',
                         editorOptions: {
-                            showClearButton: true
-                        }
-                        //editorType: 'dxRadioGroup',
+                            showClearButton: true,
+                            layout: "horizontal"
+                        },
+                        editorType: 'dxRadioGroup',
+
+
 
                     },
                     {
@@ -382,7 +429,9 @@ app.controller('personalController', function($scope, $http){
                                     dataField: 'telefono',
                                     caption: 'Telefono',
                                     editorOptions: {
-                                        showClearButton: true
+                                        showClearButton: true,
+                                        mask: "0000000",
+                                        maskRules: {"X": /[0-9]/}
                                     }
                                 }
                             ]
@@ -415,34 +464,34 @@ app.controller('personalController', function($scope, $http){
                     widget: 'dxButton',
                     options: {
                         icon: 'refresh',
-                        type: 'success',
+                        //type: 'success',
                         onClick: function() {
                             dataGrid.refresh();
                         }
                     }
                 },
-                {
-                    location: 'after',
-                    widget: 'dxButton',
-                    options: {
-                        icon:'trash',
-                        type: 'danger',
-                        onClick: function() {
-                            //console.log(dataGrid.getSelectedRowsData());
-                            //Obtiene el o los dato(s) seleccionados
-                            let selectedData = dataGrid.getSelectedRowsData();
-                            let idData = selectedData[0].id;
-                            //TODO: Realizar un dialog de confirmación de la eliminación de registros
-                            //Mejorar pra cuando se selecciones más de un registro
-                            // personal.store().remove(idData);
-                            var ds = $("#gridContainer").dxDataGrid("getDataSource");
-                            ds.store().remove(idData);
-                           ds.reload();
+                // {
+                //     location: 'after',
+                //     widget: 'dxButton',
+                //     options: {
+                //         icon:'trash',
+                //         //type: 'danger',
+                //         onClick: function() {
+                //             //console.log(dataGrid.getSelectedRowsData());
+                //             //Obtiene el o los dato(s) seleccionados
+                //             let selectedData = dataGrid.getSelectedRowsData();
+                //             let idData = selectedData[0].id;
+                //             //TODO: Realizar un dialog de confirmación de la eliminación de registros
+                //             //Mejorar pra cuando se selecciones más de un registro
+                //             // personal.store().remove(idData);
+                //             var ds = $("#gridContainer").dxDataGrid("getDataSource");
+                //             ds.store().remove(idData);
+                //            ds.reload();
 
-                        }
+                //         }
 
-                    }
-                }
+                //     }
+                // }
             );
         }
 

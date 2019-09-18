@@ -37,16 +37,17 @@ class PlanificacionController extends Controller
     public function insert(Request $request)
     {
         try {
+
             if (Auth::check()) {
                 if ($request != null)
                 {
                     $planificacion = new Planificacion();
                     $planificacion->id_periodo = $request->id_periodo;
-                    $planificacion->id_curso = $request->id_curso;
-                    $planificacion->id_paralelo = $request->id_paralelo;
+                    $planificacion->curso_id = $request->curso_id;
+                    $planificacion->paralelo_id = $request->paralelo_id;
                     $planificacion->activo = true;
-                    $planificacion->created_by = Auth::user()->get();
-                    $planificacion->updated_by = Auth::user()->get();
+                    $planificacion->created_by = Auth::user()->name;
+                    $planificacion->updated_by = Auth::user()->name;
                     if($planificacion->save()){
                         return response()->json(["mensaje"=>"Se actualizó correctamente."]);
                     }
@@ -64,8 +65,8 @@ class PlanificacionController extends Controller
                 $planificacion = Planificacion::find($id);
                 if ($planificacion !== null) {
 
-                    $planificacion->id_curso = $request->id_curso != null ? $request->id_curso : $planificacion->id_curso;
-                    $planificacion->id_paralelo = $request->id_paralelo != null  ? $request->id_paralelo : $planificacion->id_paralelo;
+                    $planificacion->curso_id = $request->curso_id != null ? $request->curso_id : $planificacion->curso_id;
+                    $planificacion->paralelo_id = $request->paralelo_id != null  ? $request->paralelo_id : $planificacion->paralelo_id;
                     $planificacion->activo = $request->activo == false ? false : true;
                     $planificacion->updated_by = Auth::user()->name;
                     if($planificacion->save())
@@ -75,6 +76,28 @@ class PlanificacionController extends Controller
                  }
             }
         } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+    }
+
+    public function remove (int $id)
+    {
+        try
+        {
+            if($id > 0)
+            {
+                $planificacion = Planificacion::find($id);
+                if($planificacion != null)
+                {
+                    $planificacion->activo = false;
+                    if($planificacion->save())
+                    {
+                        return response()->json(['mensaje' => 'Se eliminó correctamente.']);
+                    }
+                }
+            }
+        }catch(Exception $e)
+        {
             return response()->json(['mensaje' => $e->getMessage()]);
         }
     }
