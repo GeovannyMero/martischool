@@ -12,11 +12,11 @@ class RolController extends Controller
     public function index()
     {
         if(Auth::check()){
-            if(Auth::user()->hasRol('Master')){
+            // if(Auth::user()->hasRol('Master')){
                 return view('General.Rol.Index');
-            }else{
-                return abort(403, 'Acceso No Autorizado');
-            }
+            // }else{
+            //     return abort(403, 'Acceso No Autorizado');
+            // }
         }
 
 
@@ -29,7 +29,7 @@ class RolController extends Controller
         {
             if(Auth::check())
             {
-               $roles = Rol::where('activo', true)->get();
+               $roles = Rol::all();
             //    $roles = Rol::find(1);
             //    dd($roles->permiso->get());
             }
@@ -53,7 +53,7 @@ class RolController extends Controller
                     {
                         $rol->nombre = $request->nombre != null ? $request->nombre : $rol->nombre;
                         $rol->descripcion = $request->descripcion != null ? $request->descripcion : $rol->descripcion;
-                        $rol->activo = $request->activo == false ? false : true;
+                        $rol->activo = $request->activo != null ? $request->activo : $rol->activo;
                         $rol->updated_by = Auth::user()->name;
 
                         if($rol->save()){

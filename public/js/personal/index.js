@@ -86,9 +86,12 @@ app.controller('personalController', function($scope, $http){
             store: personal
         },
 
-        rowAlternationEnabled: true,
+        rowAlternationEnabled: false,
         columnHidingEnabled: true,
         columnAutoWidth: true,
+        showColumnLines: true,
+        showRowLines: true,
+        showBorders: true,
         columns: [
             {
                 dataField: 'cedula',
@@ -231,7 +234,10 @@ app.controller('personalController', function($scope, $http){
                 visible: false
             }
         ],
-
+        masterDetail: {
+            enabled: true,
+            template: '<h3>Cursos Asignados</h3>'
+        },
         summary: {
             totalItems: [{
                 column: "cedula",
@@ -274,7 +280,7 @@ app.controller('personalController', function($scope, $http){
         },
         export: {
             enabled: true,
-            fileName: "Estudiantes",
+            fileName: "personal",
             texts: {
                 exportAll: 'Exportar'
             }
@@ -298,9 +304,9 @@ app.controller('personalController', function($scope, $http){
             visible: true,
             placeholder: 'Buscar'
         },
-        selection: {
-            mode: "multiple"
-        },
+        // selection: {
+        //     mode: "multiple"
+        // },
 
         editing: {
             mode: 'form',
@@ -405,39 +411,46 @@ app.controller('personalController', function($scope, $http){
                     {
                         itemType: 'tabbed',
                         tabPanelOptions: {
+                            animationEnabled: true,
                             deferRendering: false
                         },
                         colSpan: 2,
                         tabs: [{
                             title: "Contacto",
+                            colCount: 2,
+                            icon: 'fa fa-address-book',
                             items: [
-                                {
-                                    dataField: 'direccion',
-                                    caption: 'Dirección',
-                                    editorOptions: {
-                                        showClearButton: true
-                                    }
-                                },
+
                                 {
                                     dataField: 'correo',
-                                    caption: 'Correo Electronico',
+                                    caption: 'Correo Electrónico',
                                     editorOptions: {
                                         showClearButton: true
                                     }
                                 },
                                 {
                                     dataField: 'telefono',
-                                    caption: 'Telefono',
+                                    caption: 'Teléfono',
                                     editorOptions: {
                                         showClearButton: true,
                                         mask: "0000000",
                                         maskRules: {"X": /[0-9]/}
                                     }
-                                }
+                                },
+
+                                {
+                                    dataField: 'direccion',
+                                    colSpan: 2,
+                                    caption: 'Dirección',
+                                    editorOptions: {
+                                        showClearButton: true
+                                    }
+                                },
                             ]
                         },
                         {
                             title: "Permisos",
+                            icon: 'key',
                             items: [
                                 {
                                     dataField: 'accesoSistema',
@@ -445,6 +458,13 @@ app.controller('personalController', function($scope, $http){
                                 }
                             ]
                         },
+                        {
+                            title: 'Cursos Asignados',
+                            icon: 'fa fa-graduation-cap',
+                            items: [
+
+                            ]
+                        }
                         ]
                     }
 

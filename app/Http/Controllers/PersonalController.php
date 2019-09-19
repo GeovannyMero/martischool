@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use \App\Modelos\Personal;
+use \App\User;
 
 class PersonalController extends Controller
 {
@@ -81,7 +83,9 @@ class PersonalController extends Controller
             {
                 if($request != null)
                 {
+                    DB::beginTransaction();
                     $personal = new Personal;
+                    $usuario = new User;
                     $personal->cedula = $request->cedula;
                     $personal->primerNombre = $request->primerNombre;
                     $personal->segundoNombre = $request->segundoNombre;
@@ -99,12 +103,25 @@ class PersonalController extends Controller
                     $personal->update_by = Auth::user()->name;
                     if($personal->save())
                     {
-                        return response()->json(["mensaje"=>"Se actualizó correctamente."]);
+                        $usuario->name = substr($request->primerNombre,0,3);
+                        $usuario->email = $request->correo;
+                        $usuario->password = bcrypt($request->cedula);
+                        $usuario->activo = true;
+                        $usuario->escuela_id = Auth::user()->escuela_id;
+                        $usuario->rol_id = $request->id_rol;
+                        $usuario->created_by = Auth::user()->name;
+                        $usuario->update_by = Auth::user()->name;
+                        if($usuario->save()){
+                            DB::commit();
+                            return response()->json(["mensaje"=>"Se guardó correctamente."]);
+                        }
+
                     }
                 }
             }
         }catch(Exception $e)
         {
+            DB::rollBack();
             return response()->json(['mensaje' => $e->getMessage()]);
         }
     }

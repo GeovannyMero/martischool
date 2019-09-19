@@ -52,6 +52,7 @@
                                     <p>
                                     ROL
                                     <small>{{Auth::user()->getRolUser(Auth::user()->rol_id)}}</small>
+                                    <small>Escuela{{Auth::user()->escuela_id}}</small>
                                     </p>
                                 </li>
                                 <li class="user-footer">
@@ -91,14 +92,14 @@
                             </span>
                         </a>
                             <ul class="treeview-menu">
-                                @if(Auth::user()->hasRol("Administrador"))
+                                {{-- @if(Auth::user()->hasRol("Administrador")) --}}
                                 <li class="">
                                     <a href="{{ url('/rol')}}">
                                         <i class="fa fa-circle-o"></i>Rol
                                         <span class="pull-right-container"></span>
                                     </a>
                                 </li>
-                                @endif
+                                {{-- @endif --}}
                                 <!--<li class="">
                                     <a href="{{ url('/estudiante')}}">
                                         <i class="fa fa-circle-o"></i>Estudiante
