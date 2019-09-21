@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use \App\Modelos\Personal;
 use \App\User;
+use \App\Modelos\PersonalPlanificacion;
 
 class PersonalController extends Controller
 {
@@ -27,7 +28,12 @@ class PersonalController extends Controller
         try {
             if(Auth::check())
             {
-                $personal = Personal::all();
+                //$personal = Personal::all();
+                $personal = DB::table('personal')
+                ->leftJoin('personal_planificacion', 'personal.id', '=', 'personal_planificacion.personal_id')
+                ->leftJoin('planificacion', 'personal_planificacion.planificacion_id', '=', 'planificacion.id')
+                ->select('personal.*', 'personal_planificacion.id as planificacion_id')
+                ->get();
             }
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()]);
@@ -62,7 +68,14 @@ class PersonalController extends Controller
                         $personal->update_by = Auth::user()->name;
                         if($personal->save())
                         {
-                            return response()->json(["mensaje"=>"Se actualizó correctamente."]);
+                            $planificacionPersonal = new PersonalPlanificacion;
+                            $planificacionPersonal->personal_id =$personal->id;
+                            $planificacionPersonal->planificacion_id = $request->planificacion_id;
+                            $planificacionPersonal->timestamps = false;
+                            if($planificacionPersonal->save()){
+                                return response()->json(["mensaje"=>"Se actualizó correctamente."]);
+                            }
+
                         }
 
                     }
@@ -103,7 +116,7 @@ class PersonalController extends Controller
                     $personal->update_by = Auth::user()->name;
                     if($personal->save())
                     {
-                        $usuario->name = substr($request->primerNombre,0,3);
+                        $usuario->name = substr($request->primerNombre,0,1) . $request->primerApellido;
                         $usuario->email = $request->correo;
                         $usuario->password = bcrypt($request->cedula);
                         $usuario->activo = true;

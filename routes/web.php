@@ -86,6 +86,7 @@ Route::post('/planificacion/update/{id}', 'PlanificacionController@update');
 Route::post('/planificacion/remove/{id}', 'PlanificacionController@remove');
 Route::post('/planificacion/findByCourse/{id}', 'PlanificacionController@findByCourse');
 Route::get('/planificacion/findParalelo/{id}', 'PlanificacionController@findParalelo');
+Route::post('/planificacion/periodoActual/{perido}', 'PlanificacionController@planificacionPorPeriodo');
 
 Route::post('/planificacion/prePlanificacion', 'PlanificacionController@prePlanificacion');
 Route::post('/planificacion/paralelos', 'PlanificacionController@paralelos');

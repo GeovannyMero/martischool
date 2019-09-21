@@ -21,6 +21,21 @@ app.controller('personalController', function($scope, $http){
 
     });
 
+    //periodo
+    var periodo = new DevExpress.data.CustomStore({
+        key: 'id',
+        loadMode: 'raw',
+        load: () => {
+            return $http.post('/planificacion/periodoActual/2019')
+            .then((response) => {
+                return response.data;
+            })
+            .catch((err) => {
+                DevExpress.ui.notify(err.data, 'error', 5000);
+            })
+        }
+    })
+
 
     //CRUD
     var personal = new DevExpress.data.CustomStore({
@@ -165,6 +180,16 @@ app.controller('personalController', function($scope, $http){
                     valueExpr: 'id'
                 }
 
+            },
+            {
+                dataField: 'planificacion_id',
+                caption: 'Cursos',
+                visible: false,
+                lookup: {
+                    dataSource: periodo,
+                    displayExpr:  data => data.periodo_inicio + " - " + data.curso + ' - ' + data.paralelo,
+                    valueExpr: 'id'
+                }
             },
             {
                 dataField: 'activo',
@@ -321,154 +346,171 @@ app.controller('personalController', function($scope, $http){
                 confirmDeleteMessage: "¿Está ud. seguro que desea eliminar este registro?"
             },
             form: {
-                colCount: 2,
+                colCount: 1,
                 items: [
                     {
-                        dataField: 'id_rol',
-                        caption: 'Rol',
-                        editorOptions: {
-                            showClearButton: true,
-                            placeholder: 'Seleccionar'
-                        },
-                        //editorType: 'dxTagBox'
-                    },
-                    {
-                        itemType: 'empty'
-                    },
-                    {
-                        dataField: 'cedula',
-                        caption: 'Cedula',
-                        editorOptions: {
-                            showClearButton: true,
-                            maxLength: 10,
-                            placeholder: 'Cédula',
-                            //showSpinButtons: true,
-                            mask: "0000000000",
-                            maskRules: {"X": /[0-9]/}
-                        },
-                       //editorType: 'dxNumberBox'
-                    },
-                    {
-                        itemType: 'empty'
-                    },
-                    {
-                        dataField: 'primerNombre',
-                        caption:'Primer Nombre',
-                        editorOptions: {
-                            showClearButton: true
-                        }
-                    },
-                    {
-                        dataField: 'segundoNombre',
-                        caption: 'Segundo Nombre',
-                        editorOptions: {
-                            showClearButton: true
-                        }
-                    },
-                    {
-                        dataField: 'primerApellido',
-                        caption: 'Apellido Paterno',
-                        editorOptions: {
-                            showClearButton: true
-                        }
-                    },
-                    {
-                        dataField: 'segundoApellido',
-                        caption: 'Apellido Materno',
-                        editorOptions: {
-                            showClearButton: true
-                        }
-                    },
-                    {
-                        dataField: 'fechaNacimiento',
-                        caption: 'Fecha Nacimiento',
-                        editorOptions: {
-                            showClearButton: true
-                        }
-
-                    },
-                    {
-                        dataField: 'Genero',
-                        caption: 'Genero',
-                        editorOptions: {
-                            showClearButton: true,
-                            layout: "horizontal"
-                        },
-                        editorType: 'dxRadioGroup',
-
-
-
-                    },
-                    {
-                        dataField: "activo",
-                        caption: 'Activo',
-                        dataType: "boolean",
-
-                    },
-                    {
-                        itemType: 'empty'
-                    },
-                    {
-                        itemType: 'tabbed',
-                        tabPanelOptions: {
-                            animationEnabled: true,
-                            deferRendering: false
-                        },
-                        colSpan: 2,
-                        tabs: [{
-                            title: "Contacto",
-                            colCount: 2,
-                            icon: 'fa fa-address-book',
-                            items: [
-
-                                {
-                                    dataField: 'correo',
-                                    caption: 'Correo Electrónico',
-                                    editorOptions: {
-                                        showClearButton: true
-                                    }
+                        itemType: 'group',
+                        caption: 'Información de Personal',
+                        colCount: 2,
+                        items: [
+                            {
+                                dataField: 'id_rol',
+                                caption: 'Rol',
+                                editorOptions: {
+                                    showClearButton: true,
+                                    placeholder: 'Seleccionar'
                                 },
-                                {
-                                    dataField: 'telefono',
-                                    caption: 'Teléfono',
-                                    editorOptions: {
-                                        showClearButton: true,
-                                        mask: "0000000",
-                                        maskRules: {"X": /[0-9]/}
-                                    }
+                                //editorType: 'dxTagBox'
+                            },
+                            {
+                                itemType: 'empty'
+                            },
+                            {
+                                dataField: 'cedula',
+                                caption: 'Cedula',
+                                editorOptions: {
+                                    showClearButton: true,
+                                    maxLength: 10,
+                                    placeholder: 'Cédula',
+                                    //showSpinButtons: true,
+                                    mask: "0000000000",
+                                    maskRules: {"X": /[0-9]/}
                                 },
-
-                                {
-                                    dataField: 'direccion',
-                                    colSpan: 2,
-                                    caption: 'Dirección',
-                                    editorOptions: {
-                                        showClearButton: true
-                                    }
-                                },
-                            ]
-                        },
-                        {
-                            title: "Permisos",
-                            icon: 'key',
-                            items: [
-                                {
-                                    dataField: 'accesoSistema',
-                                    caption: 'Acceso al Sistema'
+                               //editorType: 'dxNumberBox'
+                            },
+                            {
+                                itemType: 'empty'
+                            },
+                            {
+                                dataField: 'primerNombre',
+                                caption:'Primer Nombre',
+                                editorOptions: {
+                                    showClearButton: true
                                 }
-                            ]
-                        },
-                        {
-                            title: 'Cursos Asignados',
-                            icon: 'fa fa-graduation-cap',
-                            items: [
+                            },
+                            {
+                                dataField: 'segundoNombre',
+                                caption: 'Segundo Nombre',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
+                            },
+                            {
+                                dataField: 'primerApellido',
+                                caption: 'Apellido Paterno',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
+                            },
+                            {
+                                dataField: 'segundoApellido',
+                                caption: 'Apellido Materno',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
+                            },
+                            {
+                                dataField: 'fechaNacimiento',
+                                caption: 'Fecha Nacimiento',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
 
-                            ]
-                        }
+                            },
+                            {
+                                dataField: 'Genero',
+                                caption: 'Genero',
+                                editorOptions: {
+                                    showClearButton: true,
+                                    layout: "horizontal"
+                                },
+                                editorType: 'dxRadioGroup',
+
+
+
+                            },
+                            {
+                                dataField: "activo",
+                                caption: 'Activo',
+                                dataType: "boolean",
+
+                            },
+                            {
+                                itemType: 'empty'
+                            },
+                            {
+                                itemType: 'tabbed',
+                                tabPanelOptions: {
+                                    //animationEnabled: true,
+                                    deferRendering: false
+                                },
+                                colSpan: 2,
+                                tabs: [{
+                                    title: "Contacto",
+                                    colCount: 2,
+                                    icon: 'fa fa-address-book',
+                                    items: [
+
+                                        {
+                                            dataField: 'correo',
+                                            caption: 'Correo Electrónico',
+                                            editorOptions: {
+                                                showClearButton: true
+                                            }
+                                        },
+                                        {
+                                            dataField: 'telefono',
+                                            caption: 'Teléfono',
+                                            editorOptions: {
+                                                showClearButton: true,
+                                                mask: "0000000",
+                                                maskRules: {"X": /[0-9]/}
+                                            }
+                                        },
+
+                                        {
+                                            dataField: 'direccion',
+                                            colSpan: 2,
+                                            caption: 'Dirección',
+                                            editorOptions: {
+                                                showClearButton: true
+                                            }
+                                        },
+                                    ]
+                                },
+                                {
+                                    title: "Permisos",
+                                    icon: 'key',
+                                    items: [
+                                        {
+                                            dataField: 'accesoSistema',
+                                            caption: 'Acceso al Sistema'
+                                        }
+                                    ]
+                                },
+                                {
+                                    title: 'Cursos Asignados',
+                                    icon: 'fa fa-graduation-cap',
+                                    badge: '1',
+                                    items: [
+                                        {
+                                            dataField: 'planificacion_id',
+                                            caption: 'planificacion_id',
+                                            editorOptions: {
+                                                showClearButton: true,
+                                                placeholder: 'Seleccionar'
+                                            },
+                                            //editorType: 'dxTagBox'
+                                        },
+                                    ]
+                                }
+                                ]
+                            }
+
                         ]
                     }
 
-                ]
+                ]//kk
             }
         },
         //tool bar

@@ -10,6 +10,7 @@ use \App\Modelos\Periodo;
 use \App\Modelos\Curso;
 use \App\Modelos\Paralelos;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class PlanificacionController extends Controller
 {
@@ -159,4 +160,28 @@ class PlanificacionController extends Controller
         $paralelos = Curso::find($idCurso)->paralelos()->get();
         return $paralelos;
     }
+
+    public function planificacionPorPeriodo(string $periodo)
+    {
+        try {
+            if(Auth::check())
+            {
+                if($periodo != null)
+                {
+                    $periodoActual = DB::table('planificacion')
+                                    ->join('periodo', 'periodo.id', '=', 'planificacion.id_periodo')
+                                    ->join('curso', 'curso.id', '=', 'planificacion.curso_id')
+                                    ->join('paralelo', 'paralelo.id', '=', 'planificacion.paralelo_id')
+                                    ->where('periodo.activo', '=', true)
+                                    ->where('periodo.periodo_inicio', '=', $periodo)
+                                    ->select('planificacion.id', 'periodo.periodo_inicio', 'curso.nombre as curso', 'paralelo.nombre as paralelo', 'planificacion.activo')
+                                    ->get();
+                }
+            }
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+        return $periodoActual;
+    }
+
 }
