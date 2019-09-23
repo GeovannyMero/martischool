@@ -59,7 +59,7 @@ class PersonalController extends Controller
                         $personal->segundoApellido = $request->segundoApellido != null ? $request->segundoApellido : $personal->segundoApellido;
                         $personal->fechaNacimiento = $request->fechaNacimiento != null ? $request->fechaNacimiento : $personal->fechaNacimiento;
                         $personal->Genero = $request->Genero != null ? $request->Genero : $personal->Genero;
-                        $personal->activo = $request->activo != true ? false : true;
+                        $personal->activo = $request->activo != null ? $request->activo : $personal->activo;
                         $personal->direccion = $request->direccion != null ? $request->direccion : $personal->direccion;
                         $personal->correo = $request->correo != null ? $request->correo : $personal->correo;
                         $personal->telefono = $request->telefono != null ? $request->telefono : $personal->telefono;
@@ -68,13 +68,16 @@ class PersonalController extends Controller
                         $personal->update_by = Auth::user()->name;
                         if($personal->save())
                         {
-                            $planificacionPersonal = new PersonalPlanificacion;
-                            $planificacionPersonal->personal_id =$personal->id;
-                            $planificacionPersonal->planificacion_id = $request->planificacion_id;
-                            $planificacionPersonal->timestamps = false;
-                            if($planificacionPersonal->save()){
-                                return response()->json(["mensaje"=>"Se actualizó correctamente."]);
+                            if($request->planificacion_id > 0){
+                                $planificacionPersonal = new PersonalPlanificacion;
+                                $planificacionPersonal->personal_id =$personal->id;
+                                $planificacionPersonal->planificacion_id = $request->planificacion_id;
+                                $planificacionPersonal->timestamps = false;
+                                if($planificacionPersonal->save()){
+                                    return response()->json(["mensaje"=>"Se actualizó correctamente."]);
+                                }
                             }
+
 
                         }
 
@@ -116,6 +119,7 @@ class PersonalController extends Controller
                     $personal->update_by = Auth::user()->name;
                     if($personal->save())
                     {
+                        //Se crea el usuario
                         $usuario->name = substr($request->primerNombre,0,1) . $request->primerApellido;
                         $usuario->email = $request->correo;
                         $usuario->password = bcrypt($request->cedula);
@@ -125,8 +129,22 @@ class PersonalController extends Controller
                         $usuario->created_by = Auth::user()->name;
                         $usuario->update_by = Auth::user()->name;
                         if($usuario->save()){
-                            DB::commit();
-                            return response()->json(["mensaje"=>"Se guardó correctamente."]);
+
+                            if($request->planificiacion_id > 0){
+                                $planificacionPersonal = new PersonalPlanificacion;
+                                $planificacionPersonal->personal_id =$personal->id;
+                                $planificacionPersonal->planificacion_id = $request->planificacion_id;
+                                $planificacionPersonal->timestamps = false;
+                                if($planificacionPersonal->save()){
+                                    DB::commit();
+                                    return response()->json(["mensaje"=>"Se guardó correctamente."]);
+                                }
+
+                            }else{
+                                DB::commit();
+                                    return response()->json(["mensaje"=>"Se guardó correctamente."]);
+                            }
+
                         }
 
                     }
