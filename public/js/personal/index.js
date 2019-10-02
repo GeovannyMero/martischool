@@ -51,10 +51,17 @@ app.controller('personalController', function($scope, $http){
             });
         },
         update: (key, values) => {
+            //debugger;
             let id = JSON.stringify(key['id']);
+            //let planificacion = ;
+            // let datos = {
+            //     planificacion_id: JSON.stringify(key['planificacion_id']),
+            //     data: values
+            // }
+            let planificacion = JSON.stringify(key['planificacion_id']);
             if(id !== 0)
             {
-                return $http.post('/personal/update/' + id, values)
+                return $http.post('/personal/update/' + id + "/" + planificacion, values)
                 .then((response) => {
                     DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
                 })
@@ -188,7 +195,7 @@ app.controller('personalController', function($scope, $http){
                 lookup: {
                     dataSource: periodo,
                     displayExpr:  data => data.periodo_inicio + " - " + data.curso + ' - ' + data.paralelo,
-                    valueExpr: 'id'
+                    valueExpr: 'planificacion_id'
                 }
             },
             {

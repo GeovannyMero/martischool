@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \App\Modelos\Paralelos;
 use PHPUnit\Framework\Exception;
+use Illuminate\Support\Facades\DB;
 
 class ParaleloController extends Controller
 {
@@ -74,5 +75,17 @@ class ParaleloController extends Controller
         {
             return response()->json(['mensaje' => $e->getMessage()]);
         }
+    }
+
+    public function ParaleloCurso(){
+        try {
+            $paralelosCurso = DB::table('paralelo')
+            ->join('planificacion','planificacion.paralelo_id', '=', 'paralelo.id')
+            ->join('curso', 'curso.id', '=', 'planificacion.curso_id')
+            ->select('curso.id as idCurso', 'paralelo.id as idParalelo','paralelo.nombre')->get();
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+        return $paralelosCurso;
     }
 }

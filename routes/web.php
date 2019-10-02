@@ -71,6 +71,7 @@ Route::get('/paralelo', 'ParaleloController@Index');
 Route::post('/paralelo/all', 'ParaleloController@all');
 Route::post('/paralelo/update/{id}', 'ParaleloController@update');
 Route::post('/paralelo/insert', 'ParaleloController@insert');
+Route::post('/paralelo/paraleloCurso', 'ParaleloController@paraleloCurso');
 
 Route::get('/periodos', 'PeriodoController@index');
 Route::post('/periodos/all', 'PeriodoController@all');
@@ -102,7 +103,7 @@ Route::post('/profesor/insert', 'ProfesorController@insert');
 //Personal Educativo
 Route::get('/personal', 'PersonalController@index');
 Route::post('/personal/all', 'PersonalController@all');
-Route::post('/personal/update/{id}', 'PersonalController@update');
+Route::post('/personal/update/{id}/{planificacion}', 'PersonalController@update');
 Route::post('/personal/insert', 'PersonalController@insert');
 Route::post('/personal/remove/{id}', 'PersonalController@remove');
 

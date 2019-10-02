@@ -26,14 +26,13 @@ class PersonalController extends Controller
     public function all()
     {
         try {
-            if(Auth::check())
-            {
+            if (Auth::check()) {
                 //$personal = Personal::all();
                 $personal = DB::table('personal')
-                ->leftJoin('personal_planificacion', 'personal.id', '=', 'personal_planificacion.personal_id')
-                ->leftJoin('planificacion', 'personal_planificacion.planificacion_id', '=', 'planificacion.id')
-                ->select('personal.*', 'personal_planificacion.id as planificacion_id')
-                ->get();
+                    ->leftJoin('personal_planificacion', 'personal.id', '=', 'personal_planificacion.personal_id')
+                    ->leftJoin('planificacion', 'personal_planificacion.planificacion_id', '=', 'planificacion.id')
+                    ->select('personal.*', 'planificacion.id as planificacion_id')
+                    ->get();
             }
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()]);
@@ -41,19 +40,16 @@ class PersonalController extends Controller
         return $personal;
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request,  int $id, int $planificacion_id)
     {
-        try
-        {
-            if(Auth::check())
-            {
-                if($id != 0)
-                {
+        //dd($p);
+        try {
+            if (Auth::check()) {
+                if ($id != 0) {
                     $personal = Personal::find($id);
-                    if($personal != null)
-                    {
+                    if ($personal != null) {
                         $personal->cedula = $request->cedula != null ? $request->cedula : $personal->cedula;
-                        $personal->primerNombre = $request->primerNombre != null ? $request->primerNombre : $personal->primerNombre;
+                        $personal->primerNombre = $request->primerNombre != null ? $request->primerNombr : $personal->primerNombre;
                         $personal->segundoNombre = $request->segundoNombre != null ? $request->segundoNombre : $personal->segundoNombre;
                         $personal->primerApellido = $request->primerApellido != null ? $request->primerApellido : $personal->primerApellido;
                         $personal->segundoApellido = $request->segundoApellido != null ? $request->segundoApellido : $personal->segundoApellido;
@@ -66,39 +62,37 @@ class PersonalController extends Controller
                         $personal->accesoSistema = $request->accesoSistema ? $request->accesoSistema : $personal->accesoSistema;
                         $personal->id_rol = $request->id_rol != null ? $request->id_rol : $personal->id_rol;
                         $personal->update_by = Auth::user()->name;
-                        if($personal->save())
-                        {
-                            if($request->planificacion_id > 0){
-                                $planificacionPersonal = new PersonalPlanificacion;
-                                $planificacionPersonal->personal_id =$personal->id;
-                                $planificacionPersonal->planificacion_id = $request->planificacion_id;
-                                $planificacionPersonal->timestamps = false;
-                                if($planificacionPersonal->save()){
-                                    return response()->json(["mensaje"=>"Se actualizó correctamente."]);
+                        if ($personal->save()) {
+                            //dd($planificacion_id);
+                            if ($planificacion_id > 0) {
+
+                                //buscar planificacion
+                                $planificacion = PersonalPlanificacion::where('personal_id', $personal->id)
+                                    ->where('planificacion_id', $planificacion_id)->first();
+                                //dd($planificacion);
+                                if ($planificacion != null) {
+                                    $planificacion->planificacion_id = $request->planificacion_id;
+                                    $planificacion->timestamps = false;
+                                    if ($planificacion->save()) {
+                                        return response()->json(["mensaje" => "Se actualizó correctamente."]);
+                                    }
                                 }
                             }
-
-
                         }
-
                     }
                 }
             }
-        }catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()]);
         }
     }
 
     public function insert(Request $request)
     {
-        try
-        {
+        try {
             //dd($request->id_rol[0]);
-            if(Auth::check())
-            {
-                if($request != null)
-                {
+            if (Auth::check()) {
+                if ($request != null) {
                     DB::beginTransaction();
                     $personal = new Personal;
                     $usuario = new User;
@@ -117,10 +111,9 @@ class PersonalController extends Controller
                     $personal->id_rol = $request->id_rol;
                     $personal->created_by = Auth::user()->name;
                     $personal->update_by = Auth::user()->name;
-                    if($personal->save())
-                    {
+                    if ($personal->save()) {
                         //Se crea el usuario
-                        $usuario->name = substr($request->primerNombre,0,1) . $request->primerApellido;
+                        $usuario->name = substr($request->primerNombre, 0, 1) . $request->primerApellido;
                         $usuario->email = $request->correo;
                         $usuario->password = bcrypt($request->cedula);
                         $usuario->activo = true;
@@ -128,30 +121,26 @@ class PersonalController extends Controller
                         $usuario->rol_id = $request->id_rol;
                         $usuario->created_by = Auth::user()->name;
                         $usuario->update_by = Auth::user()->name;
-                        if($usuario->save()){
+                        if ($usuario->save()) {
 
-                            if($request->planificiacion_id > 0){
+                            if ($request->planificiacion_id > 0) {
                                 $planificacionPersonal = new PersonalPlanificacion;
-                                $planificacionPersonal->personal_id =$personal->id;
+                                $planificacionPersonal->personal_id = $personal->id;
                                 $planificacionPersonal->planificacion_id = $request->planificacion_id;
                                 $planificacionPersonal->timestamps = false;
-                                if($planificacionPersonal->save()){
+                                if ($planificacionPersonal->save()) {
                                     DB::commit();
-                                    return response()->json(["mensaje"=>"Se guardó correctamente."]);
+                                    return response()->json(["mensaje" => "Se guardó correctamente."]);
                                 }
-
-                            }else{
+                            } else {
                                 DB::commit();
-                                    return response()->json(["mensaje"=>"Se guardó correctamente."]);
+                                return response()->json(["mensaje" => "Se guardó correctamente."]);
                             }
-
                         }
-
                     }
                 }
             }
-        }catch(Exception $e)
-        {
+        } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['mensaje' => $e->getMessage()]);
         }
@@ -159,28 +148,20 @@ class PersonalController extends Controller
 
     public function remove(int $id)
     {
-        try
-        {
-            if(Auth::check())
-            {
-                if($id != 0)
-                {
+        try {
+            if (Auth::check()) {
+                if ($id != 0) {
                     $personal = Personal::find($id);
-                    if($personal != null)
-                    {
+                    if ($personal != null) {
                         $personal->activo = false;
-                        if($personal->save())
-                        {
-                            return response()->json(["mensaje"=>"Se eliminó correctamente."]);
+                        if ($personal->save()) {
+                            return response()->json(["mensaje" => "Se eliminó correctamente."]);
                         }
                     }
                 }
             }
-        }catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()]);
         }
     }
-
-
 }

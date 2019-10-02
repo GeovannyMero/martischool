@@ -11,6 +11,7 @@
 <script type="text/javascript" src="{{ asset('DevExtreme/js/dx.all.js')}}"></script>
 
 <script type="text/javascript" src="{{ asset('js/estudiante/index.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
 
 <div class="box box-primary">
     <div class="box-header with-border">

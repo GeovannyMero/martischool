@@ -6,6 +6,7 @@ app.controller('appController', function estudianteController($scope, $http){
         load: function(){
             return $http.post('/estudiante/all')
             .then(function(response){
+                console.log('datos' + JSON.stringify(response.data));
                 return response.data;
             }, function(response){
                 alert(response.data);
@@ -13,6 +14,7 @@ app.controller('appController', function estudianteController($scope, $http){
         },
         //insert
         insert: function(values){
+            debugger;
             //console.log(JSON.stringify(values));}
             return $http.post('/estudiante/saveEstudiante', values)
             .then(function(response){
@@ -49,6 +51,7 @@ app.controller('appController', function estudianteController($scope, $http){
         load: () => {
             return $http.post('/curso/all')
             .then((response) => {
+                console.log('Curso => ' + JSON.stringify(response.data));
                 return response.data;
             })
             .catch((err) => {
@@ -62,9 +65,9 @@ app.controller('appController', function estudianteController($scope, $http){
         key: 'id',
         loadMode: 'raw',
         load: () => {
-            return $http.post('/planificacion/all')
+            return $http.post('/paralelo/paraleloCurso')
             .then((response) => {
-                console.log(response.data);
+                console.log('Paralelo => ' + JSON.stringify(response.data));
                 return response.data;
             })
             .catch((err) => {
@@ -78,7 +81,17 @@ app.controller('appController', function estudianteController($scope, $http){
         dataSource: {
             store: estudiantes
         },
+        rowAlternationEnabled: false,
         columnHidingEnabled: true,
+        columnAutoWidth: true,
+        showColumnLines: true,
+        showRowLines: true,
+        showBorders: true,
+        onEditorPreparing: function(e) {
+            if(e.parentType === "dataRow" && e.dataField === "idParalelo") {
+                e.editorOptions.disabled = (typeof e.row.data.idCurso !== "number");
+            }
+        },
         columns:[
             // {
             //     dataField: 'id',
@@ -92,16 +105,16 @@ app.controller('appController', function estudianteController($scope, $http){
                 dataField: 'codigo',
                 caption: 'Código',
                 width: 80,
-                editorOptions: {
-                    showClearButton: true
-                }
+                // editorOptions: {
+                //     showClearButton: true
+                // }
 
             },
 
             {
                 dataField: 'cedula',
                 caption: "Identificación",
-                dataType: 'number',
+                //dataType: 'number',
                 editorOptions: {
                     showClearButton: true
                 },
@@ -109,6 +122,12 @@ app.controller('appController', function estudianteController($scope, $http){
                     {
                         type: "required",
                         message: "Identificación es requerida"
+                    },
+                    {
+                        type: 'stringLength',
+                        max: 10,
+                        min: 10,
+                        message: 'La longitud es de 10.'
                     }
                 ]
 
@@ -124,6 +143,20 @@ app.controller('appController', function estudianteController($scope, $http){
                    {
                        type: 'required',
                        message: 'El nombre es requerido'
+                   }
+               ]
+           },
+           {
+               dataField: 'segundoNombre',
+               caption: 'Segundo Nombre',
+               dataType: 'string',
+               editorOptions: {
+                   showClearButton: true
+               },
+               validationRules: [
+                   {
+                       type: 'required',
+                       message: 'El campo es requerido'
                    }
                ]
            },
@@ -183,7 +216,7 @@ app.controller('appController', function estudianteController($scope, $http){
                 dataField: 'telefono',
                 caption: 'Teléfono',
                 visible: false,
-                dataType: 'number',
+                //dataType: 'number',
                 editorOptions: {
                     showClearButton: true,
                      //mask: "0000000000",
@@ -257,12 +290,11 @@ app.controller('appController', function estudianteController($scope, $http){
                        type: 'required',
                        message: 'El curso es requerido'
                    }
-               ],
-            //    setCellValue: function(rowData, value) {
-            //        debugger;
-            //     rowData.idCurso = value;
-            //     //rowData.CityID = null;
-            //  },
+                ],
+               setCellValue: function(rowData, value) {
+                rowData.idCurso = value;
+                rowData.idParalelo = null;
+             },
                lookup:{
                 dataSource: curso,
                 displayExpr: 'nombre',
@@ -275,13 +307,15 @@ app.controller('appController', function estudianteController($scope, $http){
                caption: 'Paralelo',
                lookup: {
                    dataSource: (options) => {
+                       debugger;
                         return {
                             store: paralelo,
                             filter: options.data ? ["idCurso", "=", options.data.idCurso] : null
-                        }
+                        };
                    },
-                   displayExpr: 'idCurso',
-                   valueExpr: 'id'
+                //dataSource: paralelo,
+                   displayExpr: 'nombre',
+                   valueExpr: 'idParalelo'
 
 
 
@@ -305,18 +339,21 @@ app.controller('appController', function estudianteController($scope, $http){
         //    }
         ],
 
-        onEditorPrepared: function(e)
-        {
-            if (e.dataType == 'date' && e.dataField == 'fechaMatricula') {
-                var dateNow = Date.now();
-                e.editorElement.dxDateBox("instance").option("value", dateNow);
-            }
-        },
+        // onEditorPrepared: function(e)
+        // {
+        //     if (e.dataType == 'date' && e.dataField == 'fechaMatricula') {
+        //         debugger;
+        //         //var dateNow = Date.now();
+        //         e.editorElement.dxDateBox("instance").option("value", now);
+        //     }
+        // },
         // onEditorPreparing: function(e) {
         //     debugger;
         //     if (e.parentType == 'dataRow' && e.dataField == 'idCurso') {
         //         var onValueChanged = e.editorOptions.onValueChanged;
-        //         e.editorOptions.onValueChanged = () => console.log('value changed')
+        //         e.editorOptions.onValueChanged = function(args){
+        //             console.log(onValueChanged);
+        //         }
         //     }
         // },
         summary: {
@@ -341,7 +378,10 @@ app.controller('appController', function estudianteController($scope, $http){
         export: {
             enabled: true,
             fileName: "Estudiantes",
-            allowExportSelectedData: true
+            texts: {
+                exportAll: 'Exportar'
+            }
+           //allowExportSelectedData: true
         },
         pager: {
             infoText: 'Pagina {0} de {1}',
@@ -387,34 +427,63 @@ app.controller('appController', function estudianteController($scope, $http){
                             },
                             {
                                 dataField: 'cedula',
-                                caption: 'Cédula'
+                                caption: 'Cédula',
+                                editorOptions: {
+                                    showClearButton: true,
+                                    maxLength: 10,
+                                    placeholder: 'Cédula',
+                                    mask: '0000000000',
+                                    maskRules: {'X': /[0-9]/}
+                                }
                             },
                             {
                                 itemType: 'empty'
                             },
                             {
                                 dataField: 'primerNombre',
-                                caption: 'Primer Nombre'
+                                caption: 'Primer Nombre',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
                             },
                             {
                                 dataField: 'segundoNombre',
-                                caption: 'Segundo Nombre'
+                                caption: 'Segundo Nombre',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
                             },
                             {
                                 dataField: 'primerApellido',
-                                caption: 'Apellido Paterno'
+                                caption: 'Apellido Paterno',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
                             },
                             {
                                 dataField: 'segundoApellido',
-                                caption: 'Apellido Materno'
+                                caption: 'Apellido Materno',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
                             },
                             {
                                 dataField: 'genero',
-                                caption: 'Genero'
+                                caption: 'Genero',
+                                editorOptions: {
+                                    showClearButton: true,
+                                    layout: "horizontal"
+                                },
+                                editorType: 'dxRadioGroup',
                             },
                             {
                                 dataField: 'telefono',
                                 caption: 'Teléfono',
+                                editorOptions: {
+                                    showClearButton: true,
+                                    mask: "0000000",
+                                    maskRules: {"X": /[0-9]/}
+                                }
 
 
                             },
@@ -439,15 +508,24 @@ app.controller('appController', function estudianteController($scope, $http){
 
                             {
                                 dataField: 'fechaNacimiento',
-                                caption: 'Fecha'
+                                caption: 'Fecha',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
                             },
                             {
                                 dataField: 'lugarNacimiento',
-                                caption: 'Lugar'
+                                caption: 'Lugar',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
                             },
                             {
                                 dataField: 'nacionalidad',
-                                caption: 'Nacionalidad'
+                                caption: 'Nacionalidad',
+                                editorOptions: {
+                                    showClearButton: true
+                                }
                             }
 
                         ]
@@ -461,34 +539,60 @@ app.controller('appController', function estudianteController($scope, $http){
                             tabs: [
                                 {
                                 title: "Domicilio",
+                                icon: 'home',
                                 items: [
                                     {
                                         dataField: 'direccion',
-                                        caption: 'Dirección'
+                                        caption: 'Dirección',
+                                        editorOptions: {
+                                            showClearButton: true
+                                        }
                                     }
                                 ]
                             },
                             {
                                 title: "Familiares",
-                                items: ["Skype"]
+                                icon: 'fa fa-users',
+                                items: [{
+                                    template: '<div class="box-body">'+
+                                    '<div class="gridEstudiantes" class="demo-containder" ng-app="App" ng-controller="padresController">'+
+                                        '<div id="gridContainer" dx-data-grid="dataGridOptions"></div>'+
+                                    '</div>'+
+                                '</div>'
+                                }]
                             },
                             {
                                 title: "Periodo",
+                                icon: 'fa fa-calendar',
                                 colCount: 2,
                                 items: [
 
                                     {
                                         dataField: 'codigoMatricula',
-                                        caption: 'Código de Matricula'
+                                        caption: 'Código de Matricula',
+                                        editorOptions: {
+                                            showClearButton: true
+                                        }
                                     },
                                     {
                                         dataField: 'fechaMatricula',
                                         caption: 'Fecha de Matricula',
+                                        editorOptions: {
+                                            showClearButton: true,
+                                            value:  new Date()
+                                        }
 
                                     },
                                     {
                                         dataField: 'idCurso',
-                                        caption: 'Curso'
+                                        caption: 'Curso',
+                                        editorOptions: {
+                                            showClearButton: true,
+                                            // onValueChanged: () => {
+                                            //     console.log('OK');
+                                            // }
+                                        },
+                                        editorType: 'dxSelectBox'
                                     },
                                     {
                                         dataField: 'idParalelo',
@@ -498,6 +602,7 @@ app.controller('appController', function estudianteController($scope, $http){
                             },
                             {
                                 title: 'Emergencia',
+                                icon: 'fa fa-ambulance',
                                 items:[]
 
                             }
@@ -552,7 +657,7 @@ app.controller('appController', function estudianteController($scope, $http){
                     widget: "dxButton",
                     options: {
                         icon: "refresh",
-                        type: "success",
+                        //type: "success",
                         onClick: function(){
                             dataGrid.refresh();
                         }
@@ -563,3 +668,28 @@ app.controller('appController', function estudianteController($scope, $http){
         }
     }
 });
+
+
+app.controller('padresController', function($scope){
+var padres = [
+    {
+        "ID": 1,
+        "CompanyName": "Super Mart of the West",
+        "City": "Bentonville",
+        "State": "Arkansas"
+    }
+];
+$scope.dataGridOptions = {
+    dataSource: {
+        store: padres
+    },
+    showColumnLines: true,
+        showRowLines: true,
+        showBorders: true,
+        editing: {
+            mode: 'popup',
+            allowAdding: true
+        }
+}
+})
+

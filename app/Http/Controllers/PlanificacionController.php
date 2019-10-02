@@ -174,7 +174,7 @@ class PlanificacionController extends Controller
                                     ->join('paralelo', 'paralelo.id', '=', 'planificacion.paralelo_id')
                                     ->where('periodo.activo', '=', true)
                                     ->where('periodo.periodo_inicio', '=', $periodo)
-                                    ->select('planificacion.id', 'periodo.periodo_inicio', 'curso.nombre as curso', 'paralelo.nombre as paralelo', 'planificacion.activo')
+                                    ->select('planificacion.id as planificacion_id', 'periodo.periodo_inicio', 'curso.nombre as curso', 'paralelo.nombre as paralelo', 'planificacion.activo')
                                     ->get();
                 }
             }
