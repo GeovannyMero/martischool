@@ -13,14 +13,14 @@ class CreateAlumnoRepresentanteTable extends Migration
      */
     public function up()
     {
-        Schema::create('alumno_representante', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('estudiante_id')->nullable($value=false);
-            $table->integer('representante_id')->nullable($value=false);
+        // Schema::create('alumno_representante', function (Blueprint $table) {
+        //     $table->bigIncrements('id');
+        //     $table->integer('estudiante_id')->nullable($value=false);
+        //     $table->integer('representante_id')->nullable($value=false);
 
-            $table->foreign('estudiante_id')->references('id')->on('estudiante');
-            $table->foreign('representante_id')->references('id')->on('representante');
-        });
+        //     $table->foreign('estudiante_id')->references('id')->on('estudiante');
+        //     $table->foreign('representante_id')->references('id')->on('representante');
+        // });
     }
 
     /**

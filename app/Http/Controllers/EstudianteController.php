@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use \App\Modelos\Estudiantes;
 use Illuminate\Http\Request;
 use  \App\Http\Controllers\Controller;
-
+use App\Modelos\Representante;
+use Illuminate\Support\Facades\DB;
 
 class EstudianteController extends Controller
 {
@@ -15,11 +16,20 @@ class EstudianteController extends Controller
 
     public function all(){
         try{
-            $estudiantes = Estudiantes::all();
+            $estudiantes = Estudiantes::with(['representantes'])->get();
+            //$estudiantes = Estudiantes::find(3)->representantes()->get();
+
+            //$estudiantes->with(['representante'])->get();
+            // $estudiantes = DB::table('estudiante')
+            // ->join('estudiantes_representante', 'estudiante.id', '=', 'estudiantes_representante.estudiantes_id')
+            // ->join('representante', 'representante.id', '=', 'estudiantes_representante.representante_id')
+            // //->select('estudiante.*')
+            // ->get();
+            //echo($estudiantes);
         }catch(Exception $e){
             return response()->json(["mensaje" => $e->getMessage()]);
         }
-        return $estudiantes;
+        return $estudiantes->toArray();
     }
 
 //GUARDAR

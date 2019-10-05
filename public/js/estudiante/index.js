@@ -6,10 +6,12 @@ app.controller('appController', function estudianteController($scope, $http){
         load: function(){
             return $http.post('/estudiante/all')
             .then(function(response){
-                console.log('datos' + JSON.stringify(response.data));
+                debugger;
+                let datos = JSON.stringify(response.data[0].representantes);
+                console.log(datos);
                 return response.data;
             }, function(response){
-                alert(response.data);
+                alert(JSON.stringify(response.data));
             });
         },
         //insert
@@ -51,7 +53,7 @@ app.controller('appController', function estudianteController($scope, $http){
         load: () => {
             return $http.post('/curso/all')
             .then((response) => {
-                console.log('Curso => ' + JSON.stringify(response.data));
+                //console.log('Curso => ' + JSON.stringify(response.data));
                 return response.data;
             })
             .catch((err) => {
@@ -67,7 +69,7 @@ app.controller('appController', function estudianteController($scope, $http){
         load: () => {
             return $http.post('/paralelo/paraleloCurso')
             .then((response) => {
-                console.log('Paralelo => ' + JSON.stringify(response.data));
+               // console.log('Paralelo => ' + JSON.stringify(response.data));
                 return response.data;
             })
             .catch((err) => {
@@ -307,7 +309,7 @@ app.controller('appController', function estudianteController($scope, $http){
                caption: 'Paralelo',
                lookup: {
                    dataSource: (options) => {
-                       debugger;
+                      // debugger;
                         return {
                             store: paralelo,
                             filter: options.data ? ["idCurso", "=", options.data.idCurso] : null
@@ -540,6 +542,7 @@ app.controller('appController', function estudianteController($scope, $http){
                                 {
                                 title: "Domicilio",
                                 icon: 'home',
+                                deferRendering: false,
                                 items: [
                                     {
                                         dataField: 'direccion',
@@ -671,6 +674,9 @@ app.controller('appController', function estudianteController($scope, $http){
 
 
 app.controller('padresController', function($scope){
+    debugger;
+
+   alert($scope.dataGridOptions.dataSource);
 var padres = [
     {
         "ID": 1,

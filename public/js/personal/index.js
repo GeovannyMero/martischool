@@ -42,7 +42,7 @@ app.controller('personalController', function($scope, $http){
         load: () => {
             return $http.post('/personal/all')
             .then((response) => {
-                //console.log(JSON.stringify(response.data));
+                console.log(JSON.stringify(response.data));
                 return response.data;
             })
             .catch((err) =>
