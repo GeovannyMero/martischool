@@ -190,7 +190,7 @@
                         </ul>
                     </li>
                     <!--Calificaciones-->
-                    <li class="treeview">
+                    <li>
                         <a href="{{ url('/notas')}}">
                             <i class="fa fa-pencil"></i>
                             <span>Notas</span>

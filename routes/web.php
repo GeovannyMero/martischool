@@ -24,6 +24,9 @@ Route::get('/estudiante','EstudianteController@index');
 Route::post('/estudiante/all', 'EstudianteController@all');
 Route::post('/estudiante/saveEstudiante','EstudianteController@saveEstudiante');
 Route::post('/estudiante/update/{id}','EstudianteController@update');
+Route::get('/estudiante/detail/{id}', 'EstudianteController@detail');
+Route::post('/estudiante/getInformation/{id}', 'EstudianteController@getInformation' );
+Route::post('/estudiante/representantes/{id}', 'EstudianteController@representantes');
 
 //Empresa
 Route::get('/empresa', 'EmpresaController@index');
@@ -107,5 +110,11 @@ Route::post('/personal/update/{id}/{planificacion}', 'PersonalController@update'
 Route::post('/personal/insert', 'PersonalController@insert');
 Route::post('/personal/remove/{id}', 'PersonalController@remove');
 
+
+//Notas
+Route::get('/notas', 'NotasController@index');
+Route::post('/notas/cursos', 'NotasController@cursos');
+Route::get('/notas/comportamiento/{idCurso}/{idParalelo}', 'NotasController@comportamiento');
+Route::post('/notas/comportamientoPorCurso/{idCurso}', 'NotasController@comportamientoPorCurso');
 
 

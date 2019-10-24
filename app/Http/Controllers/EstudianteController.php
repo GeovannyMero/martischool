@@ -7,15 +7,19 @@ use Illuminate\Http\Request;
 use  \App\Http\Controllers\Controller;
 use App\Modelos\Representante;
 use Illuminate\Support\Facades\DB;
+use Response;
+use View;
 
 class EstudianteController extends Controller
 {
-    public function index(){
-        return view ('General.Estudiante.estudiante');
+    public function index()
+    {
+        return view('General.Estudiante.estudiante');
     }
 
-    public function all(){
-        try{
+    public function all()
+    {
+        try {
             $estudiantes = Estudiantes::with(['representantes'])->get();
             //$estudiantes = Estudiantes::find(3)->representantes()->get();
 
@@ -26,21 +30,22 @@ class EstudianteController extends Controller
             // //->select('estudiante.*')
             // ->get();
             //echo($estudiantes);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return response()->json(["mensaje" => $e->getMessage()]);
         }
         return $estudiantes->toArray();
     }
 
-//GUARDAR
-    public function saveEstudiante(Request $request){
-        try{
+    //GUARDAR
+    public function saveEstudiante(Request $request)
+    {
+        try {
 
-            if($request->id == ""){
-               // dd($request);
-              // var_dump($request);
+            if ($request->id == "") {
+                // dd($request);
+                // var_dump($request);
                 $estudiante = new Estudiantes;
-               // return response()->json(["mensaje"=>"OK"]);
+                // return response()->json(["mensaje"=>"OK"]);
                 $estudiante->codigo = $request->codigo;
                 $estudiante->cedula = $request->cedula;
                 //$estudiante->tipoidentificacion = $request->tipoidentificacion;
@@ -59,30 +64,47 @@ class EstudianteController extends Controller
                 $estudiante->fechaMatricula = $request->fechaMatricula;
                 $estudiante->idCurso = $request->idCurso;
                 $estudiante->idParalelo = $request->idParalelo;
-                if($estudiante->save()){
-                    return response()->json(["mensaje"=> "Se guardo correctamente"]);
+                if ($estudiante->save()) {
+                    return response()->json(["mensaje" => "Se guardo correctamente"]);
                 }
             }
-
-        }catch(Exception $e){
-            return response()->json(["mensaje"=>$e->getMessage()]);
+        } catch (Exception $e) {
+            return response()->json(["mensaje" => $e->getMessage()]);
         }
     }
-///estudiante/update/
-    public function update(Request $request, $id){
-        try{
-            if($id != 0){
+    ///estudiante/update/
+    public function update(Request $request, $id)
+    {
+        try {
+            if ($id != 0) {
+                dd($id);
                 $estudiante = Estudiantes::find($id);
-                if($estudiante != null){
+                if ($estudiante != null) {
                     $estudiante->cedula = ($request->cedula) == null ? $estudiante->cedula : $request->cedula;
-                    if($estudiante->save()){
-                        return response()->json(["mensaje"=>"Se actualizó correctamente."]);
+                    if ($estudiante->save()) {
+                        return response()->json(["mensaje" => "Se actualizó correctamente."]);
                     }
                 }
-
             }
-        }catch(Exception $e){
-            return response()->json(["mensaje"=>$e->getMessage()]);
+        } catch (Exception $e) {
+            return response()->json(["mensaje" => $e->getMessage()]);
         }
+    }
+
+    public function detail(int $idEstudiante)
+    {
+        //dd($request);
+        //$datos = $request;
+        //dd($datos['id']);
+        $estudiante = Estudiantes::find($idEstudiante)->with(['representantes'])->get();
+        //dd($idEstudiante);
+        return view('General.Estudiante.estudianteDetalles')->with(['estudiante' => $estudiante])->renderSections()['content'];
+        //return $estudiante;
+    }
+
+    public function representantes(int $id){
+        $estudi = Estudiantes::find($id)->representantes()->get();
+        //dd($estudi);
+        return $estudi;
     }
 }

@@ -11,22 +11,16 @@
 <!--script-->
 <script type="text/javascript" src="{{ asset('DevExtreme/js/dx.all.js')}}"></script>
 
-<script type="text/javascript" src="{{ asset('js/estudiante/index.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/estudiante/detallesEstudiante.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/notas/index.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/notas/comportamiento.js')}}"></script>
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
-
-<div class="box box-primary" ng-app="App" ng-controller="appController"><ng-view></ng-view>
-   <div class="box-header with-border">
-        <h3 class="box-title">Estudiantes</h3>
+<div class="box box-primary" ng-app='notasModule'>
+    <div class="box-header with-border">
+        <h3 class="box-title">Comportamiento</h3>
     </div>
-    <div class="box-body" id='box-body-estudiantes'>
-        <div class="gridEstudiantes" class="demo-containder" >
-            <div id="gridContainer" dx-data-grid="dataGridOptions">
+    <div class="box-body" ng-controller='comportamientoController'>
+    <input type="hidden" name="idCurso" id="idCurso" value="{{$idCurso}}">
 
-            </div>
-        </div>
     </div>
-
 </div>
 @endsection
