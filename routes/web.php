@@ -117,4 +117,10 @@ Route::post('/notas/cursos', 'NotasController@cursos');
 Route::get('/notas/comportamiento/{idCurso}/{idParalelo}', 'NotasController@comportamiento');
 Route::post('/notas/comportamientoPorCurso/{idCurso}', 'NotasController@comportamientoPorCurso');
 
+//Parametros
+Route::get('/parametros', 'ParametrosController@index');
+Route::post('/parametros/all', 'ParametrosController@all');
+Route::post('/parametros/insert', 'ParametrosController@insert');
+
+
 

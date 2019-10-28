@@ -55,6 +55,7 @@ class NotasController extends Controller
     {
         try {
             $estudiantesPorCurso = Estudiantes::where('idCurso', $idcurso)->get();
+            //dd($estudiantesPorCurso);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e.getMessage()]);
         }

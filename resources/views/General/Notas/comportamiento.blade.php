@@ -14,13 +14,38 @@
 <script type="text/javascript" src="{{ asset('js/notas/index.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/notas/comportamiento.js')}}"></script>
 
+<style>
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+</style>
 <div class="box box-primary" ng-app='notasModule'>
     <div class="box-header with-border">
         <h3 class="box-title">Comportamiento</h3>
     </div>
     <div class="box-body" ng-controller='comportamientoController'>
     <input type="hidden" name="idCurso" id="idCurso" value="{{$idCurso}}">
+    <div>@{{cantidadEstudiantes}}</div>
+    <div dx-toolbar="toolbarOptions"></div>
+    <div class="row">
+    <div id="gridContainer" dx-data-grid="dataGridOptions"  class="column"></div>
+    <div id="employeeInfo" ng-init="selectedEmployee"  class="column">
+            {{-- <img class="employeePhoto" ng-src="{{selectedEmployee.Picture}}" /> --}}
 
+            <p style='width: 50%'class="column">@{{selectedEmployee.cedula}}</p>
+        </div>
+    </div>
+    <div id="simplePopup" ></div>
     </div>
 </div>
 @endsection

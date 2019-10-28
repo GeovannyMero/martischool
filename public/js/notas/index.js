@@ -1,4 +1,4 @@
-var appNotas = angular.module('notasModule', ['ngRoute']);
+var appNotas = angular.module('notasModule', ['ngRoute', 'dx']);
 
 appNotas.config(function($routeProvider, $locationProvider){
     $locationProvider.hashPrefix('');

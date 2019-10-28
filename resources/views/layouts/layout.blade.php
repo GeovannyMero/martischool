@@ -205,6 +205,13 @@
                             <span class="pull-right-container"></span>
                         </a>
                     </li>
+                    <li>
+                    <a href="{{url('/parametros')}}">
+                            <i class="fa fa-pencil"></i>
+                            <span>Parametros</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
                 </ul>
 
             </section>
