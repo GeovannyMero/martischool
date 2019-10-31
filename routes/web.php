@@ -121,6 +121,16 @@ Route::post('/notas/comportamientoPorCurso/{idCurso}', 'NotasController@comporta
 Route::get('/parametros', 'ParametrosController@index');
 Route::post('/parametros/all', 'ParametrosController@all');
 Route::post('/parametros/insert', 'ParametrosController@insert');
+Route::post('/parametros/update/{id}', 'ParametrosController@update');
+Route::post('/parametros/remove/{id}', 'ParametrosController@remove');
+Route::get('/parametros/quintiles', 'ParametrosController@quintiles');
+
+//Parciales
+Route::get('/parciales', 'ParcialController@index');
+Route::post('/parciales/all', 'ParcialController@all');
+Route::post('/parciales/insert', 'ParcialController@insert');
+Route::post('/parciales/update/{id}', 'ParcialController@update');
+Route::get('/parciales/parciales', 'ParcialController@parciales');
 
 
 

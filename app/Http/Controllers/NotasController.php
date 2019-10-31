@@ -54,10 +54,15 @@ class NotasController extends Controller
     public function comportamientoPorCurso(int $idcurso)
     {
         try {
-            $estudiantesPorCurso = Estudiantes::where('idCurso', $idcurso)->get();
+            //$estudiantesPorCurso = Estudiantes::where('idCurso', $idcurso)->get();
+            $estudiantesPorCurso = DB::table('estudiante')
+            ->leftjoin('comportamiento', 'estudiante.id', '=', 'comportamiento.estudiante_id')
+            ->select('estudiante.id', 'estudiante.primerNombre',
+            'comportamiento.id as comportamientoId', 'comportamiento.parcial_id', 'comportamiento.nota', 'estudiante.activo')
+            ->get();
             //dd($estudiantesPorCurso);
         } catch (Exception $e) {
-            return response()->json(['mensaje' => $e.getMessage()]);
+            return response()->json(['mensaje' => $e->getMessage()]);
         }
         return $estudiantesPorCurso;
     }

@@ -5,6 +5,10 @@
     --color: #5cb85c;
     color: orange;
 }
+.dx-icon-edit:before {
+    color: #337ab7;
+    border: none;
+}
 .dx-icon-edit-button-addrow:before {
     color: #337ab7;
 }

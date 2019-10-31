@@ -1,20 +1,35 @@
-appParametros.controller('title', function($scope){
-$scope.modulo = 'Parametros Generales'
+
+
+appParcial.controller('title', function($scope){
+    $scope.modulo = 'Parciales';
 })
 
-appParametros.controller('parametrosController', function($scope, $http){
-    var parametros = new DevExpress.data.CustomStore({
+var parametros = {
+    store: new DevExpress.data.CustomStore({
+        key: 'id',
+        loadMode: 'raw',
         load: () => {
-            return $http.post('/parametros/all')
+            return $.getJSON('/parametros/quintiles')
+            .done(response => {
+                response.data;
+            })
+        }    })
+}
+appParcial.controller('parcialController', function($scope, $http){
+    var parciales = new DevExpress.data.CustomStore({
+        load: () => {
+            return $http.post('/parciales/all')
             .then(response => {
+                debugger;
                 return response.data;
             })
             .catch(error => {
-                DevExpress.ui.notify(error.data['mensaje'], 'error', 5000);
+                DevExpress.ui.notify(error.data, 'error', 5000);
             })
         },
+
         insert: values => {
-            return $http.post('/parametros/insert', values)
+            return $http.post('/parciales/insert', values)
             .then(response => {
                 DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
             })
@@ -24,21 +39,9 @@ appParametros.controller('parametrosController', function($scope, $http){
         },
         update: (key, values) => {
             let id = JSON.stringify(key['id']);
-            if(id > 0){
-                return $http.post('/parametros/update/' + id, values)
-                .then(response => {
-                    DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
-                })
-                .catch(error => {
-                    DevExpress.ui.notify(err.data, 'error', 5000);
-                })
-            }
-        },
-        remove: (key) => {
-            let id = key.id;
             if(id > 0)
             {
-                return $http.post('/parametros/remove/' + id)
+                return $http.post('/parciales/update/' + id, values)
                 .then(response => {
                     DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
                 })
@@ -47,13 +50,12 @@ appParametros.controller('parametrosController', function($scope, $http){
                 })
             }
         }
-
     });
 
-    //opciones grid
+    //opciones
     $scope.dataGridOptions = {
         dataSource: {
-            store: parametros
+            store: parciales
         },
         columns: [
             {
@@ -61,18 +63,23 @@ appParametros.controller('parametrosController', function($scope, $http){
                 visible: false
             },
             {
-                dataField: 'nombre',
-                caption: 'Nombre',
+                dataField: 'catalogo_id',
+                caption: 'Quintil',
                 validationRules: [
                     {
                         type: 'required',
                         message: 'El campo es requerido'
                     }
-                ]
+                ],
+                lookup: {
+                    dataSource: parametros,
+                    displayExpr: 'descripcion',
+                    valueExpr: 'id'
+                }
             },
             {
-                dataField: 'codigo',
-                caption: 'Código',
+                dataField: 'nombre',
+                caption: 'Nombre',
                 validationRules: [
                     {
                         type: 'required',
@@ -91,23 +98,6 @@ appParametros.controller('parametrosController', function($scope, $http){
                 width: 80
             }
         ],
-        summary: {
-            totalItems: [
-                {
-                    column: 'nombre',
-                    summaryType: 'count',
-                    displayFormat: 'Total: {0}'
-                }
-            ]
-        },
-        onCellPrepared: function(e){
-            if(e.rowType === 'data'){
-                var $links = e.cellElement.find(".dx-link");
-                if(e.row.data.activo === false) {
-                    $links.filter(".dx-link-delete").remove();
-                }
-            }
-        },
         showBorders: true,
         pager: {
             infoText: 'Página {0} de {1}',
@@ -133,25 +123,27 @@ appParametros.controller('parametrosController', function($scope, $http){
                 colCount: 2,
                 items: [
                     {
+                        dataField: 'catalogo_id',
+                        caption: 'Quintil'
+                    },
+                    {
                         dataField: 'nombre',
                         caption: 'Nombre'
                     },
                     {
-                        dataField: 'codigo',
-                        caption: 'Código'
-                    },
-                    {
                         dataField: 'descripcion',
                         caption: 'Descripción',
-                        colSpan: 2,
-                        editorType: 'dxTextArea'
+                        editorType: 'dxTextArea',
+                        colSpan: 2
                     },
                     {
-                        dataField: 'activo'
+                        dataField: 'activo',
+                        caption: 'Activo'
                     }
                 ]
             }
-        }
+        },
+
 
     }
 })

@@ -1,5 +1,24 @@
+var parciales = {
+    store: new DevExpress.data.CustomStore({
+        key: 'id',
+        loadMode: 'raw',
+
+        load: () => {
+            return $.getJSON('/parciales/parciales')
+            .done(response => {
+                debugger;
+                console.log(" => "+ (JSON.stringify(response)));
+                response;
+
+            })
+        },
+
+    }),
+    group: 'descripcion',
+}
+
 appNotas.controller('comportamientoController', function comportamientoController($http, $scope){
-    debugger;
+
     let idCurso = document.getElementById('idCurso').value;
     var vm = this;
     // $http.post('/notas/comportamientoPorCurso/'+idCurso)
@@ -39,13 +58,17 @@ appNotas.controller('comportamientoController', function comportamientoControlle
             {
                 location: 'before',
                 widget: 'dxSelectBox',
-                locateInMenu: 'auto',
+                //locateInMenu: 'auto',
                 options: {
-                    width: 140,
-                    items: [],
+                    width: 240,
+                    //items: [],
+                    dataSource: parciales,
                     valueExpr: "id",
-                    displayExpr: "text",
-                    value: "",
+                    //group: 'descripcion',
+                    grouped: true,
+                    displayExpr: "nombre",
+                    //value: "",
+
                     onValueChanged: function(args) {
                         // if(args.value > 1) {
                         //     productsStore.filter("type" , "=", args.value);
@@ -57,7 +80,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                 }
             },
             {
-                location: 'before',
+                location: 'center',
                 widget: 'dxCheckBox',
                 locateInMenu: 'auto',
                 options: {
@@ -69,7 +92,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                 }
             },
             {
-                location: 'before',
+                location: 'center',
                 widget: 'dxCheckBox',
                 locateInMenu: 'auto',
                 options: {
@@ -98,12 +121,12 @@ appNotas.controller('comportamientoController', function comportamientoControlle
 
                         $("#simplePopup").dxPopup({
                             title: "Popup Title",
-        contentTemplate: function () {
-            return $("<p />").text("Popup content");
-        }
+                            contentTemplate: function () {
+                                return $("<p />").text("Popup content");
+                                }
                         });
                         $("#simplePopup").dxPopup("show");
-                       //DevExpress.ui.notify("Refresh button has been clicked!");
+                                    //DevExpress.ui.notify("Refresh button has been clicked!");
                     }
                 }
             },
@@ -115,7 +138,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
         load: () => {
             return $http.post('/notas/comportamientoPorCurso/' + idCurso)
             .then(response => {
-                console.log(response.data.length);
+                console.log(response.data);
                 $scope.cantidadEstudiante = response.data.length;
                 return response.data;
             })
@@ -151,6 +174,35 @@ appNotas.controller('comportamientoController', function comportamientoControlle
         ],
         onSelectionChanged: function (selectedItems) {
            $scope.selectedEmployee = selectedItems.selectedRowsData[0];
+           $('#calificacion').html('Calificación');
+           $('#nota').dxTextBox({
+               value: 5,
+               width: 80,
+               buttons: [{
+                name: "password",
+                location: "after",
+                options: {
+                    icon: "edit",
+                    stylingMode: "text",
+                    //type: "success",
+                    onClick: function() {
+
+                        $("#notaPopup").dxPopup({
+                            title: "Ingrese la Calificación",
+                            width: 350,
+                            height: 300,
+                            contentTemplate: function () {
+                                return $("<div />").dxTextBox({
+                                    value: 5
+                                });
+                                }
+                        });
+                        $("#notaPopup").dxPopup("show");
+                    }
+                }
+            }]
+
+           })
         },
 
         //

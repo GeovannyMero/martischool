@@ -13,7 +13,7 @@
 
 <script type="text/javascript" src="{{ asset('js/notas/index.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/notas/comportamiento.js')}}"></script>
-
+<link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
 <style>
 
 .column {
@@ -26,6 +26,13 @@
   content: "";
   display: table;
   clear: both;
+}
+.dx-texteditor-input {
+    text-align: center;
+
+    font-weight: bold;
+    font-size: 20px;
+
 }
 
 </style>
@@ -42,10 +49,21 @@
     <div id="employeeInfo" ng-init="selectedEmployee"  class="column">
             {{-- <img class="employeePhoto" ng-src="{{selectedEmployee.Picture}}" /> --}}
 
-            <p style='width: 50%'class="column">@{{selectedEmployee.cedula}}</p>
+            {{-- <p style='width: 50%'class="column">@{{selectedEmployee.primerNombre}}</p> --}}
+            {{-- <div class="dx-field"> --}}
+                {{-- <div class="dx-field-label">Default mode</div> --}}
+                {{-- <div class="dx-field-value"> --}}
+                    {{-- <div dx-text-box="@{{selectedEmployee.primerNombre}}"></div> --}}
+                    <label for="calificacion" id="calificacion"></label>
+                    <div id="nota"></div>
+                {{-- </div> --}}
+            {{-- </div> --}}
+            {{-- <div dx-text-box='selectedEmployee.primerNombre'></div> --}}
         </div>
     </div>
-    <div id="simplePopup" ></div>
+        <div id="simplePopup" ></div>
+        <div id="notaPopup" ></div>
+
     </div>
 </div>
 @endsection
