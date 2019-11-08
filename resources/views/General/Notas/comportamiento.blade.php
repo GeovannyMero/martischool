@@ -31,7 +31,7 @@
     text-align: center;
 
     font-weight: bold;
-    font-size: 20px;
+    /*font-size: 20px;*/
 
 }
 
@@ -62,7 +62,9 @@
         </div>
     </div>
         <div id="simplePopup" ></div>
-        <div id="notaPopup" ></div>
+        <div id="notaPopup" >
+            <div id="btnSave" dx-button="saveButtonConfig"></div>
+        </div>
 
     </div>
 </div>

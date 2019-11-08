@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use \App\Modelos\Estudiantes;
+use \App\Modelos\Comportamiento;
 
 class NotasController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function index()
     {
         return view('General.Notas.index');
@@ -65,6 +69,45 @@ class NotasController extends Controller
             return response()->json(['mensaje' => $e->getMessage()]);
         }
         return $estudiantesPorCurso;
+    }
+
+    public function guardarNota(Request $request)
+    {
+        try {
+            if($request != null){
+                if($request->comportamientoId == null){
+                    $comportamiento = new Comportamiento();
+                    $comportamiento->parcial_id = $request->parcial_id;
+                    $comportamiento->estudiante_id = $request->id;
+                    $comportamiento->nota = $request->nota;
+                    $comportamiento->activo = true;
+                    $comportamiento->created_by = Auth::user()->name;
+                    $comportamiento->updated_by = Auth::user()->name;
+                }else{
+                    //valida si existe nota para el parcial y para el estudiante
+                    $comportamiento = DB::table('comportamiento')
+                                        ->where('parcial_id', $request->parcial_id)
+                                        ->where('estudiante_id', $request->id)
+                                        ->count();
+                    if($comportamiento == 0)
+                    {
+                        $comportamiento = new Comportamiento();
+                        $comportamiento->parcial_id = $request->parcial_id;
+                        $comportamiento->estudiante_id = $request->id;
+                        $comportamiento->nota = $request->nota;
+                        $comportamiento->activo = true;
+                        $comportamiento->created_by = Auth::user()->name;
+                        $comportamiento->updated_by = Auth::user()->name;
+                    }
+                }
+
+                if($comportamiento->save()){
+                    return response()->json(['mensaje' => 'Se guardo con exito']);
+                }
+            }
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
     }
 
 

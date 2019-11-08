@@ -2,12 +2,10 @@ var parciales = {
     store: new DevExpress.data.CustomStore({
         key: 'id',
         loadMode: 'raw',
-
         load: () => {
             return $.getJSON('/parciales/parciales')
             .done(response => {
-                debugger;
-                console.log(" => "+ (JSON.stringify(response)));
+                console.log(" => "+ (JSON.stringify(response[0].id)));
                 response;
 
             })
@@ -17,19 +15,23 @@ var parciales = {
     group: 'descripcion',
 }
 
-appNotas.controller('comportamientoController', function comportamientoController($http, $scope){
+appNotas.controller('comportamientoController', function comportamientoController($http, $scope, $window){
 
     let idCurso = document.getElementById('idCurso').value;
-    var vm = this;
-    // $http.post('/notas/comportamientoPorCurso/'+idCurso)
-    // .then(response => {
-    //     console.log(response.data);
-    //     $scope.estudiantesPorCurso = response.data;
-    // })
-    // .catch(error => {
-    //     alert(error);
-    // })
     //toolbar
+    var estudiantesPorCurso = new DevExpress.data.CustomStore({
+        load: () => {
+            return $http.post('/notas/comportamientoPorCurso/' + idCurso)
+            .then(response => {
+                //console.log(response.data);
+                $scope.cantidadEstudiante = response.data.length;
+                return response.data;
+            })
+            .catch(error => {
+                DevExpress.ui.notify(error.data['mensaje'], 'error', 5000);
+            })
+        }
+    });
 
     $scope.toolbarOptions = {
         items: [
@@ -40,6 +42,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                     type: 'back',
                     text: 'Back',
                     onClick: function() {
+                        $window.location.href = '/notas'
                         DevExpress.ui.notify("Back button has been clicked!");
                     }
                 }
@@ -51,7 +54,8 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                 options: {
                     icon: "refresh",
                     onClick: function() {
-                        DevExpress.ui.notify("Refresh button has been clicked!");
+                        //DevExpress.ui.notify("Refresh button has been clicked!");
+                        $('#gridContainer').dxDataGrid("instance").refresh();
                     }
                 }
             },
@@ -61,21 +65,32 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                 //locateInMenu: 'auto',
                 options: {
                     width: 240,
-                    //items: [],
                     dataSource: parciales,
-                    valueExpr: "id",
-                    //group: 'descripcion',
-                    grouped: true,
                     displayExpr: "nombre",
-                    //value: "",
+                    valueExpr: "id",
+                    grouped: true,
+                    value: 1,
 
                     onValueChanged: function(args) {
-                        // if(args.value > 1) {
-                        //     productsStore.filter("type" , "=", args.value);
-                        // } else {
-                        //     productsStore.filter(null);
-                        // }
-                        // productsStore.load();
+                            estudiantesPorCurso.load()
+                                .done(function (data) {
+                                    debugger;
+                                    //console.log(JSON.stringify(data.filter(p => p.parcial_id === args.value)));
+                                    $('#nota').dxTextBox({
+                                        value: 0
+                                    })
+                                    $('#gridContainer').dxDataGrid({
+                                        dataSource: data.filter(p => p.parcial_id === args.value)
+                                    });
+                                    //return data.filter(p => p.parcial_id === args.value);
+                                })
+                                .fail(function (error) {
+                                    debugger;
+                                    DevExpress.ui.notify(error, 'error', 5000);
+                                    alert('>KI' + error);
+                                });
+
+                        estudiantesPorCurso.load();
                     }
                 }
             },
@@ -132,21 +147,8 @@ appNotas.controller('comportamientoController', function comportamientoControlle
             },
 
         ]
-    }
-
-    var estudiantesPorCurso = new DevExpress.data.CustomStore({
-        load: () => {
-            return $http.post('/notas/comportamientoPorCurso/' + idCurso)
-            .then(response => {
-                console.log(response.data);
-                $scope.cantidadEstudiante = response.data.length;
-                return response.data;
-            })
-            .catch(error => {
-                DevExpress.ui.notify(error.data['mensaje'], 'error', 5000);
-            })
-        }
-    });
+    };
+    //grid
 
     //opciones Grid
     $scope.dataGridOptions = {
@@ -173,10 +175,14 @@ appNotas.controller('comportamientoController', function comportamientoControlle
             }
         ],
         onSelectionChanged: function (selectedItems) {
-           $scope.selectedEmployee = selectedItems.selectedRowsData[0];
+           //$scope.selectedEmployee = selectedItems.selectedRowsData[0];
+           //obtener la nota
+           let nota = typeof selectedItems.selectedRowsData[0].nota === 'undefined' ? 0 : selectedItems.selectedRowsData[0].nota;
+            debugger;
+           alert(JSON.stringify(selectedItems.selectedRowsData[0]));
            $('#calificacion').html('Calificación');
            $('#nota').dxTextBox({
-               value: 5,
+               value: typeof selectedItems.selectedRowsData[0].nota === 'undefined' ? 0 : selectedItems.selectedRowsData[0].nota,
                width: 80,
                buttons: [{
                 name: "password",
@@ -189,13 +195,109 @@ appNotas.controller('comportamientoController', function comportamientoControlle
 
                         $("#notaPopup").dxPopup({
                             title: "Ingrese la Calificación",
-                            width: 350,
-                            height: 300,
-                            contentTemplate: function () {
-                                return $("<div />").dxTextBox({
-                                    value: 5
-                                });
-                                }
+                            width: 280,
+                            height: 250,
+
+                            contentTemplate: function (e) {
+                                // var boton = $('#btnSave').dxButton({
+                                //     text: 'save'
+                                // })
+                                // var a = $("<div />").attr('id', 'notaContainner').dxTextBox({
+                                //     value: 5
+                                // }).dxTextBox('instance');
+                                // var c = a.option('value');
+
+                                //alert(c);
+                                // contentElement.append(
+                                //     $('<div />').attr('id', 'nota').dxTextBox({
+                                //         value: 5,
+                                //         width: 80,
+
+                                //     }),
+                                //     $('<div />').attr('id', 'buttonContainner').dxButton({
+                                //         text: 'Guardar',
+                                //         onClick: function(){
+
+
+                                //         }
+                                //     })
+                                // )
+
+
+                                var formContainer = $("<div id='form'>");
+                                formContainer.dxForm({
+                                    formData: selectedItems.selectedRowsData[0],
+                                    showValidationSummary: true,
+                                    items: [
+
+                                        {
+                                            dataField: 'id',
+                                            visible: false
+                                        },
+                                        {
+                                            dataField: 'parcial_id',
+                                            editorType: 'dxSelectBox',
+                                            editorOptions: {
+                                                dataSource: parciales,
+                                                displayExpr: 'nombre',
+                                                valueExpr: "id",
+                                                grouped: true,
+                                                displayExpr: "nombre",
+                                                },
+                                            validationRules: [
+                                                {
+                                                    type: 'required',
+                                                    message: 'El campo es requerido.'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            dataField: 'nota',
+                                            validationRules: [
+                                                {
+                                                    type: 'required',
+                                                    message: 'El campo es requerido'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            itemType: 'button',
+                                            alignment: "left",
+                                            buttonOptions: {
+                                                text: "Guardar",
+                                                useSubmitBehavior: true,
+                                                onClick: function () {
+                                                   // var a = $('#nota').dxTextBox('instance').option('value');
+                                                    var form = $("#form").dxForm("instance");
+                                                    var data = form.option("formData")
+                                                    alert(JSON.stringify(data));
+                                                    $http.post('/notas/guardarNota', data)
+                                                    .then(response => {
+                                                        response.data;
+                                                        $("#notaPopup").dxPopup("hide");
+                                                    })
+                                                    .catch(error => {
+                                                        DevExpress.ui.notify(error.data, 'error', 5000);
+                                                    })
+                                                }
+                                            }
+                                        },
+                                        {
+                                            itemType: 'button',
+                                            alignment: "right",
+                                            buttonOptions: {
+                                                text: 'Cancelar',
+                                                onClick: () =>{
+                                                    $("#notaPopup").dxPopup("hide");
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }).dxForm('instance');
+                                e.append(formContainer);
+
+
+                                 }
                         });
                         $("#notaPopup").dxPopup("show");
                     }
@@ -244,6 +346,4 @@ appNotas.controller('comportamientoController', function comportamientoControlle
 
 
 });
-
-
 
