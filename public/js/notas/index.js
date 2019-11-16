@@ -5,5 +5,5 @@ appNotas.config(function($routeProvider, $locationProvider){
     $routeProvider.when('/notas/comportamiento/:idCurso/:idParalelo',{
         templateUrl: "/resources\views\General\Notas\comportamiento.blade.php"
     })
-    .otherwise({redirectTo: '/home'});
+    //.otherwise({redirectTo: '/home'});
 });

@@ -30,7 +30,7 @@ appParametros.controller('parametrosController', function($scope, $http){
                     DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
                 })
                 .catch(error => {
-                    DevExpress.ui.notify(err.data, 'error', 5000);
+                    DevExpress.ui.notify(error.data, 'error', 5000);
                 })
             }
         },

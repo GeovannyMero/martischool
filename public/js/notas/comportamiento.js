@@ -5,7 +5,7 @@ var parciales = {
         load: () => {
             return $.getJSON('/parciales/parciales')
             .done(response => {
-                console.log(" => "+ (JSON.stringify(response[0].id)));
+                //console.log(" => "+ (JSON.stringify(response[0].id)));
                 response;
 
             })
@@ -18,7 +18,7 @@ var parciales = {
 appNotas.controller('comportamientoController', function comportamientoController($http, $scope, $window){
 
     let idCurso = document.getElementById('idCurso').value;
-    //toolbar
+
     var estudiantesPorCurso = new DevExpress.data.CustomStore({
         load: () => {
             return $http.post('/notas/comportamientoPorCurso/' + idCurso)
@@ -32,7 +32,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
             })
         }
     });
-
+    //toolbar
     $scope.toolbarOptions = {
         items: [
             {
@@ -74,7 +74,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                     onValueChanged: function(args) {
                             estudiantesPorCurso.load()
                                 .done(function (data) {
-                                    debugger;
+                                    //debugger;
                                     //console.log(JSON.stringify(data.filter(p => p.parcial_id === args.value)));
                                     $('#nota').dxTextBox({
                                         value: 0
@@ -132,16 +132,119 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                 options: {
                     text: 'Agregar',
                     icon: "plus",
-                    onClick: function() {
-
-                        $("#simplePopup").dxPopup({
-                            title: "Popup Title",
-                            contentTemplate: function () {
-                                return $("<p />").text("Popup content");
+                    onClick: function(e) {
+                        debugger;
+                        //TODO: Detalles de comportamiento.
+                        var dataGrid = $("#gridContainer").dxDataGrid("instance");
+                        var selectedRowsData = dataGrid.getSelectedRowsData();
+                        //alert(JSON.stringify(selectedRowsData[0].comportamientoId));
+                        let comportamientoId = selectedRowsData[0].comportamientoId
+                        $("#detallesPopup").dxPopup({
+                            title: "Detalle de Comportamiento",
+                            width: 570,
+                            height: 300,
+                            contentTemplate: (e) => {
+                                //return $("<p />").text("Popup content");
+                                var tipos = ['Positivo', 'Negativo'];
+                                var formDetallesContainer = $("<div id='formDetalles'>");
+                                    formDetallesContainer.dxForm({
+                                        formData: {
+                                            'fecha': '',
+                                            'tipo': '',
+                                            'comentario': '',
+                                            'comportamientoId': comportamientoId
+                                        },
+                                        colCount: 2,
+                                        items: [
+                                            {
+                                                dataField: 'comportamientoId',
+                                                visible: false
+                                            },
+                                            {
+                                                dataField: 'fecha',
+                                                caption: 'Fecha',
+                                                dataType: 'date',
+                                                editorType: 'dxDateBox',
+                                                editorOptions: {
+                                                    displayFormat: "dd/MM/yyyy"
+                                                },
+                                                validationRules: [
+                                                    {
+                                                        type: 'required',
+                                                        message: 'El campo es requerido.'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: 'tipo',
+                                                caption: 'Tipo',
+                                                editorType: 'dxRadioGroup',
+                                                editorOptions: {
+                                                    dataSource: tipos,
+                                                    layout: "horizontal"
+                                                },
+                                                validationRules: [
+                                                    {
+                                                        type: 'required',
+                                                        message: 'El campo es requerido.'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: 'comentario',
+                                                caption: 'Comentario',
+                                                editorType: 'dxTextArea',
+                                                colSpan: 2,
+                                                validationRules: [
+                                                    {
+                                                        type: 'required',
+                                                        message: 'El campo es requerido'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                itemType: 'empty',
+                                                colSpan: 2
+                                            },
+                                            {
+                                                itemType: 'button',
+                                                alignment: "right",
+                                                buttonOptions: {
+                                                    text: "Guardar",
+                                                    useSubmitBehavior: true,
+                                                    onClick: function () {
+                                                        debugger;
+                                                        alert('Obtener datos');
+                                                        var form = $("#formDetalles").dxForm("instance");
+                                                        var data = form.option("formData");
+                                                        alert(JSON.stringify(data));
+                                                        $http.post('/detallesComportamiento/guardarDetalles', data)
+                                                        .then(response => {
+                                                            alert(JSON.stringify(response.data));
+                                                        })
+                                                        .catch(error => {
+                                                            alert(error);
+                                                        })
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                itemType: 'button',
+                                                alignment: "left",
+                                                buttonOptions: {
+                                                    text: 'Cancelar',
+                                                    onClick: () =>  {
+                                                        $("#detallesPopup").dxPopup("hide");
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }).dxForm('instance');
+                                    e.append(formDetallesContainer);
                                 }
                         });
-                        $("#simplePopup").dxPopup("show");
-                                    //DevExpress.ui.notify("Refresh button has been clicked!");
+
+                        $("#detallesPopup").dxPopup("show");
                     }
                 }
             },
@@ -177,13 +280,14 @@ appNotas.controller('comportamientoController', function comportamientoControlle
         onSelectionChanged: function (selectedItems) {
            //$scope.selectedEmployee = selectedItems.selectedRowsData[0];
            //obtener la nota
-           let nota = typeof selectedItems.selectedRowsData[0].nota === 'undefined' ? 0 : selectedItems.selectedRowsData[0].nota;
-            debugger;
-           alert(JSON.stringify(selectedItems.selectedRowsData[0]));
+           debugger;
+           let nota = selectedItems.selectedRowsData.length > 0 ? selectedItems.selectedRowsData[0].nota : 0;
+            //alert(nota);
+           //alert(JSON.stringify(selectedItems.selectedRowsData[0]));
            $('#calificacion').html('Calificación');
            $('#nota').dxTextBox({
-               value: typeof selectedItems.selectedRowsData[0].nota === 'undefined' ? 0 : selectedItems.selectedRowsData[0].nota,
-               width: 80,
+               value: nota,
+               width: 90,
                buttons: [{
                 name: "password",
                 location: "after",
@@ -192,42 +296,17 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                     stylingMode: "text",
                     //type: "success",
                     onClick: function() {
-
                         $("#notaPopup").dxPopup({
                             title: "Ingrese la Calificación",
                             width: 280,
                             height: 250,
-
                             contentTemplate: function (e) {
-                                // var boton = $('#btnSave').dxButton({
-                                //     text: 'save'
-                                // })
-                                // var a = $("<div />").attr('id', 'notaContainner').dxTextBox({
-                                //     value: 5
-                                // }).dxTextBox('instance');
-                                // var c = a.option('value');
-
-                                //alert(c);
-                                // contentElement.append(
-                                //     $('<div />').attr('id', 'nota').dxTextBox({
-                                //         value: 5,
-                                //         width: 80,
-
-                                //     }),
-                                //     $('<div />').attr('id', 'buttonContainner').dxButton({
-                                //         text: 'Guardar',
-                                //         onClick: function(){
-
-
-                                //         }
-                                //     })
-                                // )
-
-
+                                //TODO: NOTA.
                                 var formContainer = $("<div id='form'>");
                                 formContainer.dxForm({
                                     formData: selectedItems.selectedRowsData[0],
                                     showValidationSummary: true,
+                                    colCount: 2,
                                     items: [
 
                                         {
@@ -236,6 +315,8 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                                         },
                                         {
                                             dataField: 'parcial_id',
+                                            caption: 'Parcial',
+                                            colSpan: 2,
                                             editorType: 'dxSelectBox',
                                             editorOptions: {
                                                 dataSource: parciales,
@@ -253,6 +334,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                                         },
                                         {
                                             dataField: 'nota',
+                                            colSpan: 2,
                                             validationRules: [
                                                 {
                                                     type: 'required',
@@ -261,8 +343,12 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                                             ]
                                         },
                                         {
+                                            itemType: 'empty',
+                                            colSpan: 2
+                                        },
+                                        {
                                             itemType: 'button',
-                                            alignment: "left",
+                                            alignment: "right",
                                             buttonOptions: {
                                                 text: "Guardar",
                                                 useSubmitBehavior: true,
@@ -270,7 +356,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                                                    // var a = $('#nota').dxTextBox('instance').option('value');
                                                     var form = $("#form").dxForm("instance");
                                                     var data = form.option("formData")
-                                                    alert(JSON.stringify(data));
+                                                    //alert(JSON.stringify(data));
                                                     $http.post('/notas/guardarNota', data)
                                                     .then(response => {
                                                         response.data;
@@ -284,7 +370,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                                         },
                                         {
                                             itemType: 'button',
-                                            alignment: "right",
+                                            alignment: "left",
                                             buttonOptions: {
                                                 text: 'Cancelar',
                                                 onClick: () =>{
@@ -295,53 +381,16 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                                     ]
                                 }).dxForm('instance');
                                 e.append(formContainer);
-
-
-                                 }
+                             }
                         });
                         $("#notaPopup").dxPopup("show");
                     }
                 }
             }]
 
-           })
+           });
+           //componente para detalles
         },
-
-        //
-        // onToolbarPreparing: function(e){
-        //     var dataGrid = e.component;
-
-        //     e.toolbarOptions.items.unshift({
-        //         location: 'before',
-
-        //     },
-        //     {
-        //         location: 'before',
-        //         widget: 'dxSelectBox',
-        //         options: {
-        //             width: 200,
-
-        //         }
-        //     },
-        //     {
-        //         location: 'before',
-        //         widget: 'dxCheckBox',
-        //         options: {
-        //             text: 'Positivo'
-        //         }
-        //     },
-        //     {
-
-        //             location: 'before',
-        //             widget: 'dxButton',
-        //             options: {
-        //                 text: 'Añadir'
-        //             }
-
-        //     })
-        // }
-        //
-
     }
 
 
