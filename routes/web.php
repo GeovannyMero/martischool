@@ -120,6 +120,7 @@ Route::post('/notas/guardarNota', 'NotasController@guardarNota');
 
 //detalles de comportamiento
 Route::post('/detallesComportamiento/guardarDetalles', 'DetallesComportamientoController@guardarDetalles');
+Route::post('/detallesComportamiento/detalles/{comportamientoId}', 'DetallesComportamientoController@detalles');
 
 //Parametros
 Route::get('/parametros', 'ParametrosController@index');

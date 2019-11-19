@@ -32,7 +32,7 @@
 
     font-weight: bold;
     /*font-size: 20px;*/
-} */
+/*}*/
 
 </style>
 <div class="box box-primary" ng-app='notasModule'>
@@ -40,12 +40,12 @@
         <h3 class="box-title">Comportamiento</h3>
     </div>
     <div class="box-body" ng-controller='comportamientoController'>
-    <input type="hidden" name="idCurso" id="idCurso" value="{{$idCurso}}">
+        <input type="hidden" name="idCurso" id="idCurso" value="{{$idCurso}}">
     <div>@{{cantidadEstudiantes}}</div>
     <div dx-toolbar="toolbarOptions"></div>
     <div class="row">
-    <div id="gridContainer" dx-data-grid="dataGridOptions"  class="column"></div>
-    <div id="employeeInfo" ng-init="selectedEmployee"  class="column">
+        <div id="gridContainer" dx-data-grid="dataGridOptions"  class="column"></div>
+        <div id="employeeInfo" ng-init="selectedEmployee"  class="column">
             {{-- <img class="employeePhoto" ng-src="{{selectedEmployee.Picture}}" /> --}}
 
             {{-- <p style='width: 50%'class="column">@{{selectedEmployee.primerNombre}}</p> --}}
@@ -56,6 +56,13 @@
                     <label for="calificacion" id="calificacion"></label>
                     <div id="nota"></div>
                     <div class="col-lg-7" style="padding-top: 20px">
+                    {{-- <p>@{{detallesComportamiento[0].fecha}}</p>
+                    <p ng-repeat='item in detallesComportamiento'>
+                        @{{item.fecha}}
+                    </p> --}}
+
+                        <detalles-component ng-repeat ='item in detallesComportamiento' fecha='@{{item.fecha}}' comentario = @{{item.comentario}} tipo = @{{item.tipo}}></detalles-component>
+                    </div>
                     {{-- <div>
                         <div class="box box-success">
                             <div class="box-header with-border">
@@ -92,7 +99,7 @@
                             </div>
                         </div>
                 </div> --}}
-                <detalles-component param='Hello'></detalles-component>
+                {{-- <detalles-component param='Hello'></detalles-component> --}}
                 {{-- </div> --}}
             {{-- </div> --}}
             {{-- <div dx-text-box='selectedEmployee.primerNombre'></div> --}}

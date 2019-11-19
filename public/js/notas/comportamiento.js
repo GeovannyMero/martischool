@@ -294,7 +294,6 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                 options: {
                     icon: "edit",
                     stylingMode: "text",
-                    //type: "success",
                     onClick: function() {
                         $("#notaPopup").dxPopup({
                             title: "Ingrese la Calificación",
@@ -389,7 +388,22 @@ appNotas.controller('comportamientoController', function comportamientoControlle
             }]
 
            });
-           //componente para detalles
+           //TODO: componente para detalles
+           let comportamientoId = selectedItems.selectedRowsData[0].comportamientoId;
+           if(comportamientoId > 0)
+           {
+               debugger;
+                let detalles = $http.post('/detallesComportamiento/detalles/' + comportamientoId)
+                .then(response => {
+                    $scope.detallesComportamiento = response.data;
+                })
+                .catch(error => {
+                    alert(JSON.stringify(error));
+                })
+           }else{
+               DevExpress.ui.notify('ERROR');
+           }
+
         },
     }
 

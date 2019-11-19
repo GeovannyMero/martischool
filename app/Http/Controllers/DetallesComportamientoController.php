@@ -38,4 +38,16 @@ class DetallesComportamientoController extends Controller
             return response()->json(['mensaje' => $e->getMessage()]);
         }
     }
+
+    public function detalles(int $comportamientoId){
+        try {
+            if($comportamientoId > 0)
+            {
+                $detalles = DetallesComportamiento::where('comportamiento_id', $comportamientoId)->get();
+            }
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+        return $detalles;
+    }
 }
