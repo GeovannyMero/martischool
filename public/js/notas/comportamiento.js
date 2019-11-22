@@ -396,6 +396,41 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                 let detalles = $http.post('/detallesComportamiento/detalles/' + comportamientoId)
                 .then(response => {
                     $scope.detallesComportamiento = response.data;
+                    $('#detalles').dxDataGrid({
+                        dataSource: response.data,
+                        // onCellPrepared: function(options){
+                        //   var fieldData = options.value;
+                        //     var fieldHtml = "";
+                        //       //if(fieldData && fieldData.value){
+                        //         if(fieldData === 'P'){
+                        //             fieldHtml += "<span style = 'color: red'>POSITIVO</span>";
+                        //         }
+                        //         options.cellElement.html(fieldHtml);
+                        //      //}
+
+
+                        // },
+                        columns: [
+                            {
+                                dataField: 'fecha',
+                            },
+                            {
+                                dataField: 'tipo',
+                                cellTemplate: (container, options) => {
+
+                                    if(options.data.tipo == 'P'){
+                                        debugger;
+                                        return $("<span style='color: white; background-color: green'>Positivo</span>");
+                                    }else{
+                                        return $("<span style='color: white; background-color: red'>Negativo</span>");
+                                    }
+                                }
+                            },
+                            {
+                                dataField: 'comentario'
+                            }
+                        ]
+                    })
                 })
                 .catch(error => {
                     alert(JSON.stringify(error));
@@ -409,4 +444,3 @@ appNotas.controller('comportamientoController', function comportamientoControlle
 
 
 });
-

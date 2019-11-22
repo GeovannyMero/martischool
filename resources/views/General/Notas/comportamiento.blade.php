@@ -60,8 +60,14 @@
                     <p ng-repeat='item in detallesComportamiento'>
                         @{{item.fecha}}
                     </p> --}}
+                    <div ng-repeat ='item in detallesComportamiento'>
 
-                        <detalles-component ng-repeat ='item in detallesComportamiento' fecha='@{{item.fecha}}' comentario = @{{item.comentario}} tipo = @{{item.tipo}}></detalles-component>
+
+                        <detalles-component
+                    fecha='@{{item.fecha}}' comentario = @{{item.comentario}} tipo = @{{item.tipo}}>
+                        </detalles-component>
+                    </div>
+                    {{-- <div dx-data-grid='dataGridDetalles' id='detalles'></div> --}}
                     </div>
                     {{-- <div>
                         <div class="box box-success">
@@ -112,4 +118,5 @@
 
     </div>
 </div>
+
 @endsection
