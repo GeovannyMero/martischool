@@ -61,54 +61,18 @@
                         @{{item.fecha}}
                     </p> --}}
                     <div ng-repeat ='item in detallesComportamiento'>
+                        <detalles-component ng-if="item.tipo == 'P'"
+                            fecha='@{{item.fecha}}' comentario = @{{item.comentario}} tipo = "POSITIVO" clase = "box box-success" icono = "fa fa-thumbs-up" color="#00a65a">
+                        </detalles-component>
 
-
-                        <detalles-component
-                    fecha='@{{item.fecha}}' comentario = @{{item.comentario}} tipo = @{{item.tipo}}>
+                        <detalles-component ng-if="item.tipo == 'N'"
+                            fecha='@{{item.fecha}}' comentario = @{{item.comentario}} tipo = "NEGATIVO" clase = "box box-danger" icono = "fa fa-thumbs-down" color="#dd4b39">
                         </detalles-component>
                     </div>
+
+
                     {{-- <div dx-data-grid='dataGridDetalles' id='detalles'></div> --}}
                     </div>
-                    {{-- <div>
-                        <div class="box box-success">
-                            <div class="box-header with-border">
-                                <h3>detalles</h3>
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" >
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="box-body">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, ratione! Saepe cum facilis eaque rem dolores officia quibusdam quos illum aut, necessitatibus suscipit itaque reprehenderit eum veritatis corporis, quae eligendi.</p>
-                            </div>
-                        </div>
-                    </div> --}}
-                    <!--2 opcion-->
-                    {{-- <div class="info-box bg-green">
-                        <span class="info-box-icon">
-                            <i class="fa fa-thumbs-up"></i>
-                        </span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">2019/10/01</span>
-                            <span class="info-box-number">Respondio bien</span>
-                        </div>
-                    </div>
-
-                    <div class="info-box bg-red">
-                            <span class="info-box-icon">
-                                <i class="fa fa-thumbs-down"></i>
-                            </span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">2019/11/14</span>
-                                <span class="info-box-number">Golpeo a un compañero</span>
-                            </div>
-                        </div>
-                </div> --}}
-                {{-- <detalles-component param='Hello'></detalles-component> --}}
-                {{-- </div> --}}
-            {{-- </div> --}}
-            {{-- <div dx-text-box='selectedEmployee.primerNombre'></div> --}}
         </div>
     </div>
         <div id="detallesPopup"></div>

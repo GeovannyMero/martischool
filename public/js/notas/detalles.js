@@ -12,9 +12,9 @@ appNotas.component('detallesComponent', {
         //     "</div>"+
         // "</div>"
 
-        "<div class='box box-success'>"+
-            "<div class='box-header with-border'>"+
-                "<h3>{{$ctrl.fecha}}<span id='tipo'>{{$ctrl.tipo}}</span></h3>"+
+        "<div class='{{$ctrl.clase}}'>"+
+            "<div class='box-header with-border' style='padding-top: 2px; padding-left: 0.5px'>"+
+                "<h3><span style='background-color:{{$ctrl.color}}; color: white; padding: 3px; border-radius: 3px'> {{$ctrl.tipo}} <i class='{{$ctrl.icono}}'></i></span></h3>"+
                 "<div class='box-tools pull-right'>"+
                     "<button type='button' class='btn btn-box-tool'>"+
                         "<i class='fa fa-pencil'></i>"+
@@ -28,12 +28,16 @@ appNotas.component('detallesComponent', {
                 "<p>{{$ctrl.comentario}}</p>"+
             "</div>"+
         "</div>"
+
     ].join(''),
-    controller: () =>{},
+    controller: () => {},
     bindings: {
         fecha: '@',
         comentario: '@',
-        tipo: '@'
+        tipo: '@',
+        clase: '@',
+        icono: '@',
+        color: '@'
     }
 
 })
