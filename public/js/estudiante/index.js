@@ -50,6 +50,7 @@ app.controller("appController", function estudianteController($scope, $http) {
         },
         //Update
         update: function(key, values) {
+            debugger;
             var id = JSON.stringify(key["id"]);
             //DevExpress.ui.notify(id,"success",6000);
             return $http
@@ -102,7 +103,7 @@ app.controller("appController", function estudianteController($scope, $http) {
         }
     });
 
-    // var representantes =
+     //var representantes =
     // new DevExpress.data.CustomStore({
     //     load: () => {
     //          return $http.post('/estudiante/representantes/3')
@@ -327,9 +328,11 @@ app.controller("appController", function estudianteController($scope, $http) {
                         message: "El curso es requerido"
                     }
                 ],
+
                 setCellValue: function(rowData, value) {
                     rowData.idCurso = value;
                     rowData.idParalelo = null;
+
                 },
                 lookup: {
                     dataSource: curso,
@@ -365,7 +368,7 @@ app.controller("appController", function estudianteController($scope, $http) {
             {
                 dataField: 'representantes',
                 caption: 'identificacion',
-                visible: true,
+                visible: false,
                 //editCellTemplate: 'gm'
 
             },
@@ -734,6 +737,43 @@ app.controller("appController", function estudianteController($scope, $http) {
             let id = e.data.id;
             if(id > 0){
                 representantes = e.data.representantes;
+                /*$scope.dataGridOptionsR = {
+
+                    dataSource: {
+                        store: representantes
+                    },
+                    showColumnLines: true,
+                    showRowLines: true,
+                    showBorders: true,
+                    editing: {
+                        mode: "batch",
+                        allowAdding: true,
+                        allowUpdating: true
+                    },
+                    columns: [
+                        {
+                            dataField: "cedula",
+                            caption: "Identificación"
+                        },
+                        {
+                            dataField: "nombre",
+                            caption: "Nombres"
+                        },
+                        {
+                            dataField: "apellidos",
+                            caption: "Apellidos"
+                        },
+                        {
+                            dataField: "parentesco",
+                            caption: "Parentesco"
+                        },
+                        {
+                            dataField: "activo",
+                            caption: "Activo",
+                            dataType: "boolean"
+                        }
+                   ]
+                };*/
                     // new DevExpress.data.CustomStore({
                     // load: () => {
                     //         return $http.post('/estudiante/representantes/3')
@@ -918,58 +958,6 @@ app.controller("appController", function estudianteController($scope, $http) {
                         //TODO:
                         tabs: [
                             {
-                                title: "Domicilio",
-                                icon: "home",
-                                items: [
-                                    {
-                                        dataField: "direccion",
-                                        caption: "Dirección",
-                                        editorOptions: {
-                                            showClearButton: true
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                //TODO: FAMILIARES
-                                title: "Familiares",
-                                icon: "fa fa-users",
-                                items: [
-                                    {
-                                        dataField: "representantes",
-                                        // template: function (data, itemElement) {
-                                        //     debugger;
-
-                                        //     itemElement.append("<div id='textAreaContainer'>")
-                                        //                .dxTextArea({
-                                        //                    value: data.component.option('formData')[data.dataField],
-
-                                        //                });
-                                        // }
-                                        //caption: "Identificación",
-                                        //cellTemplate: "cellTemplate",
-                                        //itemTemplate: 'city-template',
-                                        //editorType: 'dxDataGrid'
-                                        template:
-                                            '<div class="box-body">' +
-                                            '<div class="gridEstudiantes" class="demo-containder" ng-app="App" ng-controller="appController">' +
-                                            '<div id="gridContainer" dx-data-grid="dataGridOptionsR"></div>' +
-                                            "</div>" +
-                                            "</div>"
-                                    }
-                                ],
-                                // tabTemplate: function (itemData, itemIndex, itemElement) {debugger;
-                                //     itemElement.append("<p style='color: red'>" + itemData.items[0].dataField);
-                                //},
-                                // template: function (itemData, itemIndex, itemElement) {debugger;
-                                //         itemElement.append('<div class="box-body">' +
-                                //          '<div class="gridEstudiantes" class="demo-containder" ng-app="App" ng-controller="appController">' +
-                                //          '<div id="gridContainer" dx-data-grid="dataGridOptionsR"></div>' +
-                                //          "</div>" +
-                                //          "</div>");
-                                // }
-                            },
-                            {
                                 title: "Periodo",
                                 icon: "fa fa-calendar",
                                 colCount: 2,
@@ -1003,6 +991,58 @@ app.controller("appController", function estudianteController($scope, $http) {
                                     {
                                         dataField: "idParalelo",
                                         caption: "Paralelo"
+                                    }
+                                ]
+                            },
+                            {
+                                //TODO: FAMILIARES
+                                title: "Familiares",
+                                icon: "fa fa-users",
+                                items: [
+                                    {
+                                        //dataField: "representantes",
+                                        // template: function (data, itemElement) {
+                                        //     debugger;
+
+                                        //     itemElement.append("<div id='textAreaContainer'>")
+                                        //                .dxTextArea({
+                                        //                    value: data.component.option('formData')[data.dataField],
+
+                                        //                });
+                                        // }
+                                        //caption: "Identificación",
+                                        //cellTemplate: "cellTemplate",
+                                        //itemTemplate: 'city-template',
+                                        //editorType: 'dxDataGrid'
+                                        template:
+                                            '<div class="box-body">' +
+                                            '<div class="gridEstudiantes" class="demo-containder" ng-app="App" ng-controller="appController">' +
+                                            '<div id="gridContainer" dx-data-grid="dataGridOptionsR"></div>' +
+                                            "</div>" +
+                                            "</div>"
+                                    }
+                                ],
+                                // tabTemplate: function (itemData, itemIndex, itemElement) {debugger;
+                                //     itemElement.append("<p style='color: red'>" + itemData.items[0].dataField);
+                                //},
+                                // template: function (itemData, itemIndex, itemElement) {debugger;
+                                //         itemElement.append('<div class="box-body">' +
+                                //          '<div class="gridEstudiantes" class="demo-containder" ng-app="App" ng-controller="appController">' +
+                                //          '<div id="gridContainer" dx-data-grid="dataGridOptionsR"></div>' +
+                                //          "</div>" +
+                                //          "</div>");
+                                // }
+                            },
+                            {
+                                title: "Domicilio",
+                                icon: "home",
+                                items: [
+                                    {
+                                        dataField: "direccion",
+                                        caption: "Dirección",
+                                        editorOptions: {
+                                            showClearButton: true
+                                        }
                                     }
                                 ]
                             },
@@ -1072,40 +1112,41 @@ app.controller("appController", function estudianteController($scope, $http) {
         }
     };
 
-    $scope.dataGridOptionsR = {
+    // $scope.dataGridOptionsR = {
 
-        dataSource: {
-            store: representantes
-        },
-        showColumnLines: true,
-        showRowLines: true,
-        showBorders: true,
-        editing: {
-            mode: "popup",
-            allowAdding: true
-        },
-        columns: [
-            {
-                dataField: "cedula",
-                caption: "Identificación"
-            },
-            {
-                dataField: "nombre",
-                caption: "Nombres"
-            },
-            {
-                dataField: "apellidos",
-                caption: "Apellidos"
-            },
-            {
-                dataField: "parentesco",
-                caption: "Parentesco"
-            },
-            {
-                dataField: "activo",
-                caption: "Activo",
-                dataType: "boolean"
-            }
-       ]
-    };
+    //     dataSource: {
+    //         store: representantes
+    //     },
+    //     showColumnLines: true,
+    //     showRowLines: true,
+    //     showBorders: true,
+    //     editing: {
+    //         mode: "batch",
+    //         allowAdding: true,
+    //         allowUpdating: true
+    //     },
+    //     columns: [
+    //         {
+    //             dataField: "cedula",
+    //             caption: "Identificación"
+    //         },
+    //         {
+    //             dataField: "nombre",
+    //             caption: "Nombres"
+    //         },
+    //         {
+    //             dataField: "apellidos",
+    //             caption: "Apellidos"
+    //         },
+    //         {
+    //             dataField: "parentesco",
+    //             caption: "Parentesco"
+    //         },
+    //         {
+    //             dataField: "activo",
+    //             caption: "Activo",
+    //             dataType: "boolean"
+    //         }
+    //    ]
+    // };
 });

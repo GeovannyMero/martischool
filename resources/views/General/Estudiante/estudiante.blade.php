@@ -3,7 +3,8 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.spa.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.common.css')}}" />
-<link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.light.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.light.compact.css')}}" />
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.material.blue.light.css')}}" /> --}}
 
 <!--Angular -->
 <script type="text/javascript" src="{{ asset('DevExtreme/js/angular.min.js')}}"></script>
