@@ -156,9 +156,9 @@ app.controller('periodoController', function($scope, $http){
             visible: true,
             placeholder: 'Buscar'
         },
-        selection: {
-            mode: "multiple"
-        },
+        // selection: {
+        //     mode: "multiple"
+        // },
         editing: {
             mode: 'form',
             allowAdding: true,

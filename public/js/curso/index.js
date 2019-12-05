@@ -34,18 +34,47 @@ app.controller('cursoController', function cursoController($scope, $http){
                 {
                     return $http.post('/curso/update/' + id, values)
                     .then((response) => {
-                        console.log(response.data);
-                        DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                        DevExpress.ui.notify({
+                            message: response.data['mensaje'],
+                            position: {
+                                my: 'center top',
+                                at: 'center top',
+                                offset: '50 60'
+
+                            },
+                            width: 400,
+
+                        }, 'success', 3000)
                     })
                     .catch((err) => {
-                        DevExpress.ui.notify(err.data, 'error', 5000);
+                        DevExpress.ui.notify({
+                            message: err.data,
+                            position: {
+                                my: 'center top',
+                                at: 'center top',
+                                offset: '50 60'
+
+                            },
+                            width: 400,
+
+                        }, 'success', 3000)
                     })
                 }
             },
             insert: (values) => {
                 return $http.post('/curso/insert', values)
                 .then((response) => {
-                    DevExpress.ui.notify(response.data['mensaje'], 'success', 5000)
+                    DevExpress.ui.notify({
+                        message: response.data['mensaje'],
+                        position: {
+                            my: 'center top',
+                            at: 'center top',
+                            offset: '50 60'
+
+                        },
+                        width: 400,
+
+                    }, 'success', 3000)
                 })
                 .catch((err) => {
                     DevExpress.ui.notify(err.data, 'error', 5000);
@@ -57,7 +86,16 @@ app.controller('cursoController', function cursoController($scope, $http){
                 if(id > 0){
                     return $http.post('/curso/remove/' + id)
                     .then((response) => {
-                        DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                        DevExpress.ui.notify({
+                            message: response.data['mensaje'],
+                            position: {
+                                my: 'center top',
+                                at: 'center top',
+                                offset: '50 60'
+                            },
+                            width: 400,
+
+                        }, 'success', 3000)
                     }).catch((err) => {
                         DevExpress.ui.notify(err.data, 'error',5000);
                     })
@@ -162,6 +200,14 @@ app.controller('cursoController', function cursoController($scope, $http){
                 displayFormat: 'Total: {0}'
             }]
         },
+        onCellPrepared: function(e){
+            if(e.rowType === 'data'){
+                var $links = e.cellElement.find(".dx-link");
+                if(e.row.data.activo === false) {
+                    $links.filter(".dx-link-delete").remove();
+                }
+            }
+        },
         onEditingStart: e => e.component.columnOption('id','allowEditing', false),
 
         showBorders: true,
@@ -186,9 +232,9 @@ app.controller('cursoController', function cursoController($scope, $http){
             visible: true,
             placeholder: 'Buscar'
         },
-        selection: {
-            mode: "multiple"
-        },
+        // selection: {
+        //     mode: "multiple"
+        // },
         editing: {
             mode: "form",
             allowAdding: true,
@@ -276,21 +322,21 @@ app.controller('cursoController', function cursoController($scope, $http){
                         }
                     }
                 },
-                {
-                    location: 'after',
-                    widget: 'dxButton',
-                    options: {
-                        icon:'trash',
-                        //type: 'danger',
-                        onClick: function() {
-                            if(cursos.update());
-                            {
-                                console.log('OK');
-                            }
-                        }
+                // {
+                //     location: 'after',
+                //     widget: 'dxButton',
+                //     options: {
+                //         icon:'trash',
+                //         //type: 'danger',
+                //         onClick: function() {
+                //             if(cursos.update());
+                //             {
+                //                 console.log('OK');
+                //             }
+                //         }
 
-                    }
-                }
+                //     }
+                // }
             );
         }
 

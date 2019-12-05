@@ -14,6 +14,24 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
 
+
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li>
+            <a href="/home">
+                <i class="fa fa-dashboard"></i>Dashboard
+            </a>
+        </li>
+        <li class="active">
+            Administración Basica
+        </li>
+        <li class='active'>
+           Paralelos
+        </li>
+    </ol>
+</section>
+</br>
+</br>
 <div class="box box-primary" ng-app='paraleloModule' ng-controller='title'>
     <div class="box-header with-border">
         <h3 class="box-title">@{{modulo}}</h3>

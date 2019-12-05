@@ -35,13 +35,23 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                                 offset: '50 60'
 
                             },
-                            width: 600,
+                            width: 400,
 
-                        }, 'success', 5000)
+                        }, 'success', 3000)
                     })
                     .catch((err) => {
-                        DevExpress.ui.notify(err.data, 'error', 5000);
-                    })
+                        //DevExpress.ui.notify(err.data, 'error', 5000);
+                        DevExpress.ui.notify({
+                            message: err.data,
+                            position: {
+                                my: 'center top',
+                                at: 'center top',
+                                offset: '50 60'
+                            },
+                            width: 400
+
+                        }, 'error', 3000)
+                    });
                 }
             },
             insert: (values) => {
@@ -61,7 +71,17 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                     //result = DevExpress.ui.dialog.confirm(`<i>Está ud. seguro de eliminar el registro:</i></br><strong> [${id}] ${key.nombre}</strong>`, "Eliminar Nivel Academico");
                     return $http.post('/niveleducativo/remove/' + id)
                     .then((response) => {
-                        DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                        DevExpress.ui.notify({
+                            message: response.data['mensaje'],
+                            position: {
+                                my: 'center top',
+                                at: 'center top',
+                                offset: '50 60'
+
+                            },
+                            width: 400,
+
+                        }, 'success', 3000)
                     })
                     .catch((err) => {
                         DevExpress.ui.notify(err.data, 'error',5000);
@@ -135,6 +155,14 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                 displayFormat: 'Total: {0}'
             }]
         },
+        onCellPrepared: function(e){
+            if(e.rowType === 'data'){
+                var $links = e.cellElement.find(".dx-link");
+                if(e.row.data.activo === false) {
+                    $links.filter(".dx-link-delete").remove();
+                }
+            }
+        },
         onEditingStart: e => e.component.columnOption('id','allowEditing', false),
 
         showBorders: true,
@@ -162,9 +190,9 @@ app.controller('nivel_educativoController', function nivel_educativoController($
             visible: true,
             placeholder: 'Buscar'
         },
-        selection: {
-            mode: "multiple"
-        },
+        // selection: {
+        //     mode: "multiple"
+        // },
         editing: {
             mode: 'form',
             allowAdding: true,
@@ -237,27 +265,27 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                         }
                     }
                 },
-                {
-                    location: 'after',
-                    widget: 'dxButton',
-                    options: {
-                        icon:'trash',
-                        //type: 'danger',
-                        onClick: () => {
-                            let selectedData = dataGrid.getSelectedRowsData();
-                            if(selectedData.length > 0){
-                                let idData = selectedData[0];
-                                var ds = $("#gridContainer").dxDataGrid("getDataSource");
-                                ds.store().remove(idData);
-                                //debugger;
-                                //ds.reload();
-                                dataGrid.refresh();
-                            }
+                // {
+                //     location: 'after',
+                //     widget: 'dxButton',
+                //     options: {
+                //         icon:'trash',
+                //         //type: 'danger',
+                //         onClick: () => {
+                //             let selectedData = dataGrid.getSelectedRowsData();
+                //             if(selectedData.length > 0){
+                //                 let idData = selectedData[0];
+                //                 var ds = $("#gridContainer").dxDataGrid("getDataSource");
+                //                 ds.store().remove(idData);
+                //                 //debugger;
+                //                 //ds.reload();
+                //                 dataGrid.refresh();
+                //             }
 
-                        }
+                //         }
 
-                    }
-                }
+                //     }
+                // }
             );
         }
     }

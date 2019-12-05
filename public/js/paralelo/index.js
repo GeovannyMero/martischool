@@ -80,6 +80,14 @@ app.controller('paraleloController', function paraleloController($scope, $http){
             displayFormat: 'Total: {0}'
         }]
     },
+    onCellPrepared: function(e){
+        if(e.rowType === 'data'){
+            var $links = e.cellElement.find(".dx-link");
+            if(e.row.data.activo === false) {
+                $links.filter(".dx-link-delete").remove();
+            }
+        }
+    },
     onEditingStart: e => e.component.columnOption('id','allowEditing', false),
      showBorders: true,
      filterRow: {
@@ -98,9 +106,9 @@ app.controller('paraleloController', function paraleloController($scope, $http){
         pageIndex: 0,
         pageSize: 5
     },
-    selection: {
-        mode: "multiple"
-    },
+    // selection: {
+    //     mode: "multiple"
+    // },
     searchPanel: {
         visible: true,
         placeholder: 'Buscar'
