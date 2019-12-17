@@ -19,7 +19,17 @@ app.controller('periodoController', function($scope, $http){
         insert: (values) => {
             return $http.post('/periodos/insert', values)
             .then((response) => {
-                DevExpress.ui.notify(response.data['mensaje'], 'success', 5000)
+                DevExpress.ui.notify({
+                    message: response.data['mensaje'],
+                    position: {
+                        my: 'center top',
+                        at: 'center top',
+                        offset: '50 60'
+
+                    },
+                    width: 400,
+
+                }, 'success', 3000)
             })
             .catch((err) => {
                 DevExpress.ui.notify(err.data, 'error', 5000);
@@ -31,8 +41,17 @@ app.controller('periodoController', function($scope, $http){
                 {
                     return $http.post('/periodos/update/'+ id, values)
                     .then((response) => {
-                        console.log(response);
-                        DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
+                        DevExpress.ui.notify({
+                            message: response.data['mensaje'],
+                            position: {
+                                my: 'center top',
+                                at: 'center top',
+                                offset: '50 60'
+
+                            },
+                            width: 400,
+
+                        }, 'success', 3000)
                     })
                     .catch((err) => {
                         DevExpress.ui.notify(err.data, 'error', 5000);
@@ -40,13 +59,22 @@ app.controller('periodoController', function($scope, $http){
                 }
         },
         remove: (key) => {
-            debugger;
             let id =  key.id;
             if(id > 0)
             {
                 return $http.post('/periodos/remove/' + id)
                 .then((response) => {
-                    DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                    DevExpress.ui.notify({
+                        message: response.data['mensaje'],
+                        position: {
+                            my: 'center top',
+                            at: 'center top',
+                            offset: '50 60'
+
+                        },
+                        width: 400,
+
+                    }, 'success', 3000)
                 })
                 .catch((err) => {
                     DevExpress.ui.notify(err.data, 'error',5000);
@@ -68,7 +96,8 @@ app.controller('periodoController', function($scope, $http){
             {
                 dataField: 'id',
                 caption: 'Id',
-                width: 50
+                width: 50,
+                visible: false
             },
             {
                 dataField: 'periodo_inicio',
@@ -134,6 +163,22 @@ app.controller('periodoController', function($scope, $http){
                 dataType: 'boolean'
             }
         ],//fincolumnas
+        summary: {
+            totalItems: [{
+                column: "periodo_inicio",
+                summaryType: "count",
+                displayFormat: 'Total: {0}'
+            }]
+        },
+        onCellPrepared: function(e)
+        {
+            if(e.rowType === 'data'){
+                var $links = e.cellElement.find(".dx-link");
+                if(e.row.data.activo === false) {
+                    $links.filter(".dx-link-delete").remove();
+                }
+            }
+        },
         showBorders: true,
         filterRow: {
             visible: false
@@ -177,11 +222,12 @@ app.controller('periodoController', function($scope, $http){
                 [
                     {
                         dataField: 'id',
-                        caption: 'ID'
+                        caption: 'ID',
+                        visible: false
                     },
-                    {
-                        itemType: 'empty'
-                    },
+                    // {
+                    //     itemType: 'empty'
+                    // },
                     {
                         dataField: 'periodo_inicio',
                         caption: 'Año Incio',
@@ -264,6 +310,27 @@ app.controller('periodoController', function($scope, $http){
                     }
                 ]
             }*/
+        },
+        //toolbar
+        onToolbarPreparing: e =>
+        {
+            var dataGrid = e.component;
+
+            e.toolbarOptions.items.unshift(
+                {
+                    location: 'before',
+                },
+                {
+                    location: 'after',
+                    widget: 'dxButton',
+                    options: {
+                        icon: 'refresh',
+                        onClick: () => {
+                            dataGrid.refresh();
+                        }
+                    }
+                }
+            )
         }
     }
 

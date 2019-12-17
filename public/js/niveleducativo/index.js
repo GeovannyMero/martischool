@@ -57,7 +57,17 @@ app.controller('nivel_educativoController', function nivel_educativoController($
             insert: (values) => {
                 return $http.post('/niveleducativo/insert', values)
                 .then((response) => {
-                    DevExpress.ui.notify(response.data['mensaje'], 'success', 5000)
+                    DevExpress.ui.notify({
+                        message: response.data['mensaje'],
+                        position: {
+                            my: 'center top',
+                            at: 'center top',
+                            offset: '50 60'
+
+                        },
+                        width: 400,
+
+                    }, 'success', 3000)
                 })
                 .catch((err) => {
                     DevExpress.ui.notify(err.data, 'error', 5000);
@@ -212,11 +222,12 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                     {
                         dataField: 'id',
                         caption: 'Id',
+                        visible: false
 
                     },
-                    {
-                        itemType: 'empty'
-                    },
+                    // {
+                    //     itemType: 'empty'
+                    // },
                     {
                         dataField: 'nombre',
                         caption: 'Nombre',

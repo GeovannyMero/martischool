@@ -94,7 +94,17 @@ app.controller('personalController', function($scope, $http){
                 debugger;
                return $http.post('/personal/remove/' +id)
                .then((response) => {
-                    DevExpress.ui.notify(response.data['mensaje'], "success", 5000);
+                DevExpress.ui.notify({
+                    message: response.data['mensaje'],
+                    position: {
+                        my: 'center top',
+                        at: 'center top',
+                        offset: '50 60'
+
+                    },
+                    width: 400,
+
+                }, 'success', 3000)
                })
                .catch((err) => {
                     DevExpress.ui.notify(err.data, 'error',5000);

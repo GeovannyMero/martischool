@@ -131,11 +131,12 @@ app.controller('paraleloController', function paraleloController($scope, $http){
             items: [
                 {
                     dataField: 'id',
-                    caption: 'ID'
+                    caption: 'ID',
+                    visible: false
                 },
-                {
-                    itemType: 'empty'
-                },
+                // {
+                //     itemType: 'empty'
+                // },
                 {
                     dataField: 'nombre',
                     caption: 'Paralelo',

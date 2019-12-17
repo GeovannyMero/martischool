@@ -253,11 +253,12 @@ app.controller('cursoController', function cursoController($scope, $http){
                 [
                     {
                         dataField: 'id',
-                        caption: 'ID'
+                        caption: 'ID',
+                        visible: false
                     },
-                    {
-                        itemType: 'empty'
-                    },
+                    // {
+                    //     itemType: 'empty'
+                    // },
                     {
                         dataField: 'nombre',
                         caption: 'Nombre',
@@ -293,6 +294,9 @@ app.controller('cursoController', function cursoController($scope, $http){
                         editorOptions: {
                             showClearButton: true
                         }
+                    },
+                    {
+                        itemType: 'empty'
                     },
                     {
                         dataField: 'activo',

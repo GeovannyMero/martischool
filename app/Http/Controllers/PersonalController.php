@@ -42,7 +42,7 @@ class PersonalController extends Controller
 
     public function update(Request $request,  int $id, int $planificacion_id)
     {
-        //dd($p);
+        //dd($planificacion_id);
         try {
             if (Auth::check()) {
                 if ($id != 0) {
@@ -71,6 +71,7 @@ class PersonalController extends Controller
                                     ->where('planificacion_id', $planificacion_id)->first();
                                 //dd($planificacion);
                                 if ($planificacion != null) {
+                                    //TODO::validar que tenga un cambio para ctualizar
                                     $planificacion->planificacion_id = $request->planificacion_id;
                                     $planificacion->timestamps = false;
                                     if ($planificacion->save()) {

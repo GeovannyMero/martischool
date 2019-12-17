@@ -21,7 +21,17 @@ app.controller('planificacionController', function planificacionController($scop
            // debugger;
             return $http.post('/planificacion/insert', values)
             .then((response) => {
-                DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
+                DevExpress.ui.notify({
+                    message: response.data['mensaje'],
+                    position: {
+                        my: 'center top',
+                        at: 'center top',
+                        offset: '50 60'
+
+                    },
+                    width: 400,
+
+                }, 'success', 3000)
             })
             .catch((err) => {
                 console.log(err);
@@ -35,7 +45,17 @@ app.controller('planificacionController', function planificacionController($scop
             {
                 return $http.post('/planificacion/update/' + id, values)
                 .then((response) => {
-                    DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
+                    DevExpress.ui.notify({
+                        message: response.data['mensaje'],
+                        position: {
+                            my: 'center top',
+                            at: 'center top',
+                            offset: '50 60'
+
+                        },
+                        width: 400,
+
+                    }, 'success', 3000)
                 })
                 .catch((err) => {
                     DevExpress.ui.notify(err.data, 'error', 5000);
@@ -49,7 +69,17 @@ app.controller('planificacionController', function planificacionController($scop
             {
                 return $http.post('/planificacion/remove/' + id)
                 .then((response) => {
-                    DevExpress.ui.notify(response.data['mensaje'], 'success', 5000);
+                    DevExpress.ui.notify({
+                        message: response.data['mensaje'],
+                        position: {
+                            my: 'center top',
+                            at: 'center top',
+                            offset: '50 60'
+
+                        },
+                        width: 400,
+
+                    }, 'success', 3000)
                 })
                 .catch((err) => {
                     DevExpress.ui.notify(err.data, 'error', 5000);
@@ -211,9 +241,9 @@ var periodos = new DevExpress.data.CustomStore({
             visible: true,
             placeholder: 'Buscar'
         },
-        selection: {
-            mode: "multiple"
-        },
+        // selection: {
+        //     mode: "multiple"
+        // },
         editing: {
             mode: 'batch',
             allowAdding: true,
