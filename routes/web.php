@@ -9,6 +9,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
    // return view('welcome');
@@ -24,7 +26,7 @@ Route::get('/estudiante','EstudianteController@index');
 Route::post('/estudiante/all', 'EstudianteController@all');
 Route::post('/estudiante/saveEstudiante','EstudianteController@saveEstudiante');
 Route::post('/estudiante/update/{id}','EstudianteController@update');
-Route::get('/estudiante/detail/{id}', 'EstudianteController@detail');
+Route::get('/estudiante/detail/{id?}', 'EstudianteController@detail');
 Route::post('/estudiante/getInformation/{id}', 'EstudianteController@getInformation' );
 Route::post('/estudiante/representantes/{id}', 'EstudianteController@representantes');
 

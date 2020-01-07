@@ -9,6 +9,7 @@ use App\Modelos\Representante;
 use Illuminate\Support\Facades\DB;
 use Response;
 use View;
+use Exception;
 
 class EstudianteController extends Controller
 {
@@ -75,6 +76,7 @@ class EstudianteController extends Controller
     ///estudiante/update/
     public function update(Request $request, $id)
     {
+        dd($request);
         try {
             if ($id != 0) {
                 dd($id);
@@ -96,13 +98,22 @@ class EstudianteController extends Controller
         //dd($request);
         //$datos = $request;
         //dd($datos['id']);
-        $estudiante = Estudiantes::find($idEstudiante)->with(['representantes'])->get();
+        if($idEstudiante > 0)
+        {
+            $estudiante = Estudiantes::find($idEstudiante)->with(['representantes'])->get();
+        }
+        else
+        {
+            $estudiante = null;
+        }
+
         //dd($idEstudiante);
         return view('General.Estudiante.estudianteDetalles')->with(['estudiante' => $estudiante])->renderSections()['content'];
         //return $estudiante;
     }
 
-    public function representantes(int $id){
+    public function representantes(int $id)
+    {
         $estudi = Estudiantes::find($id)->representantes()->get();
         //dd($estudi);
         return $estudi;

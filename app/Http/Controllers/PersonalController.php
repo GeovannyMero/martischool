@@ -46,6 +46,7 @@ class PersonalController extends Controller
         try {
             if (Auth::check()) {
                 if ($id != 0) {
+                    DB::beginTransaction();
                     $personal = Personal::find($id);
                     if ($personal != null) {
                         $personal->cedula = $request->cedula != null ? $request->cedula : $personal->cedula;
@@ -72,9 +73,10 @@ class PersonalController extends Controller
                                 //dd($planificacion);
                                 if ($planificacion != null) {
                                     //TODO::validar que tenga un cambio para ctualizar
-                                    $planificacion->planificacion_id = $request->planificacion_id;
+                                    $planificacion->planificacion_id = $request->planificacion_id != null ? $request->planificacion_id : $planificacion_id;
                                     $planificacion->timestamps = false;
                                     if ($planificacion->save()) {
+                                        DB::commit();
                                         return response()->json(["mensaje" => "Se actualizó correctamente."]);
                                     }
                                 }
@@ -84,6 +86,7 @@ class PersonalController extends Controller
                 }
             }
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json(['mensaje' => $e->getMessage()]);
         }
     }

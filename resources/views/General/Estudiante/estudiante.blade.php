@@ -17,6 +17,17 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
 
+<style>
+/* #gridContainer {
+    height: 440px;
+} */
+
+.master-detail-caption {
+    padding: 0 0 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+</style>
 <div class="box box-primary" ng-app="App" ng-controller="appController"><ng-view></ng-view>
    <div class="box-header with-border">
         <h3 class="box-title">Estudiantes</h3>

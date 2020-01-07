@@ -82,7 +82,8 @@
                             <span class="pull-right-container"></span>
                         </a>
                     </li>
-
+                    <!-- Seguridad -->
+                    @if(Auth::user()->hasRol("Administrador"))
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-cog"></i>
@@ -92,14 +93,14 @@
                             </span>
                         </a>
                             <ul class="treeview-menu">
-                                {{-- @if(Auth::user()->hasRol("Administrador")) --}}
+
                                 <li class="">
                                     <a href="{{ url('/rol')}}">
                                         <i class="fa fa-circle-o"></i>Rol
                                         <span class="pull-right-container"></span>
                                     </a>
                                 </li>
-                                {{-- @endif --}}
+
                                 <!--<li class="">
                                     <a href="{{ url('/estudiante')}}">
                                         <i class="fa fa-circle-o"></i>Estudiante
@@ -108,8 +109,9 @@
                                 </li>-->
                             </ul>
                     </li>
-
+                    @endif
                     <!--Estudiante-->
+                    @if(Auth::user()->hasRol("Profesor") || Auth::user()->hasRol("Administrador"))
                     <li>
                         <a href="/estudiante">
                             <i class="fa fa-users"></i>
@@ -117,7 +119,9 @@
 
                         </a>
                     </li>
+                    @endif
                     <!--Personal-->
+                    @if(Auth::user()->hasRol("Administrador"))
                     <li>
                         <a href="{{ url('/personal')}}">
                             <i class="fa fa-users"></i>
@@ -125,7 +129,9 @@
                             <span class="pull-right-container"></span>
                         </a>
                     </li>
+                    @endif
                     <!--Academico-->
+                    @if(Auth::user()->hasRol("Administrador"))
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-book"></i>
@@ -194,7 +200,9 @@
                             </li><!--fin Administracion Periodo-->
                         </ul>
                     </li>
+                    @endif
                     <!--Calificaciones-->
+                    @if(Auth::user()->hasRol("Profesor"))
                     <li>
                         <a href="{{ url('/notas')}}">
                             <i class="fa fa-pencil"></i>
@@ -202,7 +210,9 @@
                             <span class="pull-right-container"></span>
                         </a>
                     </li>
+                    @endif
                     <!--Reportes-->
+                    @if(Auth::user()->hasRol("Profesor") || Auth::user()->hasRol("Administrador"))
                     <li class="treeview">
                         <a href="{{ url('/notas')}}">
                             <i class="fa fa-file-text-o"></i>
@@ -210,6 +220,9 @@
                             <span class="pull-right-container"></span>
                         </a>
                     </li>
+                    @endif
+                    <!-- Parametros -->
+                    @if(Auth::user()->hasRol("Administrador"))
                     <li>
                     <a href="{{url('/parametros')}}">
                             <i class="fa fa-pencil"></i>
@@ -217,13 +230,14 @@
                             <span class="pull-right-container"></span>
                         </a>
                     </li>
+                    @endif
                 </ul>
 
             </section>
         </aside>
         <div class="content-wrapper">
             <div class="content" id="pages">
-            @yield('content')
+            @yield('content')<!--contenido-->
             </div>
         </div>
 
