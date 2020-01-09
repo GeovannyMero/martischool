@@ -18,11 +18,16 @@
 <div class="box box-primary" ng-app = 'App' ng-controller='appController'>
 <input type="hidden" name="idEstudiante" id="idEstudiante" >
 <input type="hidden" name="estudiante" id="estudiante" value="{{$estudiante}}">
-        <div class="box-header with-border">
-        <h3 class="box-title">Estudiante: <strong>[{{$estudiante[0]['codigo']}}] {{$estudiante[0]['primerApellido']}}</strong></h3>
+    <div class="box-header with-border">
+        <h3 class="box-title">Estudiante:
+                @if(@count($estudiante) > 0)
+                <strong>[{{$estudiante[0]['codigo']}}] {{$estudiante[0]['primerApellido']}}, {{$estudiante[0]['primerNombre']}}
+                </strong>
+                @endif
+        </h3>
     </div>
-<div class="box-body" >
-<form action="" id="form-estudiante">
+    <div class="box-body" >
+        <form action="" id="form-estudiante">
         @csrf
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">

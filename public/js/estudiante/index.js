@@ -742,6 +742,9 @@ app.controller("appController", function estudianteController($scope, $http) {
                     .appendTo(container);
 
                 var rep = currentStudentData.representantes;
+                if(rep.length > 0){
+
+
                 console.log(rep);
                 $("<div>")
                     .dxDataGrid({
@@ -775,6 +778,9 @@ app.controller("appController", function estudianteController($scope, $http) {
                         })
                     })
                     .appendTo(container);
+                }else{
+                    $('<h1>').text('no tiene registrando ningun representante.').appendTo(container);
+                }
             }
         },
         summary: {
@@ -1172,10 +1178,10 @@ app.controller("appController", function estudianteController($scope, $http) {
                     options: {
                         icon: 'plus',
                         onClick: () => {
-                            alert('ok');
+                            //alert('ok');
                             $http.get("/estudiante/detail/0")
                             .then(result => {
-                                alert(JSON.stringify(result));
+                               // alert(JSON.stringify(result));
                                 document.getElementById("pages").innerHTML = "";
                                 document.getElementById('pages').innerHTML = result.data;
                                 $("#form").dxForm({
@@ -1197,12 +1203,7 @@ app.controller("appController", function estudianteController($scope, $http) {
                                                     editorOptions: {
                                                         disabled: true
                                                     },
-                                                    validationRules: [
-                                                        {
-                                                            type: 'required',
-                                                            message: 'El campo es requerido'
-                                                        }
-                                                    ]
+
                                                 },
                                                 {
                                                     itemType: 'empty'
