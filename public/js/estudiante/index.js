@@ -369,10 +369,9 @@ app.controller("appController", function estudianteController($scope, $http) {
                 caption: "Representantes",
                 visible: true,
                 calculateDisplayValue: function(rowData) {
-                    debugger;
                     return JSON.stringify(rowData.representantes);
                 }
-                //editCellTemplate: 'gm'
+
             },
              {
                  //TODO: DETALLES
@@ -395,16 +394,7 @@ app.controller("appController", function estudianteController($scope, $http) {
                                     document.getElementById("pages").innerHTML = "";
                                     document.getElementById('pages').innerHTML = result.data;
                                     let datosEstudiante = JSON.parse($('#estudiante').val());
-                                    // $('#codigo').dxTextBox({
-                                    //      value: datosEstudiante[0].codigo
-                                    //  })
-                                    //  $scope.texBox = {
-
-                                    //          value: datosEstudiante[0].codigo
-
-                                    //  }
                                     var est = $("#form").dxForm({
-
                                         formData: datosEstudiante[0],
                                         items: [
                                             {
@@ -729,7 +719,6 @@ app.controller("appController", function estudianteController($scope, $http) {
         masterDetail: {
             enabled: true,
             template: function(container, options) {
-                debugger;
                 var currentStudentData = options.data;
                 $("<div>")
                     .addClass("master-detail-caption")
@@ -743,9 +732,6 @@ app.controller("appController", function estudianteController($scope, $http) {
 
                 var rep = currentStudentData.representantes;
                 if(rep.length > 0){
-
-
-                console.log(rep);
                 $("<div>")
                     .dxDataGrid({
                         columnAutoWidth: true,
@@ -1184,6 +1170,7 @@ app.controller("appController", function estudianteController($scope, $http) {
                                // alert(JSON.stringify(result));
                                 document.getElementById("pages").innerHTML = "";
                                 document.getElementById('pages').innerHTML = result.data;
+
                                 $("#form").dxForm({
                                     formData: [],
                                     items: [
@@ -1320,7 +1307,8 @@ app.controller("appController", function estudianteController($scope, $http) {
                                                 },
                                                 {
                                                     dataField: 'activo',
-                                                    dataType: 'boolean'
+                                                    dataType: 'boolean',
+                                                    editorType: 'dxCheckBox'
                                                 }
 
                                             ]
@@ -1355,7 +1343,12 @@ app.controller("appController", function estudianteController($scope, $http) {
                                             buttonOptions: {
                                                 text: "Register",
                                                 type: "success",
-                                                useSubmitBehavior: true
+                                                useSubmitBehavior: true,
+                                                onClick: function(e){
+                                                   alert(e);
+                                                   //get data
+                                                   console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
+                                                }
                                             }
                                         }
                                     ]
@@ -1491,9 +1484,85 @@ app.controller("appController", function estudianteController($scope, $http) {
                                             },
                                         }
 
+                                });
+                                //TODO: PERIODOS
+                                $('#periodos').dxForm({
+                                    formData: [],
+                                    colCount: 2,
+                                    items: [
+                                        {
+                                            dataField: 'codigoMatricula',
+                                            caption: 'Código Matricula'
+                                        },
+                                        {
+                                            dataField: 'fechaMatricula',
+                                            caption: 'Fecha Matricula',
+                                            editorType: "dxDateBox",
+                                        },
+                                        {
+                                            dataField: "idCurso",
+                                            label: {
+                                                text: 'Cursos'
+                                            },
+                                            validationRules: [
+                                                {
+                                                    type: "required",
+                                                    message: "El curso es requerido"
+                                                }
+                                            ],
+                                            editorType: 'dxSelectBox',
+                                            editorOptions: {
+                                                dataSource: curso,
+                                                valueExpr: "id",
+                                                displayExpr: "nombre",
+                                                onValueChanged: function(e){
+                                                    debugger;
+                                                    var form = $('#periodos').dxForm('instance');
+                                                    var secondEditor =  form.getEditor("idParalelo");
+                                                    secondEditor.getDataSource().filter(['idCurso', '=', e.value]);
+                                                    secondEditor._options.readOnly = false;
+                                                    secondEditor.getDataSource().load();
+
+                                                }
+
+                                            }
+
+
+                                        },
+                                        {
+                                            dataField: 'idParalelo',
+                                            label: {
+                                                text: 'Paralelos'
+                                            },
+                                            validationRules: [
+                                                {
+                                                    type: 'required',
+                                                    message: 'El Campo es requerido.'
+                                                }
+                                            ],
+                                            editorType: 'dxSelectBox',
+                                            editorOptions: {
+                                                dataSource: paralelo,
+                                                valueExpr: 'idParalelo',
+                                                displayExpr: 'nombre',
+                                                //readOnly: true
+                                                // dataSource: options => {
+                                                //     debugger;
+                                                //     return {
+                                                //         store: paralelo,
+                                                //         filter: options.data
+                                                //             ? ["idCurso", "=", options.data.idCurso]
+                                                //             : null
+                                                //     };
+                                                // },
+                                            },
+
+
+                                        }
+                                    ]
                                 })
                             })
-                            .catch(error => {})
+                            .catch(error => {alert(error)})
                         }
                     }
                 }

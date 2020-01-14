@@ -21,6 +21,9 @@
 // })
 
 var  guardar = () => {
+    debugger;
+    var formInstance = $("#form-estudiante");
+
     let datosEstudiante = JSON.parse($('#estudiante').val());
     let formEstudiante= $('#form-estudiante').serializeArray();
     //console.log(datosEst);

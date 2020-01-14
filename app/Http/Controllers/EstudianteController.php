@@ -40,6 +40,7 @@ class EstudianteController extends Controller
     //GUARDAR
     public function saveEstudiante(Request $request)
     {
+        dd($request);
         try {
 
             if ($request->id == "") {

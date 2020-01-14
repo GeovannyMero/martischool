@@ -19,7 +19,7 @@
 <input type="hidden" name="idEstudiante" id="idEstudiante" >
 <input type="hidden" name="estudiante" id="estudiante" value="{{$estudiante}}">
     <div class="box-header with-border">
-        <h3 class="box-title">Estudiante:
+        <h3 class="box-title"><span><i class="fa fa-graduation-cap"></i></span> Estudiante:
                 @if(@count($estudiante) > 0)
                 <strong>[{{$estudiante[0]['codigo']}}] {{$estudiante[0]['primerApellido']}}, {{$estudiante[0]['primerNombre']}}
                 </strong>
@@ -27,18 +27,18 @@
         </h3>
     </div>
     <div class="box-body" >
-        <form action="" id="form-estudiante">
+        <form action="/estudiante/saveEstudiante" id="form-estudiante" method="post">
         @csrf
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#tab_1" data-toggle="tab">General</a>
+                    <a href="#tab_1" data-toggle="tab"><i class="fa fa-user"></i> General</a>
                 </li>
                 <li>
-                    <a href="#tab_2" data-toggle="tab">Representantes</a>
+                    <a href="#tab_2" data-toggle="tab"><i class="fa fa-users"></i> Representantes</a>
                 </li>
                 <li>
-                    <a href="#tab_3" data-toggle="tab">Periodo</a>
+                    <a href="#tab_3" data-toggle="tab"><i class="fa fa-calendar"></i> Periodo</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -63,7 +63,9 @@
                 <div class="tab-pane " id="tab_2">
                         <div id="gridContainer"></div>
                 </div>
-                <div class="tab-pane" id="tab_3"></div>
+                <div class="tab-pane" id="tab_3">
+                    <div id="periodos"></div>
+                </div>
             </div>
         </div>
     </form>
@@ -71,6 +73,7 @@
     <div class="box-footer">
         {{-- <button type="submit" class="btn btn-primary">Guardar</button> --}}
         <input type="button" value="Guardar" onclick="guardar()" class="btn btn-primary">
+        <input type="button" value="Cancelar" onclick="window.history.back()" class="btn btn-danger">
     </div>
 </div>
 @endsection
