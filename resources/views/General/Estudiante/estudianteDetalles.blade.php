@@ -19,7 +19,7 @@
 <input type="hidden" name="idEstudiante" id="idEstudiante" >
 <input type="hidden" name="estudiante" id="estudiante" value="{{$estudiante}}">
     <div class="box-header with-border">
-        <h3 class="box-title"><span><i class="fa fa-graduation-cap"></i></span> Estudiante:
+        <h3 class="box-title"><span><i class="fas fa-user-graduate"></i></span> Estudiante:
                 @if(@count($estudiante) > 0)
                 <strong>[{{$estudiante[0]['codigo']}}] {{$estudiante[0]['primerApellido']}}, {{$estudiante[0]['primerNombre']}}
                 </strong>
@@ -43,22 +43,7 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
-                        {{-- <div class="dx-field">
-                                <div class="dx-field-label">Código</div>
-                                <div class="dx-field-value">
-                                    <div id="codigo"></div>
-                                </div>
-                        </div>
-
-                        <div class="dx-field">
-                                <div class="dx-field-label">Código</div>
-                                <div class="dx-field-value">
-                                    <div dx-text-box="textBox"></div>
-                                <p>@{{textBox}}</p>
-                                </div>
-                        </div> --}}
                         <div id="form"></div>
-
                 </div>
                 <div class="tab-pane " id="tab_2">
                         <div id="gridContainer"></div>
@@ -72,8 +57,9 @@
     </div>
     <div class="box-footer">
         {{-- <button type="submit" class="btn btn-primary">Guardar</button> --}}
-        <input type="button" value="Guardar" onclick="guardar()" class="btn btn-primary">
-        <input type="button" value="Cancelar" onclick="window.history.back()" class="btn btn-danger">
+        {{-- <input type="button" value="Guardar" onclick="guardar()" class="btn btn-primary"> --}}
+        <div id="guardar"></div>
+        <input type="button" value="Cancelar" onclick="cancelar();" class="btn btn-danger">
     </div>
 </div>
 @endsection

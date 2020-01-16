@@ -19,7 +19,7 @@ app.controller("appController", function estudianteController($scope, $http) {
             return $http.post("/estudiante/all").then(
                 function(response) {
                     //debugger;
-                    console.log(JSON.stringify(response.data));
+                    //console.log(JSON.stringify(response.data));
                     return response.data;
                 },
                 function(response) {
@@ -378,10 +378,15 @@ app.controller("appController", function estudianteController($scope, $http) {
                 type: "buttons",
                 width: 80,
                 buttons: [
-                    //    {
-                    //        icon: 'exportpdf',
-                    //        visible: true
-                    //    }
+                       {
+                           icon: 'trash',
+                           visible: true
+                       },
+                       {
+                        icon: 'exportpdf',
+                        visible: true,
+                        hint: 'Descargar ficha estudiante'
+                    },
                     {
                         icon: "edit",
                         visible: true,
@@ -716,6 +721,8 @@ app.controller("appController", function estudianteController($scope, $http) {
         //         }
         //     }
         // },
+
+        //MASTER DETAIL
         masterDetail: {
             enabled: true,
             template: function(container, options) {
@@ -1164,10 +1171,8 @@ app.controller("appController", function estudianteController($scope, $http) {
                     options: {
                         icon: 'plus',
                         onClick: () => {
-                            //alert('ok');
                             $http.get("/estudiante/detail/0")
                             .then(result => {
-                               // alert(JSON.stringify(result));
                                 document.getElementById("pages").innerHTML = "";
                                 document.getElementById('pages').innerHTML = result.data;
 
@@ -1337,20 +1342,20 @@ app.controller("appController", function estudianteController($scope, $http) {
                                                 }
                                             ]
                                         },
-                                        {
-                                            itemType: "button",
-                                            horizontalAlignment: "left",
-                                            buttonOptions: {
-                                                text: "Register",
-                                                type: "success",
-                                                useSubmitBehavior: true,
-                                                onClick: function(e){
-                                                   alert(e);
-                                                   //get data
-                                                   console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
-                                                }
-                                            }
-                                        }
+                                        // {
+                                        //     itemType: "button",
+                                        //     horizontalAlignment: "left",
+                                        //     buttonOptions: {
+                                        //         text: "Register",
+                                        //         type: "success",
+                                        //         useSubmitBehavior: true,
+                                        //         onClick: function(e){
+                                        //            alert(e);
+                                        //            //get data
+                                        //            console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
+                                        //         }
+                                        //     }
+                                        // }
                                     ]
                                 }).dxForm('instance');
                                 //REPRESENTANTE
@@ -1516,7 +1521,6 @@ app.controller("appController", function estudianteController($scope, $http) {
                                                 valueExpr: "id",
                                                 displayExpr: "nombre",
                                                 onValueChanged: function(e){
-                                                    debugger;
                                                     var form = $('#periodos').dxForm('instance');
                                                     var secondEditor =  form.getEditor("idParalelo");
                                                     secondEditor.getDataSource().filter(['idCurso', '=', e.value]);
@@ -1560,7 +1564,27 @@ app.controller("appController", function estudianteController($scope, $http) {
 
                                         }
                                     ]
-                                })
+                                });
+                                $("#guardar").dxButton({
+                                    text: "Guardar",
+                                    type: "success",
+                                    //useSubmitBehavior: true
+                                    onClick: (e) => {
+                                        //Validacion de los formularios
+                                        console.log($('#form-estudiante').serializeArray());
+                                        var form = $("#form").dxForm("instance");
+                                        var formPerido = $('#periodos').dxForm('instance');
+                                        var result = form.validate();
+                                        var resultPeriodo = formPerido.validate();
+                                        console.log(result)
+                                        console.log(resultPeriodo);
+                                        if(result.isValid && resultPeriodo.isValid){
+                                            alert('ok');
+                                            //console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
+                                            guardar();
+                                        }
+                                    }
+                                });
                             })
                             .catch(error => {alert(error)})
                         }

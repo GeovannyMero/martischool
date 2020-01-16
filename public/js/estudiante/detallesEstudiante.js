@@ -19,12 +19,11 @@
 //         }
 //     });
 // })
-
 var  guardar = () => {
     debugger;
     var formInstance = $("#form-estudiante");
 
-    let datosEstudiante = JSON.parse($('#estudiante').val());
+    //let datosEstudiante = JSON.parse($('#estudiante').val());
     let formEstudiante= $('#form-estudiante').serializeArray();
     //console.log(datosEst);
     let estudiante =    {
@@ -50,5 +49,9 @@ var  guardar = () => {
     .fail(error => {
         alert(error);
     })
+}
+
+var cancelar = () => {
+    window.location = '/estudiante';
 }
 
