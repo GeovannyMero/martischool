@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Response;
 use View;
 use Exception;
-
+use Barryvdh\DomPDF\Facade as PDF;
+use App;
 class EstudianteController extends Controller
 {
     public function index()
@@ -118,5 +119,20 @@ class EstudianteController extends Controller
         $estudi = Estudiantes::find($id)->representantes()->get();
         //dd($estudi);
         return $estudi;
+    }
+
+    public function fichaEstudiante()
+    {
+
+        // $pdf = App::make('dompdf.wrapper');
+        // $pdf->loadHTML('<h1>Styde.net</h1>');
+
+        // return $pdf->download('mi-archivo.pdf');
+        // return PDF::loadView('General.Estudiante.estudianteDetalles')
+        //     ->download('archivo.pdf');
+
+        $pdf = App::make('dompdf.wrapper');
+$pdf->loadHTML('<h1>Test</h1>');
+return $pdf->stream('Despacho.pdf');
     }
 }

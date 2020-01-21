@@ -385,7 +385,17 @@ app.controller("appController", function estudianteController($scope, $http) {
                        {
                         icon: 'exportpdf',
                         visible: true,
-                        hint: 'Descargar ficha estudiante'
+                        hint: 'Descargar ficha estudiante',
+                        onClick: () =>
+                        {
+                            $http.get('/estudiante/fichaEstudiante')
+                            .then(result => {
+                                //console.log(JSON.stringify(result));
+                               // window.open(result, '_blank');
+                               result;
+                            })
+                            .catch(error => { alert(error)})
+                        }
                     },
                     {
                         icon: "edit",
@@ -1264,7 +1274,8 @@ app.controller("appController", function estudianteController($scope, $http) {
                                                 },
                                                 {
                                                     dataField: 'fechanacimiento',
-                                                    caption: 'Fecha de Nacimiento',
+                                                    //caption: 'Fecha de Nacimiento',
+                                                    label: {text: 'Fecha Nacimiento'},
                                                     editorType: 'dxDateBox',
                                                     editorOptions: {
                                                         width: '100%',
@@ -1278,12 +1289,13 @@ app.controller("appController", function estudianteController($scope, $http) {
                                                     ]
 
                                                 },
-                                                {
-                                                    dataField: 'lugarNacimiento'
-                                                },
-                                                {
-                                                    dataField: 'nacionalidad'
-                                                },
+
+                                                // {
+                                                //     dataField: 'lugarNacimiento'
+                                                // },
+                                                // {
+                                                //     dataField: 'nacionalidad'
+                                                // },
                                                 {
                                                     dataField: 'genero',
                                                     editorType: 'dxRadioGroup',
@@ -1311,6 +1323,23 @@ app.controller("appController", function estudianteController($scope, $http) {
 
                                                 },
                                                 {
+                                                    dataField: 'telefono'
+                                                },
+                                                {
+                                                    itemType: 'empty'
+                                                },
+                                                {
+                                                    dataField: 'direccion',
+                                                    colSpan: 2,
+                                                    editorType: 'dxTextArea',
+                                                    validationRules: [
+                                                        {
+                                                            type: 'required',
+                                                            message: 'El campo es obligatorio.'
+                                                        }
+                                                    ]
+                                                },
+                                                {
                                                     dataField: 'activo',
                                                     dataType: 'boolean',
                                                     editorType: 'dxCheckBox'
@@ -1318,7 +1347,7 @@ app.controller("appController", function estudianteController($scope, $http) {
 
                                             ]
                                         },
-                                        {
+                                        /*{
                                             itemType: 'group',
                                             caption: 'Contacto',
                                             colCount: 2,
@@ -1341,7 +1370,7 @@ app.controller("appController", function estudianteController($scope, $http) {
                                                     ]
                                                 }
                                             ]
-                                        },
+                                        },*/
                                         // {
                                         //     itemType: "button",
                                         //     horizontalAlignment: "left",
@@ -1356,6 +1385,18 @@ app.controller("appController", function estudianteController($scope, $http) {
                                         //         }
                                         //     }
                                         // }
+                                    ]
+                                }).dxForm('instance');
+                                //INFORMACION ADICIONAL
+                                $('#form_info_adicional').dxForm({
+                                    formData: [],
+                                    items: [
+                                                {
+                                                    dataField: 'nacionalidad'
+                                                },
+                                                {
+                                                    dataField: 'lugarNacimiento'
+                                                },
                                     ]
                                 }).dxForm('instance');
                                 //REPRESENTANTE
@@ -1578,10 +1619,18 @@ app.controller("appController", function estudianteController($scope, $http) {
                                         var resultPeriodo = formPerido.validate();
                                         console.log(result)
                                         console.log(resultPeriodo);
+                                        console.log($("#gridContainer").dxDataGrid("getDataSource")._items.length);
+                                        let cantidadRepresentantes = $("#gridContainer").dxDataGrid("getDataSource")._items.length;
                                         if(result.isValid && resultPeriodo.isValid){
-                                            alert('ok');
-                                            //console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
-                                            guardar();
+                                            if(cantidadRepresentantes > 0){
+                                                debugger;
+                                                alert('ok');
+                                                console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
+                                                guardar();
+                                            }else{
+                                                DevExpress.ui.notify("Se debe registrar al menos un representante.", 'error', 5000);
+                                            }
+
                                         }
                                     }
                                 });
