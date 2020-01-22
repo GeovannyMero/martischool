@@ -11,7 +11,7 @@ app.config(function($routeProvider, $locationProvider) {
         .otherwise({ redirectTo: "/" });
 });
 
-app.controller("appController", function estudianteController($scope, $http) {
+app.controller("appController", function estudianteController($scope, $http, $location) {
     var representantes = [];
     var estudiantes = new DevExpress.data.CustomStore({
         //load
@@ -388,13 +388,18 @@ app.controller("appController", function estudianteController($scope, $http) {
                         hint: 'Descargar ficha estudiante',
                         onClick: () =>
                         {
+                            //TODO:PDF
                             $http.get('/estudiante/fichaEstudiante')
                             .then(result => {
                                 //console.log(JSON.stringify(result));
                                // window.open(result, '_blank');
-                               result;
+                               var res = result;
+                                console.log(res.config.url);
+                                location.assign(res.config.url);
+                              // result;
                             })
                             .catch(error => { alert(error)})
+
                         }
                     },
                     {
@@ -499,12 +504,12 @@ app.controller("appController", function estudianteController($scope, $http) {
                                                             }
                                                         ]
                                                     },
-                                                    {
-                                                        dataField: 'lugarNacimiento'
-                                                    },
-                                                    {
-                                                        dataField: 'nacionalidad'
-                                                    },
+                                                    // {
+                                                    //     dataField: 'lugarNacimiento'
+                                                    // },
+                                                    // {
+                                                    //     dataField: 'nacionalidad'
+                                                    // },
                                                     {
                                                         dataField: 'genero',
                                                         editorType: 'dxRadioGroup',
@@ -531,47 +536,76 @@ app.controller("appController", function estudianteController($scope, $http) {
                                                         },
                                                     },
                                                     {
+                                                        dataField: 'telefono'
+                                                    },
+                                                    {
+                                                        itemType: 'empty'
+                                                    },
+                                                    {
+                                                        dataField: 'direccion',
+                                                        colSpan: 2,
+                                                        editorType: 'dxTextArea',
+                                                        validationRules: [
+                                                            {
+                                                                type: 'required',
+                                                                message: 'El campo es obligatorio.'
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
                                                         dataField: 'activo'
                                                     }
                                                 ]
 
                                         },
-                                        {
-                                            itemType: 'group',
-                                            caption: 'Contacto',
-                                            colCount: 2,
-                                            items: [
-                                                {
-                                                    dataField: 'telefono'
-                                                },
-                                                {
-                                                    itemType: 'empty'
-                                                },
-                                                {
-                                                    dataField: 'direccion',
-                                                    colSpan: 2,
-                                                    editorType: 'dxTextArea',
-                                                    validationRules: [
-                                                        {
-                                                            type: 'required',
-                                                            message: 'El campo es obligatorio.'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            itemType: "button",
-                                            horizontalAlignment: "left",
-                                            buttonOptions: {
-                                                text: "Register",
-                                                type: "success",
-                                                useSubmitBehavior: true
-                                            }
-                                        }
+                                        // {
+                                        //     itemType: 'group',
+                                        //     caption: 'Contacto',
+                                        //     colCount: 2,
+                                        //     items: [
+                                        //         {
+                                        //             dataField: 'telefono'
+                                        //         },
+                                        //         {
+                                        //             itemType: 'empty'
+                                        //         },
+                                        //         {
+                                        //             dataField: 'direccion',
+                                        //             colSpan: 2,
+                                        //             editorType: 'dxTextArea',
+                                        //             validationRules: [
+                                        //                 {
+                                        //                     type: 'required',
+                                        //                     message: 'El campo es obligatorio.'
+                                        //                 }
+                                        //             ]
+                                        //         }
+                                        //     ]
+                                        // },
+                                        // {
+                                        //     itemType: "button",
+                                        //     horizontalAlignment: "left",
+                                        //     buttonOptions: {
+                                        //         text: "Register",
+                                        //         type: "success",
+                                        //         useSubmitBehavior: true
+                                        //     }
+                                        // }
 
                                     ]
                                      }).dxForm("instance");
+                                     //INFO ADICIONAL
+                                     $('#form_info_adicional').dxForm({
+                                        formData: datosEstudiante[0],
+                                        items: [
+                                                    {
+                                                        dataField: 'nacionalidad'
+                                                    },
+                                                    {
+                                                        dataField: 'lugarNacimiento'
+                                                    },
+                                        ]
+                                    }).dxForm('instance');
                                      //REPRESENTANTES
                                      $("#gridContainer").dxDataGrid({
                                         dataSource: datosEstudiante[0].representantes,
@@ -703,7 +737,109 @@ app.controller("appController", function estudianteController($scope, $http) {
                                             },
                                         }
                                     });
+                                    //TODO: PERIODOS
+                                $('#periodos').dxForm({
+                                    formData:  datosEstudiante[0],
+                                    colCount: 2,
+                                    items: [
+                                        {
+                                            dataField: 'codigoMatricula',
+                                            caption: 'Código Matricula'
+                                        },
+                                        {
+                                            dataField: 'fechaMatricula',
+                                            caption: 'Fecha Matricula',
+                                            editorType: "dxDateBox",
+                                        },
+                                        {
+                                            dataField: "idCurso",
+                                            label: {
+                                                text: 'Cursos'
+                                            },
+                                            validationRules: [
+                                                {
+                                                    type: "required",
+                                                    message: "El curso es requerido"
+                                                }
+                                            ],
+                                            editorType: 'dxSelectBox',
+                                            editorOptions: {
+                                                dataSource: curso,
+                                                valueExpr: "id",
+                                                displayExpr: "nombre",
+                                                onValueChanged: function(e){
+                                                    var form = $('#periodos').dxForm('instance');
+                                                    var secondEditor =  form.getEditor("idParalelo");
+                                                    secondEditor.getDataSource().filter(['idCurso', '=', e.value]);
+                                                    secondEditor._options.readOnly = false;
+                                                    secondEditor.getDataSource().load();
 
+                                                }
+
+                                            }
+
+
+                                        },
+                                        {
+                                            dataField: 'idParalelo',
+                                            label: {
+                                                text: 'Paralelos'
+                                            },
+                                            validationRules: [
+                                                {
+                                                    type: 'required',
+                                                    message: 'El Campo es requerido.'
+                                                }
+                                            ],
+                                            editorType: 'dxSelectBox',
+                                            editorOptions: {
+                                                dataSource: paralelo,
+                                                valueExpr: 'idParalelo',
+                                                displayExpr: 'nombre',
+                                                //readOnly: true
+                                                // dataSource: options => {
+                                                //     debugger;
+                                                //     return {
+                                                //         store: paralelo,
+                                                //         filter: options.data
+                                                //             ? ["idCurso", "=", options.data.idCurso]
+                                                //             : null
+                                                //     };
+                                                // },
+                                            },
+
+
+                                        }
+                                    ]
+                                });
+                                $("#guardar").dxButton({
+                                    text: "Guardar",
+                                    type: "success",
+                                    //useSubmitBehavior: true
+                                    onClick: (e) => {
+                                        //Validacion de los formularios
+                                        console.log($('#form-estudiante').serializeArray());
+                                        var form = $("#form").dxForm("instance");
+                                        var formPerido = $('#periodos').dxForm('instance');
+                                        var result = form.validate();
+                                        var resultPeriodo = formPerido.validate();
+                                        console.log(result)
+                                        console.log(resultPeriodo);
+                                        console.log($("#gridContainer").dxDataGrid("getDataSource")._items.length);
+                                        let cantidadRepresentantes = $("#gridContainer").dxDataGrid("getDataSource")._items.length;
+                                        if(result.isValid && resultPeriodo.isValid){
+                                            if(cantidadRepresentantes > 0){
+                                                debugger;
+                                                alert('ok');
+                                                console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
+                                                guardar();
+                                            }else{
+                                                DevExpress.ui.notify("Se debe registrar al menos un representante.", 'error', 5000);
+                                            }
+
+                                        }
+                                    }
+                                });
                                 })
                                 .catch(function(error) {
                                     DevExpress.ui.notify(error.data, 'error', 5000);

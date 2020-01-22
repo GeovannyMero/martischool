@@ -9,10 +9,19 @@
 <script type="text/javascript" src="{{ asset('DevExtreme/js/angular.min.js')}}"></script>
 <!--script-->
 <script src="https://cdn3.devexpress.com/jslib/19.1.6/js/dx.all.js"></script>
+<script type="text/javascript" src="{{ asset('js/localization/dx.messages.es.js')}}"></script>
 
 <script type="text/javascript" src="{{ asset('js/estudiante/detallesEstudiante.js')}}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
+<script>
+ $(function(){
+     debugger;
+    var locale = getLocale();
+    Globalize.locale(locale);
+    console.log(locale);
+ })
 
+</script>
 <div class="box box-primary" ng-app = 'App' ng-controller='appController'>
     <input type="hidden" name="idEstudiante" id="idEstudiante" >
     <input type="hidden" name="estudiante" id="estudiante" value="{{$estudiante}}">
@@ -33,7 +42,7 @@
                         <a href="#tab_1" data-toggle="tab"><i class="fa fa-user"></i> General</a>
                     </li>
                     <li>
-                        <a href="#tab_2" data-toggle="tab"><i class="fa fa-users"></i> Información Adicional</a>
+                        <a href="#tab_2" data-toggle="tab"><i class="fa fa-info-circle"></i> Información Adicional</a>
                     </li>
                     <li>
                         <a href="#tab_3" data-toggle="tab"><i class="fa fa-users"></i> Representantes</a>
@@ -67,6 +76,8 @@
         </div>
     </div>
 
+<script>
 
+</script>
 
 @endsection

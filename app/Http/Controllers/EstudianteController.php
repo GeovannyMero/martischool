@@ -132,7 +132,7 @@ class EstudianteController extends Controller
         //     ->download('archivo.pdf');
 
         $pdf = App::make('dompdf.wrapper');
-$pdf->loadHTML('<h1>Test</h1>');
-return $pdf->stream('Despacho.pdf');
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->download('Despacho.pdf');
     }
 }

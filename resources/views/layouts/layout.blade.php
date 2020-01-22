@@ -13,8 +13,8 @@
     <script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
     <!--Referencia AdminLTE -->
     <link rel="stylesheet" href="{{ asset('Bootstrap/bootstrap.min.css')}}" />
-    {{-- <link rel="stylesheet" href="{{ asset('font-awesome-4.7.0/css/font-awesome.min.css')}}" /> --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" href="{{ asset('font-awesome-4.7.0/css/font-awesome.min.css')}}" />
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"> --}}
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/AdminLTE.min.css') }}" />
     <!-- <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/skins/_all-skins.min.css')}}" /> -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/skins/skin-blue.css')}}" />
