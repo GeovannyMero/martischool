@@ -14,13 +14,13 @@
 <script type="text/javascript" src="{{ asset('js/estudiante/detallesEstudiante.js')}}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
 <script>
- $(function(){
-     debugger;
-    var locale = getLocale();
-    Globalize.locale(locale);
-    console.log(locale);
- })
-
+//  $(function(){
+//     var locale = getLocale();
+//     Globalize.locale(locale);
+//     console.log(locale);
+//     sessionStorage.setItem("locale", es);
+//     document.location.reload();
+ //})
 </script>
 <div class="box box-primary" ng-app = 'App' ng-controller='appController'>
     <input type="hidden" name="idEstudiante" id="idEstudiante" >

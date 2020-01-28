@@ -406,6 +406,7 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                         icon: "edit",
                         visible: true,
                         onClick: e => {
+                            debugger;
                             var datos = e.row.data;
                             $http.get("/estudiante/detail/" + datos['id'])
                                 .then(function(result) {
@@ -816,16 +817,16 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                     text: "Guardar",
                                     type: "success",
                                     //useSubmitBehavior: true
-                                    onClick: (e) => {
+                                    onClick: (e) => {//TODO: Guardar Estudiante
                                         //Validacion de los formularios
                                         console.log($('#form-estudiante').serializeArray());
                                         var form = $("#form").dxForm("instance");
                                         var formPerido = $('#periodos').dxForm('instance');
                                         var result = form.validate();
                                         var resultPeriodo = formPerido.validate();
-                                        console.log(result)
-                                        console.log(resultPeriodo);
-                                        console.log($("#gridContainer").dxDataGrid("getDataSource")._items.length);
+                                        //console.log(result)
+                                        //console.log(resultPeriodo);
+                                        //console.log($("#gridContainer").dxDataGrid("getDataSource")._items.length);
                                         let cantidadRepresentantes = $("#gridContainer").dxDataGrid("getDataSource")._items.length;
                                         if(result.isValid && resultPeriodo.isValid){
                                             if(cantidadRepresentantes > 0){
@@ -834,7 +835,7 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                                 console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
                                                 guardar();
                                             }else{
-                                                DevExpress.ui.notify("Se debe registrar al menos un representante.", 'error', 5000);
+                                                DevExpress.ui.notify("Se debe registrar al menos un representante.", 'warning', 5000);
                                             }
 
                                         }
@@ -1741,7 +1742,7 @@ app.controller("appController", function estudianteController($scope, $http, $lo
 
                                         }
                                     ]
-                                });
+                                });//TODO: GUARDAR NUEVO
                                 $("#guardar").dxButton({
                                     text: "Guardar",
                                     type: "success",
@@ -1753,14 +1754,13 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                         var formPerido = $('#periodos').dxForm('instance');
                                         var result = form.validate();
                                         var resultPeriodo = formPerido.validate();
-                                        console.log(result)
-                                        console.log(resultPeriodo);
+                                        // console.log(result)
+                                        // console.log(resultPeriodo);
                                         console.log($("#gridContainer").dxDataGrid("getDataSource")._items.length);
                                         let cantidadRepresentantes = $("#gridContainer").dxDataGrid("getDataSource")._items.length;
                                         if(result.isValid && resultPeriodo.isValid){
                                             if(cantidadRepresentantes > 0){
-                                                debugger;
-                                                alert('ok');
+
                                                 console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
                                                 guardar();
                                             }else{

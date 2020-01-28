@@ -38,20 +38,29 @@ class EstudianteController extends Controller
         return $estudiantes->toArray();
     }
 
+    public function secuencialCodigoEstudiante(){
+        $secuencial = "";
+        try
+        {
+            $secuencial = DB::table('estudiante')->count('id');
+        }
+        catch(Exception $e)
+        {
+            return response()->json(["mensaje" => $e->getMessage()]);
+        }
+        return $secuencial + 1;
+    }
     //GUARDAR
     public function saveEstudiante(Request $request)
     {
-        dd($request);
+       // dd(str_pad(self::secuencialCodigoEstudiante(), 3, "0", STR_PAD_LEFT));
+       //dd($request->codigoMatricula);
         try {
 
             if ($request->id == "") {
-                // dd($request);
-                // var_dump($request);
                 $estudiante = new Estudiantes;
-                // return response()->json(["mensaje"=>"OK"]);
-                $estudiante->codigo = $request->codigo;
+                $estudiante->codigo = str_pad(self::secuencialCodigoEstudiante(), 3, "0", STR_PAD_LEFT);
                 $estudiante->cedula = $request->cedula;
-                //$estudiante->tipoidentificacion = $request->tipoidentificacion;
                 $estudiante->primerNombre = $request->primerNombre;
                 $estudiante->segundoNombre = $request->segundoNombre;
                 $estudiante->primerApellido = $request->primerApellido;
@@ -68,6 +77,7 @@ class EstudianteController extends Controller
                 $estudiante->idCurso = $request->idCurso;
                 $estudiante->idParalelo = $request->idParalelo;
                 if ($estudiante->save()) {
+
                     return response()->json(["mensaje" => "Se guardo correctamente"]);
                 }
             }
@@ -97,12 +107,13 @@ class EstudianteController extends Controller
 
     public function detail(int $idEstudiante)
     {
-        //dd($request);
+        //dd($idEstudiante);
         //$datos = $request;
         //dd($datos['id']);
         if($idEstudiante > 0)
         {
-            $estudiante = Estudiantes::find($idEstudiante)->with(['representantes'])->get();
+            $estudiante = Estudiantes::find($idEstudiante);
+            //dd($estudiante);
         }
         else
         {
@@ -124,15 +135,15 @@ class EstudianteController extends Controller
     public function fichaEstudiante()
     {
 
-        // $pdf = App::make('dompdf.wrapper');
+         $pdf = App::make('dompdf.wrapper');
         // $pdf->loadHTML('<h1>Styde.net</h1>');
 
         // return $pdf->download('mi-archivo.pdf');
-        // return PDF::loadView('General.Estudiante.estudianteDetalles')
-        //     ->download('archivo.pdf');
+        return PDF::loadView('General.Estudiante.fichaEstudiante')
+            ->download('fichaEstudiantil.pdf');
 
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->download('Despacho.pdf');
+        // $pdf = App::make('dompdf.wrapper');
+        // $pdf->loadHTML('<h1>Test</h1>');
+        // return $pdf->download('Despacho.pdf');
     }
 }
