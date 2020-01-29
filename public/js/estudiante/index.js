@@ -408,6 +408,7 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                         onClick: e => {
                             debugger;
                             var datos = e.row.data;
+                            console.log(datos['id']);
                             $http.get("/estudiante/detail/" + datos['id'])
                                 .then(function(result) {
                                     //TODO: DETALLES  DE ESTUDIANTES.

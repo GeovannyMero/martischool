@@ -6,6 +6,7 @@ use \App\Modelos\Estudiantes;
 use Illuminate\Http\Request;
 use  \App\Http\Controllers\Controller;
 use App\Modelos\Representante;
+use App\Modelos\AlumnoRepresentante;
 use Illuminate\Support\Facades\DB;
 use Response;
 use View;
@@ -54,12 +55,12 @@ class EstudianteController extends Controller
     public function saveEstudiante(Request $request)
     {
        // dd(str_pad(self::secuencialCodigoEstudiante(), 3, "0", STR_PAD_LEFT));
-       //dd($request->codigoMatricula);
+       //dd(count($request->representantes));
         try {
 
             if ($request->id == "") {
                 $estudiante = new Estudiantes;
-                $estudiante->codigo = str_pad(self::secuencialCodigoEstudiante(), 3, "0", STR_PAD_LEFT);
+                $estudiante->codigo = str_pad(self::secuencialCodigoEstudiante(), 4, "0", STR_PAD_LEFT);
                 $estudiante->cedula = $request->cedula;
                 $estudiante->primerNombre = $request->primerNombre;
                 $estudiante->segundoNombre = $request->segundoNombre;
@@ -77,8 +78,39 @@ class EstudianteController extends Controller
                 $estudiante->idCurso = $request->idCurso;
                 $estudiante->idParalelo = $request->idParalelo;
                 if ($estudiante->save()) {
+                    if(count($request->representantes) > 0)
+                    {
+                        //guarda en la tabla de representantes
+                        foreach($request->representantes as $item)
+                        {
+                            dd($item);
+                            $representante = new Representante;
+                            $representante->cedula = $item->cedula;
+                            $representante->nombre = $item->nombre;
+                            $representante->apellidos = $item->apellidos;
+                            $representante->parentesco = $item->parentesco;
+                            $representante->telefonoMovil = $item->telefonoMovil;
+                            $representante->telefonoFijo = $item->telefonoFijo;
+                            $representante->correo = $item->correo;
+                            $representante->activo = true;
+                            $representante->created_by = Auth::user()->name;
+                            $representante->updated_by = Auth::user()->name;
+                            if($representantes->save()){
+                                $alumnoRepresentante = new AlumnoRepresentante;
+                                $alumnoRepresentante->estudiante_id = $estudiante->id;
+                                $alumnoRepresentante->representante_id = $request->$representante->id;
+                                if($alumnoRepresentante->save())
+                                {
+                                    return response()->json(["mensaje" => "Se guardo correctamente"]);
+                                }
 
-                    return response()->json(["mensaje" => "Se guardo correctamente"]);
+                            }
+                        }
+
+
+
+                    }
+
                 }
             }
         } catch (Exception $e) {
@@ -112,7 +144,8 @@ class EstudianteController extends Controller
         //dd($datos['id']);
         if($idEstudiante > 0)
         {
-            $estudiante = Estudiantes::find($idEstudiante);
+            //$estudiante = Estudiantes::find($idEstudiante)->get();
+            $estudiante = Estudiantes::where('id', '=', $idEstudiante)->get();
             //dd($estudiante);
         }
         else
