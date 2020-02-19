@@ -13,6 +13,8 @@ use View;
 use Exception;
 use Barryvdh\DomPDF\Facade as PDF;
 use App;
+use Illuminate\Support\Facades\Auth;
+use App\Modelos\EstudiantesRepresentante;
 class EstudianteController extends Controller
 {
     public function index()
@@ -82,23 +84,28 @@ class EstudianteController extends Controller
                     {
                         //guarda en la tabla de representantes
                         foreach($request->representantes as $item)
+                        //for($i = 0; $i < count($request->representantes); $i++)
                         {
-                            dd($item);
+                            //dd($this->$request->representantes[$i]['cedula']);
+                            //dd($item[0]['nombre']);
                             $representante = new Representante;
-                            $representante->cedula = $item->cedula;
-                            $representante->nombre = $item->nombre;
-                            $representante->apellidos = $item->apellidos;
-                            $representante->parentesco = $item->parentesco;
-                            $representante->telefonoMovil = $item->telefonoMovil;
-                            $representante->telefonoFijo = $item->telefonoFijo;
-                            $representante->correo = $item->correo;
+                            $representante->cedula = $item[0]['cedula'];
+                            $representante->nombre = $item[0]['nombre'];
+                            $representante->apellidos = $item[0]['apellidos'];
+                            $representante->parentesco = $item[0]['parentesco'];
+                            $representante->telefonoMovil = $item[0]['telefonoMovil'];
+                            $representante->telefonoFijo = $item[0]['telefonoFijo'];
+                            $representante->correo = $item[0]['correo'];
                             $representante->activo = true;
                             $representante->created_by = Auth::user()->name;
                             $representante->updated_by = Auth::user()->name;
-                            if($representantes->save()){
-                                $alumnoRepresentante = new AlumnoRepresentante;
-                                $alumnoRepresentante->estudiante_id = $estudiante->id;
-                                $alumnoRepresentante->representante_id = $request->$representante->id;
+                            if($representante->save()){
+                                //dd('ok');
+                                $alumnoRepresentante = new EstudiantesRepresentante;
+                                //dd($representante->id);
+                                $alumnoRepresentante->estudiantes_id = $estudiante->id;
+                                $alumnoRepresentante->representante_id = $representante->id;
+                                $alumnoRepresentante->timestamps = false;
                                 if($alumnoRepresentante->save())
                                 {
                                     return response()->json(["mensaje" => "Se guardo correctamente"]);
@@ -106,9 +113,6 @@ class EstudianteController extends Controller
 
                             }
                         }
-
-
-
                     }
 
                 }

@@ -1017,12 +1017,12 @@ app.controller("appController", function estudianteController($scope, $http, $lo
             showNavegationButtons: true,
             visible: true,
             showPageSizeSelector: true,
-            allowedPageSizes: [5, 10, 15]
+            allowedPageSizes: [10, 20, 30]
         },
         paging: {
             enable: true,
             pageIndex: 0,
-            pageSize: 5
+            pageSize: 10
         },
         searchPanel: {
             visible: true

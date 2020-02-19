@@ -65,6 +65,7 @@ var  guardar = () => {
         alert(result);
     })
     .fail(error => {
+        console.log(error);
         alert(JSON.stringify(error));
     })
 }
