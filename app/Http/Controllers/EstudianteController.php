@@ -60,7 +60,8 @@ class EstudianteController extends Controller
        //dd(count($request->representantes));
         try {
 
-            if ($request->id == "") {
+            if ($request->id == "")
+            {
                 $estudiante = new Estudiantes;
                 $estudiante->codigo = str_pad(self::secuencialCodigoEstudiante(), 4, "0", STR_PAD_LEFT);
                 $estudiante->cedula = $request->cedula;
@@ -84,7 +85,6 @@ class EstudianteController extends Controller
                     {
                         //guarda en la tabla de representantes
                         foreach($request->representantes as $item)
-                        //for($i = 0; $i < count($request->representantes); $i++)
                         {
                             //dd($this->$request->representantes[$i]['cedula']);
                             //dd($item[0]['nombre']);
@@ -100,9 +100,7 @@ class EstudianteController extends Controller
                             $representante->created_by = Auth::user()->name;
                             $representante->updated_by = Auth::user()->name;
                             if($representante->save()){
-                                //dd('ok');
                                 $alumnoRepresentante = new EstudiantesRepresentante;
-                                //dd($representante->id);
                                 $alumnoRepresentante->estudiantes_id = $estudiante->id;
                                 $alumnoRepresentante->representante_id = $representante->id;
                                 $alumnoRepresentante->timestamps = false;
@@ -116,6 +114,8 @@ class EstudianteController extends Controller
                     }
 
                 }
+            }else{
+                //actualizar
             }
         } catch (Exception $e) {
             return response()->json(["mensaje" => $e->getMessage()]);
@@ -141,11 +141,29 @@ class EstudianteController extends Controller
         }
     }
 
+    public function delete(int $id)
+    {
+        try {
+            if($id > 0)
+            {
+                $estudiante = Estudiantes::find($id);
+                if($estudiante != null)
+                {
+                    $estudiante->activo = false;
+                    if($estudiante->save())
+                    {
+                        return response()->json(["mensaje" => "Se actualizo correctamente"]);
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            return response()->json(["mensaje" => $e->getMessage()]);
+        }
+
+    }
+
     public function detail(int $idEstudiante)
     {
-        //dd($idEstudiante);
-        //$datos = $request;
-        //dd($datos['id']);
         if($idEstudiante > 0)
         {
             //$estudiante = Estudiantes::find($idEstudiante)->get();

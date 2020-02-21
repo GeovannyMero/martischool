@@ -380,7 +380,23 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                 buttons: [
                        {
                            icon: 'trash',
-                           visible: true
+                           visible: true,
+                           hint: "Eliminar Estudiante",
+                           onClick: e =>{
+                                var datos = e.row.data;
+                                $http.post('/estudiante/delete/' + datos['id'])
+                                .then(function(response){
+                                    DevExpress.ui.notify(
+                                        response.data["mensaje"],
+                                        "success",
+                                        6000
+                                    );
+                                })
+                                .catch(error => {
+                                    DevExpress.ui.notify(error.data, "error", 6000);
+                                })
+                           }
+
                        },
                        {
                         icon: 'exportpdf',
@@ -408,7 +424,6 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                         onClick: e => {
                             debugger;
                             var datos = e.row.data;
-                            console.log(datos['id']);
                             $http.get("/estudiante/detail/" + datos['id'])
                                 .then(function(result) {
                                     //TODO: DETALLES  DE ESTUDIANTES.
@@ -1029,7 +1044,7 @@ app.controller("appController", function estudianteController($scope, $http, $lo
         },
         editing: {
             mode: "form",
-            allowAdding: true,
+            //allowAdding: true,
             allowUpdating: true,
             allowDeleting: true,
             useIcons: true,
@@ -1609,7 +1624,8 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                             dataField: 'correo'
                                         },
                                         {
-                                            dataField: 'activo'
+                                            dataField: 'activo',
+                                            dataType: 'boolean'
                                         }
                                     ],
                                     summary: {
@@ -1644,7 +1660,7 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                             placeholder: 'Buscar'
                                         },
                                         editing: {
-                                            mode: 'popup',
+                                            mode: 'cell',
                                             allowAdding: true,
                                             allowUpdating: true,
                                             allowDeleting: true,

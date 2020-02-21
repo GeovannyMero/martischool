@@ -13,15 +13,22 @@
 
 <script type="text/javascript" src="{{ asset('js/estudiante/detallesEstudiante.js')}}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
-<script>
-//  $(function(){
-//     var locale = getLocale();
-//     Globalize.locale(locale);
-//     console.log(locale);
-//     sessionStorage.setItem("locale", es);
-//     document.location.reload();
- //})
-</script>
+
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li>
+            <a href="/home">
+                <i class="fa fa-dashboard"></i>Dashboard
+            </a>
+        </li>
+        <li class='active'>
+           Registro de Estudiante
+
+        </li>
+    </ol>
+</section>
+</br>
+</br>
 <div class="box box-primary" ng-app = 'App' ng-controller='appController'>
     <input type="hidden" name="idEstudiante" id="idEstudiante" >
     <input type="hidden" name="estudiante" id="estudiante" value="{{$estudiante}}">

@@ -28,6 +28,23 @@
     font-weight: bold;
 }
 </style>
+
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li>
+            <a href="/home">
+                <i class="fa fa-dashboard"></i>Dashboard
+            </a>
+        </li>
+        <li class='active'>
+           Estudiantes
+
+        </li>
+    </ol>
+</section>
+</br>
+</br>
+
 <div class="box box-primary" ng-app="App" ng-controller="appController"><ng-view></ng-view>
    <div class="box-header with-border">
         <h3 class="box-title">Estudiantes</h3>

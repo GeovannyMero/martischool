@@ -62,11 +62,15 @@ var  guardar = () => {
     debugger;
     $.post('/estudiante/saveEstudiante', estudiante)
     .done(result => {
-        alert(result);
+        DevExpress.ui.notify(
+            result.data["mensaje"],
+            "success",
+            6000
+        );
     })
     .fail(error => {
         console.log(error);
-        alert(JSON.stringify(error));
+        DevExpress.ui.notify(err.data, "error", 6000);
     })
 }
 
