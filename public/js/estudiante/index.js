@@ -11,7 +11,11 @@ app.config(function($routeProvider, $locationProvider) {
         .otherwise({ redirectTo: "/" });
 });
 
-app.controller("appController", function estudianteController($scope, $http, $location) {
+app.controller("appController", function estudianteController(
+    $scope,
+    $http,
+    $location
+) {
     var representantes = [];
     var estudiantes = new DevExpress.data.CustomStore({
         //load
@@ -371,21 +375,21 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                 calculateDisplayValue: function(rowData) {
                     return JSON.stringify(rowData.representantes);
                 }
-
             },
-             {
-                 //TODO: DETALLES
+            {
+                //TODO: DETALLES
                 type: "buttons",
                 width: 80,
                 buttons: [
-                       {
-                           icon: 'trash',
-                           visible: true,
-                           hint: "Eliminar Estudiante",
-                           onClick: e =>{
-                                var datos = e.row.data;
-                                $http.post('/estudiante/delete/' + datos['id'])
-                                .then(function(response){
+                    {
+                        icon: "trash",
+                        visible: true,
+                        hint: "Eliminar Estudiante",
+                        onClick: e => {
+                            var datos = e.row.data;
+                            $http
+                                .post("/estudiante/delete/" + datos["id"])
+                                .then(function(response) {
                                     DevExpress.ui.notify(
                                         response.data["mensaje"],
                                         "success",
@@ -393,29 +397,33 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                     );
                                 })
                                 .catch(error => {
-                                    DevExpress.ui.notify(error.data, "error", 6000);
-                                })
-                           }
-
-                       },
-                       {
-                        icon: 'exportpdf',
+                                    DevExpress.ui.notify(
+                                        error.data,
+                                        "error",
+                                        6000
+                                    );
+                                });
+                        }
+                    },
+                    {
+                        icon: "exportpdf",
                         visible: true,
-                        hint: 'Descargar ficha estudiante',
-                        onClick: () =>
-                        {
+                        hint: "Descargar ficha estudiante",
+                        onClick: () => {
                             //TODO:PDF
-                            $http.get('/estudiante/fichaEstudiante')
-                            .then(result => {
-                                //console.log(JSON.stringify(result));
-                               // window.open(result, '_blank');
-                               var res = result;
-                                console.log(res.config.url);
-                                location.assign(res.config.url);
-                              // result;
-                            })
-                            .catch(error => { alert(error)})
-
+                            $http
+                                .get("/estudiante/fichaEstudiante")
+                                .then(result => {
+                                    //console.log(JSON.stringify(result));
+                                    // window.open(result, '_blank');
+                                    var res = result;
+                                    console.log(res.config.url);
+                                    location.assign(res.config.url);
+                                    // result;
+                                })
+                                .catch(error => {
+                                    alert(error);
+                                });
                         }
                     },
                     {
@@ -424,301 +432,357 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                         onClick: e => {
                             debugger;
                             var datos = e.row.data;
-                            $http.get("/estudiante/detail/" + datos['id'])
+                            $http
+                                .get("/estudiante/detail/" + datos["id"])
                                 .then(function(result) {
                                     //TODO: DETALLES  DE ESTUDIANTES.
-                                   //debugger;
-                                    document.getElementById("pages").innerHTML = "";
-                                    document.getElementById('pages').innerHTML = result.data;
-                                    let datosEstudiante = JSON.parse($('#estudiante').val());
-                                    var est = $("#form").dxForm({
-                                        formData: datosEstudiante[0],
-                                        items: [
-                                            {
-                                                itemType: 'group',
-                                                caption: 'Información Personal',
-                                                colCount: 2,
-                                                items: [
-                                                    {
-                                                        dataField: 'id',
-                                                        visible: false
-                                                    },
-                                                    {
-                                                        dataField: 'codigo',
-                                                        caption: 'Código',
-                                                        showClearButton: true,
-                                                        editorOptions: {
-                                                            disabled: true
-                                                        },
-                                                        validationRules: [
-                                                            {
-                                                                type: 'required',
-                                                                message: 'El campo es obligatorio.'
+                                    //debugger;
+                                    document.getElementById("pages").innerHTML =
+                                        "";
+                                    document.getElementById("pages").innerHTML =
+                                        result.data;
+                                    let datosEstudiante = JSON.parse(
+                                        $("#estudiante").val()
+                                    );
+                                    var est = $("#form")
+                                        .dxForm({
+                                            formData: datosEstudiante[0],
+                                            items: [
+                                                {
+                                                    itemType: "group",
+                                                    caption:
+                                                        "Información Personal",
+                                                    colCount: 2,
+                                                    items: [
+                                                        {
+                                                            dataField: "id",
+                                                            //visible: false
+                                                            editorOptions: {
+                                                                disabled: true
                                                             }
-                                                        ]
-                                                    },
-                                                    {
-                                                        itemType: 'empty'
-                                                    },
-
-                                                    {
-                                                        dataField: 'cedula',
-                                                        caption: 'Cédula',
-                                                        editorOptions:{
+                                                        },
+                                                        {
+                                                            itemType: "empty"
+                                                        },
+                                                        {
+                                                            dataField: "codigo",
+                                                            caption: "Código",
                                                             showClearButton: true,
+                                                            editorOptions: {
+                                                                disabled: true
+                                                            },
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es obligatorio."
+                                                                }
+                                                            ]
+                                                        },
+
+
+                                                        {
+                                                            dataField: "cedula",
+                                                            caption: "Cédula",
+                                                            editorOptions: {
+                                                                showClearButton: true
+                                                            }
+                                                        },
+                                                        // {
+                                                        //     itemType: "empty"
+                                                        // },
+                                                        {
+                                                            dataField:
+                                                                "primerNombre",
+                                                            caption:
+                                                                "Primer Nombre",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es obligatorio."
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "segundoNombre",
+                                                            caption:
+                                                                "Segundo Nombre"
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "primerApellido",
+                                                            caption:
+                                                                "Primer Apellido",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es obligatorio."
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "segundoApellido",
+                                                            caption:
+                                                                "Segundo Apellido",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es obligatorio."
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "fechaNacimiento",
+                                                            caption:
+                                                                "Fecha de Nacimiento",
+                                                            editorType:
+                                                                "dxDateBox",
+
+                                                            editorOptions: {
+                                                                width: "100%",
+                                                                displayFormat:
+                                                                    "dd/MM/yyyy"
+                                                            },
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es obligatorio."
+                                                                }
+                                                            ]
+                                                        },
+                                                        // {
+                                                        //     dataField: 'lugarNacimiento'
+                                                        // },
+                                                        // {
+                                                        //     dataField: 'nacionalidad'
+                                                        // },
+                                                        {
+                                                            dataField: "genero",
+                                                            editorType:
+                                                                "dxRadioGroup",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es obligatorio."
+                                                                }
+                                                            ],
+                                                            editorOptions: {
+                                                                layout:
+                                                                    "horizontal",
+                                                                dataSource: [
+                                                                    {
+                                                                        ID: "M",
+                                                                        desc:
+                                                                            "Masculino"
+                                                                    },
+                                                                    {
+                                                                        ID: "F",
+                                                                        desc:
+                                                                            "Femenino"
+                                                                    }
+                                                                ],
+                                                                displayExpr:
+                                                                    "desc",
+                                                                valueExpr: "ID"
+                                                            }
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "telefono"
+                                                        },
+                                                        {
+                                                            itemType: "empty"
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "direccion",
+                                                            colSpan: 2,
+                                                            editorType:
+                                                                "dxTextArea",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es obligatorio."
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            dataField: "activo"
                                                         }
-                                                    },
-                                                    {
-                                                        itemType: 'empty'
-                                                    },
-                                                    {
-                                                        dataField: 'primerNombre',
-                                                        caption: 'Primer Nombre',
-                                                        validationRules: [
-                                                            {
-                                                                type: 'required',
-                                                                message: 'El campo es obligatorio.'
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        dataField: 'segundoNombre',
-                                                        caption: 'Segundo Nombre'
-                                                    },
-                                                    {
-                                                        dataField: 'primerApellido',
-                                                        caption: 'Primer Apellido',
-                                                        validationRules: [
-                                                            {
-                                                                type: 'required',
-                                                                message: 'El campo es obligatorio.'
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        dataField: 'segundoApellido',
-                                                        caption: 'Segundo Apellido',
-                                                        validationRules: [
-                                                            {
-                                                                type: 'required',
-                                                                message: 'El campo es obligatorio.'
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        dataField: 'fechaNacimiento',
-                                                        caption: 'Fecha de Nacimiento',
-                                                        editorType: "dxDateBox",
-
-                                                        editorOptions: {
-                                                            width: "100%",
-                                                            displayFormat: "dd/MM/yyyy",
-                                                        },
-                                                        validationRules: [
-                                                            {
-                                                                type: 'required',
-                                                                message: 'El campo es obligatorio.'
-                                                            }
-                                                        ]
-                                                    },
-                                                    // {
-                                                    //     dataField: 'lugarNacimiento'
-                                                    // },
-                                                    // {
-                                                    //     dataField: 'nacionalidad'
-                                                    // },
-                                                    {
-                                                        dataField: 'genero',
-                                                        editorType: 'dxRadioGroup',
-                                                        validationRules: [
-                                                            {
-                                                                type: 'required',
-                                                                message: 'El campo es obligatorio.'
-                                                            }
-                                                        ],
-                                                        editorOptions: {
-                                                            layout: "horizontal",
-                                                            dataSource: [
-                                                                            {
-                                                                                ID: "M",
-                                                                                desc: "Masculino"
-                                                                            },
-                                                                            {
-                                                                                ID: "F",
-                                                                                desc: "Femenino"
-                                                                            }
-                                                                        ],
-                                                                        displayExpr: "desc",
-                                                                        valueExpr: "ID"
-                                                        },
-                                                    },
-                                                    {
-                                                        dataField: 'telefono'
-                                                    },
-                                                    {
-                                                        itemType: 'empty'
-                                                    },
-                                                    {
-                                                        dataField: 'direccion',
-                                                        colSpan: 2,
-                                                        editorType: 'dxTextArea',
-                                                        validationRules: [
-                                                            {
-                                                                type: 'required',
-                                                                message: 'El campo es obligatorio.'
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        dataField: 'activo'
-                                                    }
-                                                ]
-
-                                        },
-                                        // {
-                                        //     itemType: 'group',
-                                        //     caption: 'Contacto',
-                                        //     colCount: 2,
-                                        //     items: [
-                                        //         {
-                                        //             dataField: 'telefono'
-                                        //         },
-                                        //         {
-                                        //             itemType: 'empty'
-                                        //         },
-                                        //         {
-                                        //             dataField: 'direccion',
-                                        //             colSpan: 2,
-                                        //             editorType: 'dxTextArea',
-                                        //             validationRules: [
-                                        //                 {
-                                        //                     type: 'required',
-                                        //                     message: 'El campo es obligatorio.'
-                                        //                 }
-                                        //             ]
-                                        //         }
-                                        //     ]
-                                        // },
-                                        // {
-                                        //     itemType: "button",
-                                        //     horizontalAlignment: "left",
-                                        //     buttonOptions: {
-                                        //         text: "Register",
-                                        //         type: "success",
-                                        //         useSubmitBehavior: true
-                                        //     }
-                                        // }
-
-                                    ]
-                                     }).dxForm("instance");
-                                     //INFO ADICIONAL
-                                     $('#form_info_adicional').dxForm({
-                                        formData: datosEstudiante[0],
-                                        items: [
-                                                    {
-                                                        dataField: 'nacionalidad'
-                                                    },
-                                                    {
-                                                        dataField: 'lugarNacimiento'
-                                                    },
-                                        ]
-                                    }).dxForm('instance');
-                                     //REPRESENTANTES
-                                     $("#gridContainer").dxDataGrid({
-                                        dataSource: datosEstudiante[0].representantes,
+                                                    ]
+                                                }
+                                                // {
+                                                //     itemType: 'group',
+                                                //     caption: 'Contacto',
+                                                //     colCount: 2,
+                                                //     items: [
+                                                //         {
+                                                //             dataField: 'telefono'
+                                                //         },
+                                                //         {
+                                                //             itemType: 'empty'
+                                                //         },
+                                                //         {
+                                                //             dataField: 'direccion',
+                                                //             colSpan: 2,
+                                                //             editorType: 'dxTextArea',
+                                                //             validationRules: [
+                                                //                 {
+                                                //                     type: 'required',
+                                                //                     message: 'El campo es obligatorio.'
+                                                //                 }
+                                                //             ]
+                                                //         }
+                                                //     ]
+                                                // },
+                                                // {
+                                                //     itemType: "button",
+                                                //     horizontalAlignment: "left",
+                                                //     buttonOptions: {
+                                                //         text: "Register",
+                                                //         type: "success",
+                                                //         useSubmitBehavior: true
+                                                //     }
+                                                // }
+                                            ]
+                                        })
+                                        .dxForm("instance");
+                                    //INFO ADICIONAL
+                                    $("#form_info_adicional")
+                                        .dxForm({
+                                            formData: datosEstudiante[0],
+                                            items: [
+                                                {
+                                                    dataField: "nacionalidad"
+                                                },
+                                                {
+                                                    dataField: "lugarNacimiento"
+                                                }
+                                            ]
+                                        })
+                                        .dxForm("instance");
+                                    //REPRESENTANTES
+                                    $("#gridContainer").dxDataGrid({
+                                        dataSource:
+                                            datosEstudiante[0].representantes,
                                         rowAlternationEnabled: false,
                                         //columnHidingEnabled: true,
                                         columnAutoWidth: true,
-                                         showColumnLines: true,
-                                         showRowLines: true,
-                                         showBorders: true,
-                                         columns: [
-                                             {
-                                                dataField: 'id',
+                                        showColumnLines: true,
+                                        showRowLines: true,
+                                        showBorders: true,
+                                        columns: [
+                                            {
+                                                dataField: "id",
                                                 visible: false
-                                             },
-                                             {
-                                                 dataField: 'cedula',
-                                                 caption: 'Cédula',
-                                                 //width: 30,
-                                                 validationRules: [
-                                                     {
-                                                         type: 'required',
-                                                         message: 'El campo es obligatorio.'
-                                                     }
-                                                 ]
-                                             },
-                                             {
-                                                 dataField: 'nombre',
-                                                 caption: 'Nombres',
-                                                 validationRules: [
-                                                    {
-                                                        type: 'required',
-                                                        message: 'El campo es obligatorio.'
-                                                    }
-                                                ]
-                                             },
-                                             {
-                                                dataField:  'apellidos',
-                                                caption: 'Apellidos',
+                                            },
+                                            {
+                                                dataField: "cedula",
+                                                caption: "Cédula",
+                                                //width: 30,
                                                 validationRules: [
                                                     {
-                                                        type: 'required',
-                                                        message: 'El campo es requerido'
+                                                        type: "required",
+                                                        message:
+                                                            "El campo es obligatorio."
                                                     }
                                                 ]
-                                             },
-                                             {
-                                                 dataField: 'parentesco',
-                                                 validationRules: [
-                                                     {
-                                                         type: 'required',
-                                                         message: 'El campo es requerido'
-                                                     }
-                                                 ]
-                                             },
-                                             {
-                                                 dataField: 'telefonoMovil',
-                                                 caption: 'Movil',
-                                                 validationRules: [
-                                                     {
-                                                         type: 'required',
-                                                         message: 'El campo es requerido'
-                                                     }
-                                                 ]
-                                             },
-                                             {
-                                                 dataField: 'telefonoFijo',
-                                                 caption: 'Fijo'
-                                             },
-                                             {
-                                                 dataField: 'correo'
-                                             },
-                                             {
-                                                 dataField: 'activo'
-                                             }
-                                         ],
-                                         summary: {
-                                             totalItems: [
-                                                 {
-                                                     column: 'cedula',
-                                                     summaryType: 'count',
-                                                     displayFormat: 'Total: {0}'
-                                                 }
-                                             ]
-                                         },
-                                         onEditingStart: e => e.component.columnOption('id','allowEditing', false),
-                                         filterRow: {
+                                            },
+                                            {
+                                                dataField: "nombre",
+                                                caption: "Nombres",
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El campo es obligatorio."
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: "apellidos",
+                                                caption: "Apellidos",
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El campo es requerido"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: "parentesco",
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El campo es requerido"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: "telefonoMovil",
+                                                caption: "Movil",
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El campo es requerido"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: "telefonoFijo",
+                                                caption: "Fijo"
+                                            },
+                                            {
+                                                dataField: "correo"
+                                            },
+                                            {
+                                                dataField: "activo"
+                                            }
+                                        ],
+                                        summary: {
+                                            totalItems: [
+                                                {
+                                                    column: "cedula",
+                                                    summaryType: "count",
+                                                    displayFormat: "Total: {0}"
+                                                }
+                                            ]
+                                        },
+                                        onEditingStart: e =>
+                                            e.component.columnOption(
+                                                "id",
+                                                "allowEditing",
+                                                false
+                                            ),
+                                        filterRow: {
                                             visible: true
                                         },
                                         pager: {
-                                            infoText: 'Página {0} de {1}',
+                                            infoText: "Página {0} de {1}",
                                             showInfo: true,
                                             showNavegationButtons: true,
                                             visible: true,
                                             showPageSizeSelector: true,
-                                            allowedPagesSizes: [5,10,15]
-
+                                            allowedPagesSizes: [5, 10, 15]
                                         },
                                         paging: {
                                             enable: true,
@@ -727,22 +791,25 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                         },
                                         searchPanel: {
                                             visible: true,
-                                            placeholder: 'Buscar'
+                                            placeholder: "Buscar"
                                         },
                                         editing: {
-                                            mode: 'popup',
+                                            mode: "popup",
                                             allowAdding: true,
                                             allowUpdating: true,
                                             allowDeleting: true,
                                             useIcons: true,
                                             texts: {
-                                                saveRowChanges: 'Guardar',
-                                                cancelRowChanges: 'Cancelar',
-                                                confirmDeleteTitle: 'Eliminar Registro',
-                                                confirmDeleteMessage: '¿Desea eliminar el registro?'
+                                                saveRowChanges: "Guardar",
+                                                cancelRowChanges: "Cancelar",
+                                                confirmDeleteTitle:
+                                                    "Eliminar Registro",
+                                                confirmDeleteMessage:
+                                                    "¿Desea eliminar el registro?"
                                             },
                                             popup: {
-                                                title: "Información de Representante",
+                                                title:
+                                                    "Información de Representante",
                                                 showTitle: true,
                                                 width: 725,
                                                 height: 400,
@@ -751,115 +818,139 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                                     at: "center",
                                                     of: window
                                                 }
-                                            },
+                                            }
                                         }
                                     });
                                     //TODO: PERIODOS
-                                $('#periodos').dxForm({
-                                    formData:  datosEstudiante[0],
-                                    colCount: 2,
-                                    items: [
-                                        {
-                                            dataField: 'codigoMatricula',
-                                            caption: 'Código Matricula'
-                                        },
-                                        {
-                                            dataField: 'fechaMatricula',
-                                            caption: 'Fecha Matricula',
-                                            editorType: "dxDateBox",
-                                        },
-                                        {
-                                            dataField: "idCurso",
-                                            label: {
-                                                text: 'Cursos'
+                                    $("#periodos").dxForm({
+                                        formData: datosEstudiante[0],
+                                        colCount: 2,
+                                        items: [
+                                            {
+                                                dataField: "codigoMatricula",
+                                                caption: "Código Matricula"
                                             },
-                                            validationRules: [
-                                                {
-                                                    type: "required",
-                                                    message: "El curso es requerido"
+                                            {
+                                                dataField: "fechaMatricula",
+                                                caption: "Fecha Matricula",
+                                                editorType: "dxDateBox"
+                                            },
+                                            {
+                                                dataField: "idCurso",
+                                                label: {
+                                                    text: "Cursos"
+                                                },
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El curso es requerido"
+                                                    }
+                                                ],
+                                                editorType: "dxSelectBox",
+                                                editorOptions: {
+                                                    dataSource: curso,
+                                                    valueExpr: "id",
+                                                    displayExpr: "nombre",
+                                                    onValueChanged: function(
+                                                        e
+                                                    ) {
+                                                        var form = $(
+                                                            "#periodos"
+                                                        ).dxForm("instance");
+                                                        var secondEditor = form.getEditor(
+                                                            "idParalelo"
+                                                        );
+                                                        secondEditor
+                                                            .getDataSource()
+                                                            .filter([
+                                                                "idCurso",
+                                                                "=",
+                                                                e.value
+                                                            ]);
+                                                        secondEditor._options.readOnly = false;
+                                                        secondEditor
+                                                            .getDataSource()
+                                                            .load();
+                                                    }
                                                 }
-                                            ],
-                                            editorType: 'dxSelectBox',
-                                            editorOptions: {
-                                                dataSource: curso,
-                                                valueExpr: "id",
-                                                displayExpr: "nombre",
-                                                onValueChanged: function(e){
-                                                    var form = $('#periodos').dxForm('instance');
-                                                    var secondEditor =  form.getEditor("idParalelo");
-                                                    secondEditor.getDataSource().filter(['idCurso', '=', e.value]);
-                                                    secondEditor._options.readOnly = false;
-                                                    secondEditor.getDataSource().load();
-
+                                            },
+                                            {
+                                                dataField: "idParalelo",
+                                                label: {
+                                                    text: "Paralelos"
+                                                },
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El Campo es requerido."
+                                                    }
+                                                ],
+                                                editorType: "dxSelectBox",
+                                                editorOptions: {
+                                                    dataSource: paralelo,
+                                                    valueExpr: "idParalelo",
+                                                    displayExpr: "nombre"
+                                                    //readOnly: true
+                                                    // dataSource: options => {
+                                                    //     debugger;
+                                                    //     return {
+                                                    //         store: paralelo,
+                                                    //         filter: options.data
+                                                    //             ? ["idCurso", "=", options.data.idCurso]
+                                                    //             : null
+                                                    //     };
+                                                    // },
                                                 }
-
                                             }
-
-
-                                        },
-                                        {
-                                            dataField: 'idParalelo',
-                                            label: {
-                                                text: 'Paralelos'
-                                            },
-                                            validationRules: [
-                                                {
-                                                    type: 'required',
-                                                    message: 'El Campo es requerido.'
+                                        ]
+                                    });
+                                    $("#guardar").dxButton({
+                                        text: "Guardar",
+                                        type: "success",
+                                        //useSubmitBehavior: true
+                                        onClick: e => {
+                                            //TODO: Guardar Estudiante
+                                            //Validacion de los formularios
+                                            console.log($("#form-estudiante").serializeArray());
+                                            var form = $("#form").dxForm("instance");
+                                            var formPerido = $("#periodos").dxForm("instance");
+                                            var result = form.validate();
+                                            var resultPeriodo = formPerido.validate();
+                                            //console.log(result)
+                                            //console.log(resultPeriodo);
+                                            //console.log($("#gridContainer").dxDataGrid("getDataSource")._items.length);
+                                            let cantidadRepresentantes = $("#gridContainer").dxDataGrid("getDataSource")._items.length;
+                                            if (result.isValid &&resultPeriodo.isValid) {
+                                                if (cantidadRepresentantes > 0) {
+                                                    // debugger;
+                                                    // alert("ok");
+                                                    // console.log(
+                                                    //     $(
+                                                    //         "#gridContainer"
+                                                    //     ).dxDataGrid(
+                                                    //         "getDataSource"
+                                                    //     )._items
+                                                    // );
+                                                    guardar();
+                                                } else {
+                                                    DevExpress.ui.notify(
+                                                        "Se debe registrar al menos un representante.",
+                                                        "warning",
+                                                        5000
+                                                    );
                                                 }
-                                            ],
-                                            editorType: 'dxSelectBox',
-                                            editorOptions: {
-                                                dataSource: paralelo,
-                                                valueExpr: 'idParalelo',
-                                                displayExpr: 'nombre',
-                                                //readOnly: true
-                                                // dataSource: options => {
-                                                //     debugger;
-                                                //     return {
-                                                //         store: paralelo,
-                                                //         filter: options.data
-                                                //             ? ["idCurso", "=", options.data.idCurso]
-                                                //             : null
-                                                //     };
-                                                // },
-                                            },
-
-
-                                        }
-                                    ]
-                                });
-                                $("#guardar").dxButton({
-                                    text: "Guardar",
-                                    type: "success",
-                                    //useSubmitBehavior: true
-                                    onClick: (e) => {//TODO: Guardar Estudiante
-                                        //Validacion de los formularios
-                                        console.log($('#form-estudiante').serializeArray());
-                                        var form = $("#form").dxForm("instance");
-                                        var formPerido = $('#periodos').dxForm('instance');
-                                        var result = form.validate();
-                                        var resultPeriodo = formPerido.validate();
-                                        //console.log(result)
-                                        //console.log(resultPeriodo);
-                                        //console.log($("#gridContainer").dxDataGrid("getDataSource")._items.length);
-                                        let cantidadRepresentantes = $("#gridContainer").dxDataGrid("getDataSource")._items.length;
-                                        if(result.isValid && resultPeriodo.isValid){
-                                            if(cantidadRepresentantes > 0){
-                                                debugger;
-                                                alert('ok');
-                                                console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
-                                                guardar();
-                                            }else{
-                                                DevExpress.ui.notify("Se debe registrar al menos un representante.", 'warning', 5000);
                                             }
-
                                         }
-                                    }
-                                });
+                                    });
                                 })
                                 .catch(function(error) {
-                                    DevExpress.ui.notify(error.data, 'error', 5000);
+                                    DevExpress.ui.notify(
+                                        error.data,
+                                        "error",
+                                        5000
+                                    );
                                 });
                         }
                     }
@@ -901,41 +992,43 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                     .appendTo(container);
 
                 var rep = currentStudentData.representantes;
-                if(rep.length > 0){
-                $("<div>")
-                    .dxDataGrid({
-                        columnAutoWidth: true,
-                        showBorders: true,
-                        columns: [
-                            "cedula",
-                            {
-                                dataField: "nombre"
-                            },
-                            {
-                                dataField: "apellidos"
-                            },
+                if (rep.length > 0) {
+                    $("<div>")
+                        .dxDataGrid({
+                            columnAutoWidth: true,
+                            showBorders: true,
+                            columns: [
+                                "cedula",
+                                {
+                                    dataField: "nombre"
+                                },
+                                {
+                                    dataField: "apellidos"
+                                },
 
-                            {
-                                dataField: "parentesco"
-                            },
-                            {
-                                dataField: "telefonoMovil"
-                            },
-                            {
-                                dataField: "activo"
-                            }
-                        ],
-                        dataSource: new DevExpress.data.DataSource({
-                            store: new DevExpress.data.ArrayStore({
-                                key: "id",
-                                data: rep
+                                {
+                                    dataField: "parentesco"
+                                },
+                                {
+                                    dataField: "telefonoMovil"
+                                },
+                                {
+                                    dataField: "activo"
+                                }
+                            ],
+                            dataSource: new DevExpress.data.DataSource({
+                                store: new DevExpress.data.ArrayStore({
+                                    key: "id",
+                                    data: rep
+                                })
+                                //filter: ["EmployeeID", "=", options.key]
                             })
-                            //filter: ["EmployeeID", "=", options.key]
                         })
-                    })
-                    .appendTo(container);
-                }else{
-                    $('<h1>').text('no tiene registrando ningun representante.').appendTo(container);
+                        .appendTo(container);
+                } else {
+                    $("<h1>")
+                        .text("no tiene registrando ningun representante.")
+                        .appendTo(container);
                 }
             }
         },
@@ -1218,15 +1311,23 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                 items: [
                                     {
                                         dataField: "representantes[].nombre",
-                                        template: function (data, itemElement) {
+                                        template: function(data, itemElement) {
                                             debugger;
-                                            console.log(data.component.option("formData"));
-                                            itemElement.append("<div id='textAreaContainer'>")
-                                                       .dxTextArea({
-                                                           value: data.component.option('formData')[data.dataField],
-
-                                                       });
-                                        },
+                                            console.log(
+                                                data.component.option(
+                                                    "formData"
+                                                )
+                                            );
+                                            itemElement
+                                                .append(
+                                                    "<div id='textAreaContainer'>"
+                                                )
+                                                .dxTextArea({
+                                                    value: data.component.option(
+                                                        "formData"
+                                                    )[data.dataField]
+                                                });
+                                        }
                                         //caption: "Representantes",
                                         // cellTemplate: "cellTemplate",
                                         // itemTemplate: 'city-template',
@@ -1329,178 +1430,216 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                     }
                 },
                 {
-                    location: 'after',
-                    widget: 'dxButton',
+                    location: "after",
+                    widget: "dxButton",
                     options: {
-                        icon: 'plus',
+                        icon: "plus",
                         onClick: () => {
-                            $http.get("/estudiante/detail/0")
-                            .then(result => {
-                                document.getElementById("pages").innerHTML = "";
-                                document.getElementById('pages').innerHTML = result.data;
+                            $http
+                                .get("/estudiante/detail/0")
+                                .then(result => {
+                                    document.getElementById("pages").innerHTML =
+                                        "";
+                                    document.getElementById("pages").innerHTML =
+                                        result.data;
 
-                                $("#form").dxForm({
-                                    formData: [],
-                                    items: [
-                                        {
-                                            itemType: 'group',
-                                            caption: 'Información Personal',
-                                            colCount: 2,
+                                    $("#form")
+                                        .dxForm({
+                                            formData: [],
                                             items: [
                                                 {
-                                                    dataField: 'id',
-                                                    visible: false
-                                                },
-                                                {
-                                                    dataField: 'codigo',
-                                                    caption: 'Código',
-                                                    showClearButton: true,
-                                                    editorOptions: {
-                                                        disabled: true
-                                                    },
+                                                    itemType: "group",
+                                                    caption:
+                                                        "Información Personal",
+                                                    colCount: 2,
+                                                    items: [
+                                                        {
+                                                            dataField: "id",
+                                                            visible: false
+                                                        },
+                                                        {
+                                                            dataField: "codigo",
+                                                            caption: "Código",
+                                                            showClearButton: true,
+                                                            editorOptions: {
+                                                                disabled: true
+                                                            }
+                                                        },
+                                                        {
+                                                            itemType: "empty"
+                                                        },
+                                                        {
+                                                            dataField: "cedula",
+                                                            caption: "Cédula",
+                                                            editorOptions: {
+                                                                showClearButton: true
+                                                            }
+                                                        },
+                                                        {
+                                                            itemType: "empty"
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "primerNombre",
+                                                            caption:
+                                                                "Primer Nombre",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es requerido"
+                                                                }
+                                                            ],
+                                                            editorOptions: {
+                                                                showClearButton: true
+                                                            }
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "segundoNombre",
+                                                            caption:
+                                                                "Segundo Nombre",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es requerido"
+                                                                }
+                                                            ],
+                                                            editorOptions: {
+                                                                showClearButton: true
+                                                            }
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "primerApellido",
+                                                            caption:
+                                                                "Primer Apellido",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es requerido"
+                                                                }
+                                                            ],
+                                                            editorOptions: {
+                                                                showClearButton: true
+                                                            }
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "segundoApellido",
+                                                            caption:
+                                                                "Segundo Apellido",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es requerido"
+                                                                }
+                                                            ],
+                                                            editorOptions: {
+                                                                showClearButton: true
+                                                            }
+                                                        },
+                                                        {
+                                                            dataField:
+                                                                "fechanacimiento",
+                                                            //caption: 'Fecha de Nacimiento',
+                                                            label: {
+                                                                text:
+                                                                    "Fecha Nacimiento"
+                                                            },
+                                                            editorType:
+                                                                "dxDateBox",
+                                                            editorOptions: {
+                                                                width: "100%",
+                                                                displayFormat:
+                                                                    "dd/MM/yyyy"
+                                                            },
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es obligatorio."
+                                                                }
+                                                            ]
+                                                        },
 
-                                                },
-                                                {
-                                                    itemType: 'empty'
-                                                },
-                                                {
-                                                    dataField: 'cedula',
-                                                    caption: 'Cédula',
-                                                    editorOptions:{
-                                                        showClearButton: true,
-                                                    }
-                                                },
-                                                {
-                                                    itemType: 'empty'
-                                                },
-                                                {
-                                                    dataField: 'primerNombre',
-                                                    caption: 'Primer Nombre',
-                                                    validationRules: [
+                                                        // {
+                                                        //     dataField: 'lugarNacimiento'
+                                                        // },
+                                                        // {
+                                                        //     dataField: 'nacionalidad'
+                                                        // },
                                                         {
-                                                            type: 'required',
-                                                            message: 'El campo es requerido'
-                                                        }
-                                                    ],
-                                                    editorOptions: {
-                                                        showClearButton: true
-                                                    }
-                                                },
-                                                {
-                                                    dataField: 'segundoNombre',
-                                                    caption: 'Segundo Nombre',
-                                                    validationRules: [
+                                                            dataField: "genero",
+                                                            editorType:
+                                                                "dxRadioGroup",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es obligatorio."
+                                                                }
+                                                            ],
+                                                            editorOptions: {
+                                                                layout:
+                                                                    "horizontal",
+                                                                dataSource: [
+                                                                    {
+                                                                        ID: "M",
+                                                                        desc:
+                                                                            "Masculino"
+                                                                    },
+                                                                    {
+                                                                        ID: "F",
+                                                                        desc:
+                                                                            "Femenino"
+                                                                    }
+                                                                ],
+                                                                displayExpr:
+                                                                    "desc",
+                                                                valueExpr: "ID"
+                                                            }
+                                                        },
                                                         {
-                                                            type: 'required',
-                                                            message: 'El campo es requerido'
-                                                        }
-                                                    ],
-                                                    editorOptions: {
-                                                        showClearButton: true
-                                                    }
-                                                },
-                                                {
-                                                    dataField: 'primerApellido',
-                                                    caption: 'Primer Apellido',
-                                                    validationRules: [
+                                                            dataField:
+                                                                "telefono"
+                                                        },
                                                         {
-                                                            type: 'required',
-                                                            message: 'El campo es requerido'
-                                                        }
-                                                    ],
-                                                    editorOptions: {
-                                                        showClearButton: true
-                                                    }
-                                                },
-                                                {
-                                                    dataField: 'segundoApellido',
-                                                    caption: 'Segundo Apellido',
-                                                    validationRules: [
+                                                            itemType: "empty"
+                                                        },
                                                         {
-                                                            type: 'required',
-                                                            message: 'El campo es requerido'
-                                                        }
-                                                    ],
-                                                    editorOptions: {
-                                                        showClearButton: true
-                                                    }
-                                                },
-                                                {
-                                                    dataField: 'fechanacimiento',
-                                                    //caption: 'Fecha de Nacimiento',
-                                                    label: {text: 'Fecha Nacimiento'},
-                                                    editorType: 'dxDateBox',
-                                                    editorOptions: {
-                                                        width: '100%',
-                                                        displayFormat: 'dd/MM/yyyy',
-                                                    },
-                                                    validationRules: [
+                                                            dataField:
+                                                                "direccion",
+                                                            colSpan: 2,
+                                                            editorType:
+                                                                "dxTextArea",
+                                                            validationRules: [
+                                                                {
+                                                                    type:
+                                                                        "required",
+                                                                    message:
+                                                                        "El campo es obligatorio."
+                                                                }
+                                                            ]
+                                                        },
                                                         {
-                                                            type: 'required',
-                                                            message: 'El campo es obligatorio.'
+                                                            dataField: "activo",
+                                                            dataType: "boolean",
+                                                            editorType:
+                                                                "dxCheckBox"
                                                         }
                                                     ]
-
-                                                },
-
-                                                // {
-                                                //     dataField: 'lugarNacimiento'
-                                                // },
-                                                // {
-                                                //     dataField: 'nacionalidad'
-                                                // },
-                                                {
-                                                    dataField: 'genero',
-                                                    editorType: 'dxRadioGroup',
-                                                    validationRules: [
-                                                        {
-                                                            type: 'required',
-                                                            message: 'El campo es obligatorio.'
-                                                        }
-                                                    ],
-                                                    editorOptions: {
-                                                        layout: "horizontal",
-                                                        dataSource: [
-                                                                        {
-                                                                            ID: "M",
-                                                                            desc: "Masculino"
-                                                                        },
-                                                                        {
-                                                                            ID: "F",
-                                                                            desc: "Femenino"
-                                                                        }
-                                                                    ],
-                                                                    displayExpr: "desc",
-                                                                    valueExpr: "ID"
-                                                    },
-
-                                                },
-                                                {
-                                                    dataField: 'telefono'
-                                                },
-                                                {
-                                                    itemType: 'empty'
-                                                },
-                                                {
-                                                    dataField: 'direccion',
-                                                    colSpan: 2,
-                                                    editorType: 'dxTextArea',
-                                                    validationRules: [
-                                                        {
-                                                            type: 'required',
-                                                            message: 'El campo es obligatorio.'
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    dataField: 'activo',
-                                                    dataType: 'boolean',
-                                                    editorType: 'dxCheckBox'
                                                 }
-
-                                            ]
-                                        },
-                                        /*{
+                                                /*{
                                             itemType: 'group',
                                             caption: 'Contacto',
                                             colCount: 2,
@@ -1524,131 +1663,143 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                                 }
                                             ]
                                         },*/
-                                        // {
-                                        //     itemType: "button",
-                                        //     horizontalAlignment: "left",
-                                        //     buttonOptions: {
-                                        //         text: "Register",
-                                        //         type: "success",
-                                        //         useSubmitBehavior: true,
-                                        //         onClick: function(e){
-                                        //            alert(e);
-                                        //            //get data
-                                        //            console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
-                                        //         }
-                                        //     }
-                                        // }
-                                    ]
-                                }).dxForm('instance');
-                                //INFORMACION ADICIONAL
-                                $('#form_info_adicional').dxForm({
-                                    formData: [],
-                                    items: [
+                                                // {
+                                                //     itemType: "button",
+                                                //     horizontalAlignment: "left",
+                                                //     buttonOptions: {
+                                                //         text: "Register",
+                                                //         type: "success",
+                                                //         useSubmitBehavior: true,
+                                                //         onClick: function(e){
+                                                //            alert(e);
+                                                //            //get data
+                                                //            console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
+                                                //         }
+                                                //     }
+                                                // }
+                                            ]
+                                        })
+                                        .dxForm("instance");
+                                    //INFORMACION ADICIONAL
+                                    $("#form_info_adicional")
+                                        .dxForm({
+                                            formData: [],
+                                            items: [
                                                 {
-                                                    dataField: 'nacionalidad'
+                                                    dataField: "nacionalidad"
                                                 },
                                                 {
-                                                    dataField: 'lugarNacimiento'
-                                                },
-                                    ]
-                                }).dxForm('instance');
-                                //REPRESENTANTE
-                                $('#gridContainer').dxDataGrid({
-                                    dataSource: [],
-                                    owAlternationEnabled: false,
-                                    //columnHidingEnabled: true,
-                                    columnAutoWidth: true,
-                                    showColumnLines: true,
-                                    showRowLines: true,
-                                    showBorders: true,
-                                    columns: [
-                                        {
-                                            dataField: 'id',
-                                            visible: false
-                                        },
-                                        {
-                                            dataField: 'cedula',
-                                            caption: 'Cédula',
-                                            //width: 30,
-                                            validationRules: [
-                                                {
-                                                    type: 'required',
-                                                    message: 'El campo es obligatorio.'
+                                                    dataField: "lugarNacimiento"
                                                 }
                                             ]
-                                        },
-                                        {
-                                            dataField: 'nombre',
-                                            caption: 'Nombres',
-                                            validationRules: [
-                                               {
-                                                   type: 'required',
-                                                   message: 'El campo es obligatorio.'
-                                               }
-                                           ]
-                                        },
-                                        {
-                                           dataField:  'apellidos',
-                                           caption: 'Apellidos',
-                                           validationRules: [
-                                               {
-                                                   type: 'required',
-                                                   message: 'El campo es requerido'
-                                               }
-                                           ]
-                                        },
-                                        {
-                                            dataField: 'parentesco',
-                                            validationRules: [
-                                                {
-                                                    type: 'required',
-                                                    message: 'El campo es requerido'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            dataField: 'telefonoMovil',
-                                            caption: 'Movil',
-                                            validationRules: [
-                                                {
-                                                    type: 'required',
-                                                    message: 'El campo es requerido'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            dataField: 'telefonoFijo',
-                                            caption: 'Fijo'
-                                        },
-                                        {
-                                            dataField: 'correo'
-                                        },
-                                        {
-                                            dataField: 'activo',
-                                            dataType: 'boolean'
-                                        }
-                                    ],
-                                    summary: {
-                                        totalItems: [
+                                        })
+                                        .dxForm("instance");
+                                    //REPRESENTANTE
+                                    $("#gridContainer").dxDataGrid({
+                                        dataSource: [],
+                                        owAlternationEnabled: false,
+                                        //columnHidingEnabled: true,
+                                        columnAutoWidth: true,
+                                        showColumnLines: true,
+                                        showRowLines: true,
+                                        showBorders: true,
+                                        columns: [
                                             {
-                                                column: 'cedula',
-                                                summaryType: 'count',
-                                                displayFormat: 'Total: {0}'
+                                                dataField: "id",
+                                                visible: false
+                                            },
+                                            {
+                                                dataField: "cedula",
+                                                caption: "Cédula",
+                                                //width: 30,
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El campo es obligatorio."
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: "nombre",
+                                                caption: "Nombres",
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El campo es obligatorio."
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: "apellidos",
+                                                caption: "Apellidos",
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El campo es requerido"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: "parentesco",
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El campo es requerido"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: "telefonoMovil",
+                                                caption: "Movil",
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El campo es requerido"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: "telefonoFijo",
+                                                caption: "Fijo"
+                                            },
+                                            {
+                                                dataField: "correo"
+                                            },
+                                            {
+                                                dataField: "activo",
+                                                dataType: "boolean"
                                             }
-                                        ]
-                                    },
-                                    onEditingStart: e => e.component.columnOption('id','allowEditing', false),
-                                         filterRow: {
+                                        ],
+                                        summary: {
+                                            totalItems: [
+                                                {
+                                                    column: "cedula",
+                                                    summaryType: "count",
+                                                    displayFormat: "Total: {0}"
+                                                }
+                                            ]
+                                        },
+                                        onEditingStart: e =>
+                                            e.component.columnOption(
+                                                "id",
+                                                "allowEditing",
+                                                false
+                                            ),
+                                        filterRow: {
                                             visible: true
                                         },
                                         pager: {
-                                            infoText: 'Página {0} de {1}',
+                                            infoText: "Página {0} de {1}",
                                             showInfo: true,
                                             showNavegationButtons: true,
                                             visible: true,
                                             showPageSizeSelector: true,
-                                            allowedPagesSizes: [5,10,15]
-
+                                            allowedPagesSizes: [5, 10, 15]
                                         },
                                         paging: {
                                             enable: true,
@@ -1657,22 +1808,25 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                         },
                                         searchPanel: {
                                             visible: true,
-                                            placeholder: 'Buscar'
+                                            placeholder: "Buscar"
                                         },
                                         editing: {
-                                            mode: 'cell',
+                                            mode: "cell",
                                             allowAdding: true,
                                             allowUpdating: true,
                                             allowDeleting: true,
                                             useIcons: true,
                                             texts: {
-                                                saveRowChanges: 'Guardar',
-                                                cancelRowChanges: 'Cancelar',
-                                                confirmDeleteTitle: 'Eliminar Registro',
-                                                confirmDeleteMessage: '¿Desea eliminar el registro?'
+                                                saveRowChanges: "Guardar",
+                                                cancelRowChanges: "Cancelar",
+                                                confirmDeleteTitle:
+                                                    "Eliminar Registro",
+                                                confirmDeleteMessage:
+                                                    "¿Desea eliminar el registro?"
                                             },
                                             popup: {
-                                                title: "Información de Representante",
+                                                title:
+                                                    "Información de Representante",
                                                 showTitle: true,
                                                 width: 725,
                                                 height: 400,
@@ -1681,114 +1835,153 @@ app.controller("appController", function estudianteController($scope, $http, $lo
                                                     at: "center",
                                                     of: window
                                                 }
-                                            },
-                                        }
-
-                                });
-                                //TODO: PERIODOS
-                                $('#periodos').dxForm({
-                                    formData: [],
-                                    colCount: 2,
-                                    items: [
-                                        {
-                                            dataField: 'codigoMatricula',
-                                            caption: 'Código Matricula'
-                                        },
-                                        {
-                                            dataField: 'fechaMatricula',
-                                            caption: 'Fecha Matricula',
-                                            editorType: "dxDateBox",
-                                        },
-                                        {
-                                            dataField: "idCurso",
-                                            label: {
-                                                text: 'Cursos'
-                                            },
-                                            validationRules: [
-                                                {
-                                                    type: "required",
-                                                    message: "El curso es requerido"
-                                                }
-                                            ],
-                                            editorType: 'dxSelectBox',
-                                            editorOptions: {
-                                                dataSource: curso,
-                                                valueExpr: "id",
-                                                displayExpr: "nombre",
-                                                onValueChanged: function(e){
-                                                    var form = $('#periodos').dxForm('instance');
-                                                    var secondEditor =  form.getEditor("idParalelo");
-                                                    secondEditor.getDataSource().filter(['idCurso', '=', e.value]);
-                                                    secondEditor._options.readOnly = false;
-                                                    secondEditor.getDataSource().load();
-
-                                                }
-
                                             }
-
-
-                                        },
-                                        {
-                                            dataField: 'idParalelo',
-                                            label: {
-                                                text: 'Paralelos'
+                                        }
+                                    });
+                                    //TODO: PERIODOS
+                                    $("#periodos").dxForm({
+                                        formData: [],
+                                        colCount: 2,
+                                        items: [
+                                            {
+                                                dataField: "codigoMatricula",
+                                                caption: "Código Matricula"
                                             },
-                                            validationRules: [
-                                                {
-                                                    type: 'required',
-                                                    message: 'El Campo es requerido.'
+                                            {
+                                                dataField: "fechaMatricula",
+                                                caption: "Fecha Matricula",
+                                                editorType: "dxDateBox"
+                                            },
+                                            {
+                                                dataField: "idCurso",
+                                                label: {
+                                                    text: "Cursos"
+                                                },
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El curso es requerido"
+                                                    }
+                                                ],
+                                                editorType: "dxSelectBox",
+                                                editorOptions: {
+                                                    dataSource: curso,
+                                                    valueExpr: "id",
+                                                    displayExpr: "nombre",
+                                                    onValueChanged: function(
+                                                        e
+                                                    ) {
+                                                        var form = $(
+                                                            "#periodos"
+                                                        ).dxForm("instance");
+                                                        var secondEditor = form.getEditor(
+                                                            "idParalelo"
+                                                        );
+                                                        secondEditor
+                                                            .getDataSource()
+                                                            .filter([
+                                                                "idCurso",
+                                                                "=",
+                                                                e.value
+                                                            ]);
+                                                        secondEditor._options.readOnly = false;
+                                                        secondEditor
+                                                            .getDataSource()
+                                                            .load();
+                                                    }
                                                 }
-                                            ],
-                                            editorType: 'dxSelectBox',
-                                            editorOptions: {
-                                                dataSource: paralelo,
-                                                valueExpr: 'idParalelo',
-                                                displayExpr: 'nombre',
-                                                //readOnly: true
-                                                // dataSource: options => {
-                                                //     debugger;
-                                                //     return {
-                                                //         store: paralelo,
-                                                //         filter: options.data
-                                                //             ? ["idCurso", "=", options.data.idCurso]
-                                                //             : null
-                                                //     };
-                                                // },
                                             },
-
-
-                                        }
-                                    ]
-                                });//TODO: GUARDAR NUEVO
-                                $("#guardar").dxButton({
-                                    text: "Guardar",
-                                    type: "success",
-                                    //useSubmitBehavior: true
-                                    onClick: (e) => {
-                                        //Validacion de los formularios
-                                        console.log($('#form-estudiante').serializeArray());
-                                        var form = $("#form").dxForm("instance");
-                                        var formPerido = $('#periodos').dxForm('instance');
-                                        var result = form.validate();
-                                        var resultPeriodo = formPerido.validate();
-                                        // console.log(result)
-                                        // console.log(resultPeriodo);
-                                        console.log($("#gridContainer").dxDataGrid("getDataSource")._items.length);
-                                        let cantidadRepresentantes = $("#gridContainer").dxDataGrid("getDataSource")._items.length;
-                                        if(result.isValid && resultPeriodo.isValid){
-                                            if(cantidadRepresentantes > 0){
-
-                                                console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
-                                                guardar();
-                                            }else{
-                                                DevExpress.ui.notify("Se debe registrar al menos un representante.", 'error', 5000);
+                                            {
+                                                dataField: "idParalelo",
+                                                label: {
+                                                    text: "Paralelos"
+                                                },
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message:
+                                                            "El Campo es requerido."
+                                                    }
+                                                ],
+                                                editorType: "dxSelectBox",
+                                                editorOptions: {
+                                                    dataSource: paralelo,
+                                                    valueExpr: "idParalelo",
+                                                    displayExpr: "nombre"
+                                                    //readOnly: true
+                                                    // dataSource: options => {
+                                                    //     debugger;
+                                                    //     return {
+                                                    //         store: paralelo,
+                                                    //         filter: options.data
+                                                    //             ? ["idCurso", "=", options.data.idCurso]
+                                                    //             : null
+                                                    //     };
+                                                    // },
+                                                }
                                             }
-
+                                        ]
+                                    }); //TODO: GUARDAR NUEVO
+                                    $("#guardar").dxButton({
+                                        text: "Guardar",
+                                        type: "success",
+                                        //useSubmitBehavior: true
+                                        onClick: e => {
+                                            //Validacion de los formularios
+                                            console.log(
+                                                $(
+                                                    "#form-estudiante"
+                                                ).serializeArray()
+                                            );
+                                            var form = $("#form").dxForm(
+                                                "instance"
+                                            );
+                                            var formPerido = $(
+                                                "#periodos"
+                                            ).dxForm("instance");
+                                            var result = form.validate();
+                                            var resultPeriodo = formPerido.validate();
+                                            // console.log(result)
+                                            // console.log(resultPeriodo);
+                                            console.log(
+                                                $("#gridContainer").dxDataGrid(
+                                                    "getDataSource"
+                                                )._items.length
+                                            );
+                                            let cantidadRepresentantes = $(
+                                                "#gridContainer"
+                                            ).dxDataGrid("getDataSource")._items
+                                                .length;
+                                            if (
+                                                result.isValid &&
+                                                resultPeriodo.isValid
+                                            ) {
+                                                if (
+                                                    cantidadRepresentantes > 0
+                                                ) {
+                                                    console.log(
+                                                        $(
+                                                            "#gridContainer"
+                                                        ).dxDataGrid(
+                                                            "getDataSource"
+                                                        )._items
+                                                    );
+                                                    guardar();
+                                                } else {
+                                                    DevExpress.ui.notify(
+                                                        "Se debe registrar al menos un representante.",
+                                                        "error",
+                                                        5000
+                                                    );
+                                                }
+                                            }
                                         }
-                                    }
+                                    });
+                                })
+                                .catch(error => {
+                                    alert(error);
                                 });
-                            })
-                            .catch(error => {alert(error)})
                         }
                     }
                 }

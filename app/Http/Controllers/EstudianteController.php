@@ -56,11 +56,10 @@ class EstudianteController extends Controller
     //GUARDAR
     public function saveEstudiante(Request $request)
     {
-       // dd(str_pad(self::secuencialCodigoEstudiante(), 3, "0", STR_PAD_LEFT));
-       //dd(count($request->representantes));
+       //dd($request->id);
         try {
 
-            if ($request->id == "")
+            if ($request->id == null || $request->id == 0)
             {
                 $estudiante = new Estudiantes;
                 $estudiante->codigo = str_pad(self::secuencialCodigoEstudiante(), 4, "0", STR_PAD_LEFT);
@@ -116,6 +115,30 @@ class EstudianteController extends Controller
                 }
             }else{
                 //actualizar
+                if($request->id > 0){
+                    $estudiante = Estudiantes::where('id', '=', $request->id)
+                                    ->with(['representantes'])
+                                    ->first();
+                    $estudiante->cedula = $request->cedula;
+                    $estudiante->primerNombre = $request->primerNombre;
+                    $estudiante->segundoNombre = $request->segundoNombre;
+                    $estudiante->primerApellido = $request->primerApellido;
+                    $estudiante->segundoApellido = $request->segundoApellido;
+                    $estudiante->fechaNacimiento = $request->fechaNacimiento;
+                    $estudiante->lugarNacimiento = $request->lugarNacimiento;
+                    $estudiante->nacionalidad = $request->nacionalidad;
+                    $estudiante->direccion = $request->direccion;
+                    $estudiante->telefono = $request->telefono;
+                    $estudiante->genero = $request->genero;
+                    $estudiante->activo = $request->activo;
+                    $estudiante->codigoMatricula = $request->codigoMatricula;
+                    $estudiante->fechaMatricula = $request->fechaMatricula;
+                    $estudiante->idCurso = $request->idCurso;
+                    $estudiante->idParalelo = $request->idParalelo;
+                    if($estudiante->save()){
+                        return response()->json(["mensaje" => "Se guardo correctamente"]);
+                    }
+                }
             }
         } catch (Exception $e) {
             return response()->json(["mensaje" => $e->getMessage()]);
@@ -167,7 +190,9 @@ class EstudianteController extends Controller
         if($idEstudiante > 0)
         {
             //$estudiante = Estudiantes::find($idEstudiante)->get();
-            $estudiante = Estudiantes::where('id', '=', $idEstudiante)->get();
+            $estudiante = Estudiantes::where('id', '=', $idEstudiante)
+                            ->with(['representantes'])
+                            ->get();
             //dd($estudiante);
         }
         else
