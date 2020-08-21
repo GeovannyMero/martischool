@@ -3,7 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.spa.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.common.css')}}" />
-<link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.light.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.light.compact.css')}}" />
 
 <!--Angular -->
 <script type="text/javascript" src="{{ asset('DevExtreme/js/angular.min.js')}}"></script>
@@ -79,7 +79,7 @@
             {{-- <button type="submit" class="btn btn-primary">Guardar</button> --}}
             {{-- <input type="button" value="Guardar" onclick="guardar()" class="btn btn-primary"> --}}
             <div id="guardar"></div>
-            <input type="button" value="Cancelar" onclick="cancelar();" class="btn btn-danger">
+            <input type="button" value="Cancelar" onclick="cancelar();" class="btn btn-danger btn-sm">
         </div>
     </div>
 

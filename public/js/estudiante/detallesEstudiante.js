@@ -40,12 +40,12 @@ var  guardar = () => {
     //debugger;
     $.post('/estudiante/saveEstudiante', estudiante)
     .done(result => {
-        console.log(result.mensaje);
-        DevExpress.ui.notify(
+            DevExpress.ui.notify(
             result.mensaje,
             "success",
             6000
         );
+        window.location = '/estudiante';
     })
     .fail(error => {
         console.log(error);
