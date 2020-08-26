@@ -37,6 +37,28 @@ app.controller('paraleloController', function paraleloController($scope, $http){
          .catch((err) => {
             DevExpress.ui.notify(err.data, 'error', 5000);
          })
+     },
+     remove: (key) => {
+         let id = key.id;
+         if(id > 0)
+         {
+            return $http.post('/paralelo/delete/' + id)
+            .then(response => {
+                DevExpress.ui.notify({
+                    message: response.data['mensaje'],
+                    position: {
+                        my: 'center top',
+                        at: 'center top',
+                        offset: '50 60'
+                    },
+                    width: 400,
+
+                }, 'success', 3000)
+            })
+            .catch(error => {
+                DevExpress.ui.notify(error.data, 'error',5000);
+            })
+         }
      }
 
  });
@@ -124,7 +146,10 @@ app.controller('paraleloController', function paraleloController($scope, $http){
             saveRowChanges: 'Guardar',
             cancelRowChanges: 'Cancelar',
             confirmDeleteTitle: 'Eliminar Registro',
-            confirmDeleteMessage: "¿Está ud. seguro que desea eliminar este registro?"
+            confirmDeleteMessage: "¿Está ud. seguro que desea eliminar este registro?",
+            addRow: 'Nuevo',
+            editRow: 'Editar',
+            deleteRow: 'Eliminar'
         },
         form: {
             colCount: 2,

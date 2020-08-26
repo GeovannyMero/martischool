@@ -1,4 +1,4 @@
-appNotas.component('cursoComponent', {
+appNotas.component('cursoComponent', {//TODO:Se tiene que agregar un loop para recorrer todos los cursos
     template: [
     "<div class='row'><div class='col-lg-3 col-xs-3'>"+
         "<div class='small-box bg-red'>"+
@@ -21,6 +21,7 @@ appNotas.component('cursoComponent', {
         $http.post('/notas/cursos')
         .then(response => {
             vm.cursos = response.data;
+            console.log(response.data);
         })
         .catch(error => {
             alert(error);

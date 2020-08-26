@@ -58,7 +58,19 @@ class ParcialController extends Controller
             {
                 if($request != null && $id > 0)
                 {
+                    $parcial = Parcial::find($id);
+                    if($parcial != null)
+                    {
+                        $parcial->catalogo_id = $request->catalogo_id != null ? $request->catalogo_id : $parcial->catalogo_id;
+                        $parcial->nombre = $request->nombre != null ? $request->nombre : $parcial->nombre;
+                        $parcial->descripcion = $request->descripcion != null ? $request->descripcion : $parcial->descripcion;
+                        $parcial->activo = true;
 
+                        $parcial->update_by = Auth::user()->name;
+                        if($parcial->save()){
+                            return response()->json(["mensaje"=>"Se actualizó correctamente."]);
+                        }
+                    }
                 }
             }
         } catch (Exception $e) {
@@ -83,5 +95,30 @@ class ParcialController extends Controller
         }
         return $parciales;
 
+    }
+
+    public function remove(int $id)
+    {
+        try
+        {
+            if(Auth::check())
+            {
+                if($id > 0)
+                {
+                    $parcial = Parcial::find($id);
+                    if($parcial != null)
+                    {
+                        $parcial->activo = false;
+                        if($parcial->save())
+                        {
+                            return response()->json(['mensaje'=> 'Se eliminó correctamente']);
+                        }
+                    }
+                }
+            }
+        } catch(Exception $e)
+        {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
     }
 }

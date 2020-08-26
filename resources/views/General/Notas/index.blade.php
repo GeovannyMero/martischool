@@ -14,6 +14,24 @@
 <script type="text/javascript" src="{{ asset('js/notas/index.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/notas/notasCursos.js')}}"></script>
 
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li>
+            <a href="/home">
+                <i class="fa fa-dashboard"></i>Dashboard
+            </a>
+        </li>
+        <li class="active">
+            Notas
+        </li>
+        <li class='active'>
+           Paralelos
+        </li>
+    </ol>
+</section>
+</br>
+</br>
+
 <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">Cursos</h3>

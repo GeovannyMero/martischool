@@ -49,6 +49,29 @@ appParcial.controller('parcialController', function($scope, $http){
                     DevExpress.ui.notify(error.data, 'error', 5000);
                 })
             }
+        },
+        remove: (key) =>
+        {
+            let id = key.id;
+            if(id > 0)
+            {
+                return $http.post('/parciales/remove/' + id)
+                .then(response => {
+                    DevExpress.ui.notify({
+                        message: response.data['mensaje'],
+                        position: {
+                            my: 'center top',
+                            at: 'center top',
+                            offset: '50 60'
+                        },
+                        width: 400,
+
+                    }, 'success', 3000)
+                })
+                .catch((err) => {
+                    DevExpress.ui.notify(err.data, 'error',5000);
+                })
+            }
         }
     });
 
@@ -98,6 +121,17 @@ appParcial.controller('parcialController', function($scope, $http){
                 width: 80
             }
         ],
+        onCellPrepared: function(e)
+        {
+            if(e.rowType === 'data')
+            {
+                var $links = e.cellElement.find(".dx-link");
+                if(e.row.data.activo === false)
+                {
+                    $links.filter(".dx-link-delete").remove();
+                }
+            }
+        },
         showBorders: true,
         pager: {
             infoText: 'Página {0} de {1}',
@@ -117,7 +151,10 @@ appParcial.controller('parcialController', function($scope, $http){
                 saveRowChanges: 'Guardar',
                 cancelRowChanges: 'Cancelar',
                 confirmDeleteTitle: 'Eliminar Registro',
-                confirmDeleteMessage: '¿Desea eliminar el registro?'
+                confirmDeleteMessage: '¿Desea eliminar el registro?',
+                addRow: 'Nuevo',
+                editRow: 'Editar',
+                deleteRow: 'Eliminar'
             },
             form: {
                 colCount: 2,

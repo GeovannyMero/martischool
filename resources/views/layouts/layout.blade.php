@@ -203,7 +203,7 @@
                     </li>
                     @endif
                     <!--Calificaciones-->
-                    @if(Auth::user()->hasRol("Profesor"))
+                    @if(Auth::user()->hasRol("Administrador"))
                     <li>
                         <a href="{{ url('/notas')}}">
                             <i class="fa fa-pencil"></i>

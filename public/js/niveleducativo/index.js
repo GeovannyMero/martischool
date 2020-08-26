@@ -213,7 +213,10 @@ app.controller('nivel_educativoController', function nivel_educativoController($
                 saveRowChanges: 'Guardar',
                 cancelRowChanges: 'Cancelar',
                 confirmDeleteTitle: 'Eliminar Registro',
-                confirmDeleteMessage: '¿Desea eliminar el registro?'
+                confirmDeleteMessage: '¿Desea eliminar el registro?',
+                addRow: 'Nuevo',
+                editRow: 'Editar',
+                deleteRow: 'Eliminar'
 
             },
             form: {

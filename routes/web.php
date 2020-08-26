@@ -82,6 +82,7 @@ Route::post('/paralelo/all', 'ParaleloController@all');
 Route::post('/paralelo/update/{id}', 'ParaleloController@update');
 Route::post('/paralelo/insert', 'ParaleloController@insert');
 Route::post('/paralelo/paraleloCurso', 'ParaleloController@paraleloCurso');
+Route::post('/paralelo/delete/{id}', 'ParaleloController@delete');
 
 Route::get('/periodos', 'PeriodoController@index');
 Route::post('/periodos/all', 'PeriodoController@all');
@@ -143,6 +144,7 @@ Route::post('/parciales/all', 'ParcialController@all');
 Route::post('/parciales/insert', 'ParcialController@insert');
 Route::post('/parciales/update/{id}', 'ParcialController@update');
 Route::get('/parciales/parciales', 'ParcialController@parciales');
+Route::post('parciales/remove/{id}', 'ParcialController@remove');
 
 
 

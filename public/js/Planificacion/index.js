@@ -249,7 +249,16 @@ var periodos = new DevExpress.data.CustomStore({
             allowAdding: true,
             allowUpdating: true,
             allowDeleting: true,
-            useIcons: true
+            useIcons: true,
+            texts: {
+                saveRowChanges: 'Guardar',
+                cancelRowChanges: 'Cancelar',
+                confirmDeleteTitle: 'Eliminar Registro',
+                confirmDeleteMessage: '¿Desea eliminar el registro?',
+                addRow: 'Nuevo',
+                editRow: 'Editar',
+                deleteRow: 'Eliminar'
+            },
         }
     }
 });

@@ -77,7 +77,8 @@ class ParaleloController extends Controller
         }
     }
 
-    public function ParaleloCurso(){
+    public function ParaleloCurso()
+    {
         try {
             $paralelosCurso = DB::table('paralelo')
             ->join('planificacion','planificacion.paralelo_id', '=', 'paralelo.id')
@@ -87,5 +88,26 @@ class ParaleloController extends Controller
             return response()->json(['mensaje' => $e->getMessage()]);
         }
         return $paralelosCurso;
+    }
+
+    public function delete(int $id)
+    {
+        try
+        {
+            if(Auth::check())
+            {
+                $paralelo = Paralelos::find($id);
+                if($paralelo != null)
+                {
+                    $paralelo->activo = false;
+                    if($paralelo->save()){
+                        return response()->json(['mensaje'=> 'Se eliminó correctamente']);
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+
     }
 }

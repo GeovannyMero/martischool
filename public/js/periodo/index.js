@@ -214,7 +214,10 @@ app.controller('periodoController', function($scope, $http){
                 saveRowChanges: 'Guardar',
                 cancelRowChanges: 'Cancelar',
                 confirmDeleteTitle: 'Eliminar Registro',
-                confirmDeleteMessage: '¿Desea eliminar el registro?'
+                confirmDeleteMessage: '¿Desea eliminar el registro?',
+                addRow: 'Nuevo',
+                editRow: 'Editar',
+                deleteRow: 'Eliminar'
             },
             form: {
                 colCount: 2,
