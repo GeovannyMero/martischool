@@ -44,36 +44,41 @@
     <div>@{{cantidadEstudiantes}}</div>
     <div dx-toolbar="toolbarOptions"></div>
     <div class="row">
-        <div id="gridContainer" dx-data-grid="dataGridOptions"  class="column"></div>
-        <div id="employeeInfo" ng-init="selectedEmployee"  class="column">
-            {{-- <img class="employeePhoto" ng-src="{{selectedEmployee.Picture}}" /> --}}
-
-            {{-- <p style='width: 50%'class="column">@{{selectedEmployee.primerNombre}}</p> --}}
-            {{-- <div class="dx-field"> --}}
-                {{-- <div class="dx-field-label">Default mode</div> --}}
-                {{-- <div class="dx-field-value"> --}}
-                    {{-- <div dx-text-box="@{{selectedEmployee.primerNombre}}"></div> --}}
-                    <label for="calificacion" id="calificacion"></label>
-                    <div id="nota"></div>
-                    <div class="col-lg-7" style="padding-top: 20px">
-                    {{-- <p>@{{detallesComportamiento[0].fecha}}</p>
-                    <p ng-repeat='item in detallesComportamiento'>
-                        @{{item.fecha}}
-                    </p> --}}
-                    <div ng-repeat ='item in detallesComportamiento'>
-                        <detalles-component ng-if="item.tipo == 'P'"
-                            fecha='@{{item.fecha}}' comentario = @{{item.comentario}} tipo = "POSITIVO" clase = "box box-success" icono = "fa fa-thumbs-up" color="#00a65a">
-                        </detalles-component>
-
-                        <detalles-component ng-if="item.tipo == 'N'"
-                            fecha='@{{item.fecha}}' comentario = @{{item.comentario}} tipo = "NEGATIVO" clase = "box box-danger" icono = "fa fa-thumbs-down" color="#dd4b39">
-                        </detalles-component>
-                    </div>
-
-
-                    {{-- <div dx-data-grid='dataGridDetalles' id='detalles'></div> --}}
-                    </div>
+        <div class="col-lg-6">
+            <div id="gridContainer" dx-data-grid="dataGridOptions"></div>
         </div>
+        <div class="col-lg-6">
+            <div id="employeeInfo" ng-init="selectedEmployee"  >
+                {{-- <img class="employeePhoto" ng-src="{{selectedEmployee.Picture}}" /> --}}
+
+                {{-- <p style='width: 50%'class="column">@{{selectedEmployee.primerNombre}}</p> --}}
+                {{-- <div class="dx-field"> --}}
+                    {{-- <div class="dx-field-label">Default mode</div> --}}
+                    {{-- <div class="dx-field-value"> --}}
+                        {{-- <div dx-text-box="@{{selectedEmployee.primerNombre}}"></div> --}}
+                        <label for="calificacion" id="calificacion"></label>
+                        <div id="nota"></div>
+                        <div class="col-lg-12" style="padding-top: 20px">
+                        {{-- <p>@{{detallesComportamiento[0].fecha}}</p>
+                        <p ng-repeat='item in detallesComportamiento'>
+                            @{{item.fecha}}
+                        </p> --}}
+                        <div ng-repeat ='item in detallesComportamiento'>
+                            <detalles-component ng-if="item.tipo == 'P'"
+                                fecha='@{{item.fecha}}' comentario = @{{item.comentario}} tipo = "Positivo" clase = "box box-success box-solid" icono = "fa fa-thumbs-up" color="#00a65a">
+                            </detalles-component>
+
+                            <detalles-component ng-if="item.tipo == 'N'"
+                                fecha='@{{item.fecha}}' comentario = @{{item.comentario}} tipo = "Negativo" clase = "box box-danger box-solid" icono = "fa fa-thumbs-down" color="#dd4b39">
+                            </detalles-component>
+                        </div>
+
+
+                        {{-- <div dx-data-grid='dataGridDetalles' id='detalles'></div> --}}
+                        </div>
+            </div>
+        </div>
+
     </div>
         <div id="detallesPopup"></div>
         <div id="notaPopup" >

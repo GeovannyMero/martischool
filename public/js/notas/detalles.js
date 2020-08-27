@@ -14,7 +14,7 @@ appNotas.component('detallesComponent', {
 
         "<div class='{{$ctrl.clase}}'>"+
             "<div class='box-header with-border' style='padding-top: 2px; padding-left: 0.5px'>"+
-                "<h3><span style='background-color:{{$ctrl.color}}; color: white; padding: 3px; border-radius: 3px'> {{$ctrl.tipo}} <i class='{{$ctrl.icono}}'></i></span></h3>"+
+                "<h3><span style='padding: 3px;'> {{$ctrl.tipo}} <i class='{{$ctrl.icono}}'></i></span></h3>"+
                 "<div class='box-tools pull-right'>"+
                     "<button type='button' class='btn btn-box-tool'>"+
                         "<i class='fa fa-pencil'></i>"+
