@@ -1,0 +1,17 @@
+.dx-icon-trash:before {
+    color: #d9534f;
+}
+.dx-icon-refresh:before {
+    --color: #5cb85c;
+    color: orange;
+}
+.dx-icon-edit:before {
+    color: #337ab7;
+    border: none;
+}
+.dx-icon-edit-button-addrow:before {
+    color: #337ab7;
+}
+.dx-icon-export-excel-button:before {
+    color: green;
+}

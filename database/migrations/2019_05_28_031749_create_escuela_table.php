@@ -19,8 +19,8 @@ class CreateEscuelaTable extends Migration
             $table->string('descripcion',100);
             $table->boolean('activo')->nullable($values=false);
             //auditoria
-            $table->string('created_by',50);
-            $table->string('update_by', 50);
+            $table->string('created_by',100);
+            $table->string('update_by', 100);
             $table->timestamps();
 
 

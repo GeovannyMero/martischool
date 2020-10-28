@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Modelos\Rol;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        //$request->user()->authorizeRoles(['user', 'admin']);
+        $rol_id = $request->user()->rol_id;
+        //dd(Rol::find($id_rol)->nombre);
+        $rol = Rol::find($rol_id)->nombre;
         return view('home');
     }
 }

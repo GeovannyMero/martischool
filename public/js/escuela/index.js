@@ -65,7 +65,8 @@ app.controller('escuelaController', function escuelaController($scope, $http){
         {
             dataField: 'id',
             caption: 'Id',
-            width: 50
+            width: 50,
+            visible: false
 
         },
         {
@@ -110,6 +111,134 @@ app.controller('escuelaController', function escuelaController($scope, $http){
         {
             dataField: 'updated_at',
             visible: false,
+        },
+        {
+            type: "buttons",
+            width: 80,
+            buttons: [
+                {
+                    icon: "bookmark",
+                    visible: true,
+                    hint: "Asignar Administrador",
+                    onClick: e => {
+                        var datos = e.row.data;
+                        //alert(datos["id"]);
+                        var id = datos["id"];
+                        $http.get("/escuela/administrador/" + id)
+                        .then(response => {
+                            console.log(response);
+                            $('#pages').html("");
+                            $('#pages').html(response);
+                        })
+                        .catch(error => console.error(error));
+
+
+                        // popup = null;
+                        // popupOptions = {
+                        //     width: 660,
+                        //     height: 540,
+                        //     contentTemplate: function(){
+                        //         var rol = [
+                        //             {
+                        //                 "id": 2,
+                        //                 "nombre": "Administrador"
+                        //             },
+                        //             {
+                        //                 "id": 3,
+                        //                 "nombre": "Profesor"
+                        //             }
+                        //         ];
+                        //         return $("<div />").append(
+                        //             // $("<p />").text("Static Content"),
+                        //             $("<div />").attr("id", "formAdmin").dxForm({
+                        //                 formData: {},
+                        //                 colCount: 1,
+                        //                 items: [
+                        //                     {
+                        //                         itemType: "group",
+                        //                         //caption: "Información del Administrador",
+                        //                         colCount: 2,
+                        //                         items: [
+                        //                             {
+                        //                                 dataField: "rol_id",
+                        //                                 editorType: "dxSelectBox",
+                        //                                 editorOptions: {
+                        //                                     dataSource: rol ,
+                        //                                     displayExpr: "nombre",
+                        //                                     valueExpr: "id",
+                        //                                     value: rol[0].id,
+                        //                                     readOnly: true
+                        //                                 },
+                        //                                 validationRules: [
+                        //                                     {
+                        //                                         type: "required",
+                        //                                         message: "El rol es requedido"
+                        //                                     }
+                        //                                 ]
+                        //                             },
+                        //                             {
+                        //                                 dataField: "name",
+                        //                                 caption: "Usuario",
+                        //                                 validationRules: [
+                        //                                     {
+                        //                                         type: "required",
+                        //                                         message: "El usuario es requedido"
+                        //                                     }
+                        //                                 ]
+                        //                             },
+                        //                             {
+                        //                                 dataField: "email",
+                        //                                 caption: "Correo",
+                        //                                 validationRules: [
+                        //                                     {
+                        //                                         type: "required",
+                        //                                         message: "El correo es requedido"
+                        //                                     }
+                        //                                 ]
+                        //                             }
+
+                        //                         ]
+                        //                     }
+                        //                 ]
+                        //             }),
+                        //             $("<div />").attr("id", "buttonContainer").dxButton({
+                        //                 text: "Click me",
+                        //                 onClick: function (e) {
+                        //                     // ...
+                        //                 }
+                        //             })
+                        //             // $("#form_admin").dxForm({
+                        //             //     formData: [],
+                        //             //     items: [{
+                        //             //         itemType: "group",
+                        //             //         colCount: 3,
+                        //             //         items: [
+                        //             //             {
+                        //             //                 dataField: "User"
+                        //             //             }
+                        //             //         ]
+
+                        //             //     }]
+                        //             // })
+                        //         );
+                        //     },
+                        //     showTitle: true,
+                        //     title: "Asignar Administrador",
+                        //     visible: false,
+                        //     dragEnabled: false,
+                        //     closeOnOutsideClick: true
+                        // };
+                        // if(popup){
+                        //     popup.option("contentTemplate", popupOptions.contentTemplate.bind(this));
+                        // }else{
+                        //     popup = $("#popup").dxPopup(popupOptions).dxPopup("instance");
+                        // }
+                        // popup.show();
+                    }
+                },
+                "edit",
+                "delete"
+            ]
         }
     ],
         showBorders: true,

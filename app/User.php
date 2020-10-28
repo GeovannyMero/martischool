@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Modelos\Rol;
 
 class User extends Authenticatable
 {
@@ -36,4 +37,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function rol()
+    {
+        return $this->belongsTo('App\Modelos\Rol');
+    }
+    public function authorizeRoles($roles)
+    {
+        if ($this->hasAnyRole($roles)) {
+            return true;
+        }
+        abort(401, 'Esta acción no está autorizada.');
+    }
+
+    public function getRolUser($rol_id){
+
+         $rolUser = $this->rol()->find($rol_id);
+         return $rolUser->nombre;
+
+    }
+
+    public function hasRol($rol){
+        if ($this->rol()->where('nombre', $rol)->first()) {
+            return true;
+        }
+        return false;
+    }
 }

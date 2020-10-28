@@ -12,6 +12,8 @@
 
 <script type="text/javascript" src="{{ asset('js/rol/index.js')}}"></script>
 
+<link rel="stylesheet" type="text/css" href="{{ asset('css/general.css')}}" />
+
 <div class="box box-primary" ng-app='RolModule' ng-controller='title'>
     <div class="box-header with-border">
         <h3 class="box-title">@{{modulo}}</h3>

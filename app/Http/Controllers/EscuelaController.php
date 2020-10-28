@@ -91,4 +91,21 @@ class EscuelaController extends Controller
             return response()->json(["mensaje" => $e->getMessage()]);
         }
     }
+
+    public function administrador($id)
+    {
+        //dd($id);
+        // try {
+        //     if($id > 0){
+        //         $personal = DB::table('personal')
+        //                     ->join("rol", "personal.id_rol", "=", "rol.id")
+        //                     ->where("rol.id", 2)
+        //                     ->get();
+        //     }
+        // } catch (Exception $e) {
+        //     return response()->json(["mensaje" => $e->getMessage()]);
+        // }
+        if($id > 0)
+            return view('General.Escuela.administradores');
+    }
 }

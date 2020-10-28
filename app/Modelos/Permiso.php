@@ -10,8 +10,8 @@ class Permiso extends Model
     protected $primarykey = 'id';
     public $timestamps = 'false';
 
-    public function rol_permiso()
-    {
-        return $this->hasMany('App\Rol_Permiso');
-    }
+    // public function rol_permiso()
+    // {
+    //     return $this->hasMany('App\Rol_Permiso');
+    // }
 }

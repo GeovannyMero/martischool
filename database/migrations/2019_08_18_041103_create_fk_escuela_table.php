@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EscuelaUsuarioFk extends Migration
+class CreateFkEscuelaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,9 @@ class EscuelaUsuarioFk extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('id_escuela')->references('id')->on('escuela');
+            $table->foreign('escuela_id')->references('id')->on('escuela');
+            $table->foreign('rol_id')->references('id')->on('rol');
         });
-
     }
 
     /**
@@ -26,6 +26,6 @@ class EscuelaUsuarioFk extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('fk_escuela');
     }
 }

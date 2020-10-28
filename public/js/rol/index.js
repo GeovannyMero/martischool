@@ -62,9 +62,12 @@ app.controller('rolController', function rolController($scope, $http){
         dataSource: {
             store: roles
         },
-        rowAlternationEnabled: true,
+        rowAlternationEnabled: false,
         columnHidingEnabled: true,
         columnAutoWidth: true,
+        showColumnLines: true,
+        showRowLines: true,
+        showBorders: true,
         columns: [
             {
                 dataField: 'id',
@@ -89,16 +92,38 @@ app.controller('rolController', function rolController($scope, $http){
             {
                 dataField: 'activo',
                 caption: 'Activo',
-                width: 70,
+                width: 100,
+                dataType: 'boolean'
             }
         ],
+        summary: {
+            totalItems: [
+                {
+                    column: 'nombre',
+                    summaryType: 'count',
+                    displayFormat: 'Total: {0}'
+                }
+            ]
+        },
+        onCellPrepared: e => {
+            if(e.rowType === 'data'){
+                var $links = e.cellElement.find(".dx-link");
+                if(e.row.data.activo === false) {
+                    $links.filter(".dx-link-delete").remove();
+                }
+            }
+        },
         onEditingStart: function(e)
         {
             e.component.columnOption("id", "allowEditing", false);
         },
-        showBorders: true,
+
         filterRow: {
-            visible: false
+            visible: true,
+            applyFilter: 'auto'
+        },
+        headerFilter: {
+            visible: true
         },
         pager: {
             infoText: 'Página {0} de {1}',
@@ -161,6 +186,26 @@ app.controller('rolController', function rolController($scope, $http){
                     }
                 ]
             }
+        },
+
+        onToolbarPreparing: e => {
+            var dataGrid = e.component;
+
+            e.toolbarOptions.items.unshift(
+                {
+                    location: 'after'
+                },
+                {
+                    location: 'after',
+                    widget: 'dxButton',
+                    options: {
+                        icon: 'refresh',
+                        onClick: () => {
+                            dataGrid.refresh();
+                        }
+                    }
+                }
+            );
         }
 
     }
