@@ -1,6 +1,5 @@
 var app = angular.module('EscuelaModule', ['dx']);
 
-
 app.controller('escuelaController', function escuelaController($scope, $http){
     var escuela = new DevExpress.data.CustomStore({
         load: ()=>{
@@ -127,8 +126,9 @@ app.controller('escuelaController', function escuelaController($scope, $http){
                         var id = datos["id"];
                         $http.get("/escuela/administrador/" + id)
                         .then(response => {
+                            console.log(response);
                             $('#pages').html("");
-                            $('#pages').html(response.data);
+                            $('#pages').html(response);
                         })
                         .catch(error => console.error(error));
 
@@ -310,6 +310,4 @@ app.controller('escuelaController', function escuelaController($scope, $http){
 
 app.controller('title', function title($scope){
     $scope.modulo = 'Escuela';
-});
-
-
+})
