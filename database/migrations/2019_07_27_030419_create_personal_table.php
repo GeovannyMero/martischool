@@ -26,6 +26,8 @@ class CreatePersonalTable extends Migration
             $table->string('direccion')->nullable($value=false);
             $table->string('telefono')->nullable($value=false);
             $table->boolean('activo')->nullable($value=false);
+            //USURIO
+            $table->integer('id_user');
             //Permiso
             //ROL
             $table->integer('id_rol')->nullable($value=false);
@@ -37,6 +39,7 @@ class CreatePersonalTable extends Migration
 
             //foreign key
             $table->foreign('id_rol')->references('id')->on('rol');
+            $table->foreign('id_user')->references('id')->on('users');
         });
     }
 

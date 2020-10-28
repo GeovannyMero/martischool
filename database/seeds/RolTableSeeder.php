@@ -12,8 +12,8 @@ class RolTableSeeder extends Seeder
     public function run()
     {
         DB::table('rol')->insert([
-            'nombre' => 'Administrador',
-            'descripcion' => 'Administrador',
+            'nombre' => 'Master',
+            'descripcion' => 'Master',
             'activo' => true,
             'created_by' => 'default',
             'updated_by' => 'default'

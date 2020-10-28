@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder
             //add new thing
             'activo' => true,
             'escuela_id' => 1,
-            'rol_id' => 2,
+            'rol_id' => 1,
             'created_by' => 'default',
             'update_by' => 'default',
 

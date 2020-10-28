@@ -33,10 +33,12 @@ class CreateEstudianteTable extends Migration
             //asignacion de curso
             $table->integer('idCurso');
             $table->integer('idParalelo');
+            $table->integer('id_escuela');
 
             //Foreign Key
             $table->foreign('idCurso')->references('id')->on('curso');
             $table->foreign('idParalelo')->references('id')->on('paralelo');
+            $table->foreign('id_escuela')->references('id')->on('escuela');
 
 
 
