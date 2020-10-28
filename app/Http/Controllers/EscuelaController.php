@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use \App\Modelos\Escuela;
 use  \App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 class EscuelaController extends Controller
 {
     public function index(){
@@ -106,6 +106,25 @@ class EscuelaController extends Controller
         //     return response()->json(["mensaje" => $e->getMessage()]);
         // }
         if($id > 0)
-            return view('General.Escuela.administradores');
+            return view('General.Escuela.administradores')->with(['id'=> $id]);
     }
+     public function administradores($id)
+     {
+         $personal = null;
+         try {
+             if($id > 0)
+             {
+                $personal = DB::table('personal')
+                            ->join('users', 'personal.id_user', '=', 'users.id')
+                            ->join('rol', 'users.rol_id', '=', 'rol_id')
+                            ->where('users.escuela_id', $id)
+                            ->select('personal.cedula')
+                            ->get();
+                            dd($personal);
+             }
+         } catch (Exception $e) {
+            return response()->json(["mensaje" => $e->getMessage()]);
+         }
+         return $personal;
+     }
 }
