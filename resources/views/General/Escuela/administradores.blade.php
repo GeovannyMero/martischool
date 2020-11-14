@@ -1,14 +1,14 @@
-{{-- @extends('layouts.layout')
+@extends('layouts.layout')
 @section('content')
---}}
-{{-- <link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.spa.css')}}" />
+
+<link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.spa.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.common.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('DevExtreme/css/dx.light.compact.css')}}" />
 
 <!--Angular -->
 <script type="text/javascript" src="{{ asset('DevExtreme/js/angular.min.js')}}"></script>
 <!--script-->
-<script type="text/javascript" src="{{ asset('DevExtreme/js/dx.all.js')}}"></script> --}}
+<script type="text/javascript" src="{{ asset('DevExtreme/js/dx.all.js')}}"></script>
 
 <script type="text/javascript" src="{{ asset('js/escuela/indexAdministrador.js')}}"></script>
 
@@ -35,10 +35,11 @@
     <input type="hidden" id="idEscuela" value="{{ $id }}"/>
     </div>
     <div class="box-body">
-        <div id="gridEscuelaAdministradores demo-containder" ng-controller="administradoresController">
-            <div id="gridContainer" dx-data-grid="dataGridOptions"></div>@{{pb}}
+        <div id="gridEscuelaAdministradores" ng-controller="administradoresController">
+            <div id="gridContainer" dx-data-grid="dataGridOptions"></div>
+            <div id="gridAdministradoresEscuela"></div>
         </div>
     </div>
 </div>
 
-{{-- @endsection --}}
+@endsection
