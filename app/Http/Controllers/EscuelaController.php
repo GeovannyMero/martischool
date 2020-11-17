@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Modelos\Escuela;
+use \App\Modelos\Personal;
 use  \App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 class EscuelaController extends Controller
 {
     public function index(){
@@ -126,5 +128,60 @@ class EscuelaController extends Controller
             return response()->json(["mensaje" => $e->getMessage()]);
          }
          return $personal;
+
+     }
+
+     public function ExisteAdministrator($cedula)
+     {
+        try {
+            if(strlen($cedula) >= 9)
+            {
+                $existAdmin = DB::table('personal')->where('cedula', $cedula)->exists();
+                return $existAdmin;
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+     }
+
+     public function guardarAdministradores()
+     {
+         $cedula = "0931254569";
+        try {
+            $existeAdmin = $this->ExisteAdministrator($cedula);
+            if(!$existeAdmin)
+            {
+                if (Auth::check())
+                {
+                    DB::beginTransaction();
+                    $personal = new Personal;
+                    $usuario = new User;
+                    $personal->cedula = $request->cedula;
+                    $personal->primerNombre = $request->primerNombre;
+                    $personal->segundoNombre = $request->segundoNombre;
+                    $personal->primerApellido = $request->primerApellido;
+                    $personal->segundoApellido = $request->segundoApellido;
+                    $personal->fechaNacimiento = $request->fechaNacimiento;
+                    $personal->Genero = $request->Genero;
+                    $personal->activo = true;
+                    $personal->direccion = $request->direccion;
+                    $personal->correo = $request->correo;
+                    $personal->telefono = $request->telefono;
+                    $personal->accesoSistema = $request->accesoSistema;
+                    $personal->id_rol = $request->id_rol;
+                    $personal->created_by = Auth::user()->name;
+                    $personal->update_by = Auth::user()->name;
+                    if($personal->save()){
+                        return true;
+                    }
+                }
+            }else
+            {
+                return true;
+            }
+            return $existeAdmin;
+        } catch (Exception $e) {
+            //throw $th;
+        }
      }
 }
