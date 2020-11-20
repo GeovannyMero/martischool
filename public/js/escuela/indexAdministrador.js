@@ -11,6 +11,14 @@ appAdmin.controller('administradoresController', function administradoresControl
                 return response
             })
             .catch(error => console.error(error));
+        },
+        insert: (values) => {
+            return $http.post("/escuela/administrador/insertar/" + idEscuela, values)
+            .then(response => {
+                DevExpress.ui.notify(response.data["mensaje"], "success", 5000);
+            }).catch(error => {
+                DevExpress.ui.notify(error.data, "error", 5000);
+            })
         }
     });
 
@@ -157,7 +165,8 @@ appAdmin.controller('administradoresController', function administradoresControl
                         items: [
                             {
                                 dataField: 'id',
-                                disabled: true
+                                disabled: true,
+                                visible: false
                             },
                             {
                                 itemType: 'empty'

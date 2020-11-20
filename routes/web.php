@@ -50,6 +50,7 @@ Route::post('/escuela/update/{id}', 'EscuelaController@update');
 Route::post('/escuela/delete/{id}', 'EscuelaController@delete');
 Route::get('/escuela/administrador/{id}', 'EscuelaController@administrador');
 Route::post('/escuela/administradores/{id}', 'EscuelaController@administradores');
+Route::post('/escuela/administrador/insertar/{idEscuela}', 'EscuelaController@guardarAdministradores');
 
 //Roles
 Route::get('/rol', 'RolController@index')->middleware('auth');;

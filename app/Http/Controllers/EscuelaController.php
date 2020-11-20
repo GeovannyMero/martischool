@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Modelos\Escuela;
 use \App\Modelos\Personal;
+use \App\User;
 use  \App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -144,44 +145,67 @@ class EscuelaController extends Controller
         }
      }
 
-     public function guardarAdministradores()
+     public function guardarAdministradores($idEscuela, Request $request)
      {
-         $cedula = "0931254569";
+        //dd($request);
         try {
-            $existeAdmin = $this->ExisteAdministrator($cedula);
+            $existeAdmin = $this->ExisteAdministrator($request->cedula);
             if(!$existeAdmin)
             {
-                if (Auth::check())
-                {
-                    DB::beginTransaction();
+
+                DB::beginTransaction();
+
+                $usuario = new User;
+                $usuario->name = substr($request->primerNombre, 0, 1) . $request->primerApellido;
+                //$usuario->name = "gmero";
+                $usuario->email = $request->correo;
+                $usuario->password = bcrypt($request->cedula);
+                $usuario->activo = "true";
+                $usuario->escuela_id = $idEscuela;
+                $usuario->rol_id = 1;
+                $usuario->created_by = Auth::user()->name;
+                //$usuario->created_by = "default";
+                //$usuario->update_by = "defau";
+                $usuario->update_by = Auth::user()->name;
+                if($usuario->save()){
+                    DB::commit();
                     $personal = new Personal;
-                    $usuario = new User;
                     $personal->cedula = $request->cedula;
                     $personal->primerNombre = $request->primerNombre;
                     $personal->segundoNombre = $request->segundoNombre;
                     $personal->primerApellido = $request->primerApellido;
                     $personal->segundoApellido = $request->segundoApellido;
-                    $personal->fechaNacimiento = $request->fechaNacimiento;
-                    $personal->Genero = $request->Genero;
-                    $personal->activo = true;
-                    $personal->direccion = $request->direccion;
+                    $personal->fechaNacimiento = "19/11/1993";
+                    $personal->Genero = "M";
+                    $personal->activo = "true";
+                    $personal->direccion = "fragata";
                     $personal->correo = $request->correo;
-                    $personal->telefono = $request->telefono;
-                    $personal->accesoSistema = $request->accesoSistema;
-                    $personal->id_rol = $request->id_rol;
+                    $personal->telefono = "0967869571";
+                    $personal->accesoSistema = 1;
+                    $personal->id_rol = 1;
+                    $personal->id_user = $usuario->id;
                     $personal->created_by = Auth::user()->name;
                     $personal->update_by = Auth::user()->name;
+                    //$personal->created_by = "default";
+                    //$personal->update_by = "default";
                     if($personal->save()){
-                        return true;
+                        DB::commit();
+                        //return true;
+                        return response()->json(['mensaje'=> 'Se guardo correctamente']);
                     }
+
                 }
+
+
             }else
             {
-                return true;
+                return response()->json(['mensaje'=> 'Ya Existe usuario']);
             }
-            return $existeAdmin;
+
         } catch (Exception $e) {
-            //throw $th;
+            DB::rollBack();
+            //return false;
+            return response()->json(["mensaje" => $e->getMessage()]);
         }
      }
 }
