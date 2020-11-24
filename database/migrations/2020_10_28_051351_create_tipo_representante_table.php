@@ -31,6 +31,6 @@ class CreateTipoRepresentanteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_representante');
+        Schema::dropIfExists('tipo_familiar');
     }
 }

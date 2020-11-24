@@ -83,6 +83,13 @@
                             <span class="pull-right-container"></span>
                         </a>
                     </li>
+                    <li>
+                        <a href="/escuela">
+                            <i class="fa fa-institution"></i>
+                            <span>Escuela</span>
+
+                        </a>
+                    </li>
                     <!-- Seguridad -->
                     @if(Auth::user()->hasRol("Administrador"))
                     <li class="treeview">

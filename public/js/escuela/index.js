@@ -90,6 +90,7 @@ app.controller('escuelaController', function escuelaController($scope, $http){
             dataField: 'activo',
             caption: 'Estado',
             width: 70,
+            dataType: 'boolean',
             validationRules: [
                 {
                     type: 'required',
@@ -269,7 +270,7 @@ app.controller('escuelaController', function escuelaController($scope, $http){
             allowDeleting: true,
             useIcons: true,
             texts: {
-                saveRowChanges: 'fa fa-save Guardar',
+                saveRowChanges: 'Guardar',
                 cancelRowChanges: 'Cancelar',
                 confirmDeleteTitle: 'Eliminar Registro',
                 confirmDeleteMessage: "¿Está ud. seguro que desea eliminar este registro?"

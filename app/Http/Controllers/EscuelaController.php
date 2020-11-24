@@ -208,4 +208,59 @@ class EscuelaController extends Controller
             return response()->json(["mensaje" => $e->getMessage()]);
         }
      }
+
+     public function actualizar(int $id, Request $request)
+     {
+        try {
+            if(Auth::check())
+            {
+                if($id != 0)
+                {
+                    DB::beginTransaction();
+                    $personal = Personal::find($id);
+                    if($personal != null)
+                    {
+                        $personal->cedula = $request->cedula != null ? $request->cedula : $personal->cedula;
+                        $personal->primerNombre = $request->primerNombre != null ? $request->preimerNombre : $personal->primerNombre;
+                        $personal->segundoNombre = $request->segundoNombre != null ? $request->segundoNombre : $personal->segundoNombre;
+                        $personal->primerApellido = $request->primerApellido != null ? $request->primerApellido : $personal->primerApellido;
+                        $personal->segundoApellido = $request->segundoApellido != null ? $request->segundoApellido : $personal->segundoApellido;
+                        $personal->correo = $request->correo != null ? $request->correo : $personal->correo;
+                        $personal->activo = $request->activo != null ? $request->activo : $personal->activo;
+                        if($personal->save())
+                        {
+                            DB::commit();
+                            return response()->json(['mensaje'=> 'Se actualizó correctamente']);
+                        }
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(["mensaje" => $e->getMessage()]);
+        }
+     }
+
+     public function eliminar(int $id)
+     {
+        try {
+            if(Auth::check())
+            {
+                if($id > 0)
+                {
+                    $personal = Personal::find($id);
+                    if($personal != null)
+                    {
+                        $personal->activo = false;
+                        if($personal->save())
+                        {
+                            return response()->json(["mensaje" => "Se eliminó correctamente."]);
+                        }
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+     }
 }

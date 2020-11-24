@@ -19,6 +19,34 @@ appAdmin.controller('administradoresController', function administradoresControl
             }).catch(error => {
                 DevExpress.ui.notify(error.data, "error", 5000);
             })
+        },
+        update: (key, values) => {
+            let id = JSON.stringify(key['id']);
+            alert(id);
+            if(id !== 0)
+            {
+               return $http.post("/escuela/administrador/actualizar/" + id, values)
+               .then(response => {
+                   DevExpress.ui.notify(response.data["mensaje"], "success", 5000);
+               })
+               .catch(error => {
+                   DevExpress.ui.notify(error.data, "error", 5000);
+               })
+            }
+
+        },
+        remove: (key) => {
+            let id = JSON.stringify(key["id"]);
+            if(id > 0)
+            {
+                return $http.post("/escuela/administrador/eliminar/" + id)
+                .then(response => {
+                    DevExpress.ui.notify(response.data["mensaje"], "success", 5000);
+                })
+                .catch(error => {
+                    DevExpress.ui.notify(error.data, "error", 5000);
+                })
+            }
         }
     });
 
@@ -123,6 +151,14 @@ appAdmin.controller('administradoresController', function administradoresControl
                 ]
             }
         ],
+        onCellPrepared: function(e){
+            if(e.rowType === 'data'){
+                var $links = e.cellElement.find(".dx-link");
+                if(e.row.data.activo === false) {
+                    $links.filter(".dx-link-delete").remove();
+                }
+            }
+        },
         showBorders: true,
         filterRow: {
             visible: false
@@ -168,9 +204,7 @@ appAdmin.controller('administradoresController', function administradoresControl
                                 disabled: true,
                                 visible: false
                             },
-                            {
-                                itemType: 'empty'
-                            },
+
                             {
                                 dataField: 'cedula',
                                 editorOptions: {

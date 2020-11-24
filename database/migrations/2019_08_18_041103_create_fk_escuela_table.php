@@ -14,7 +14,7 @@ class CreateFkEscuelaTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('escuela_id')->references('id')->on('escuela');
+            // $table->foreign('escuela_id')->references('id')->on('escuela');
             $table->foreign('rol_id')->references('id')->on('rol');
         });
     }
