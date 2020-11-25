@@ -31,7 +31,7 @@
 <div class="box box-primary" ng-app="EscuelaAdministradorModule">
     @csrf
     <div class="box-header with-border">
-        <h3 class="box-title">Administradores {{ $id }}</h3>
+        <h3 class="box-title">Administradores</h3>
     <input type="hidden" id="idEscuela" value="{{ $id }}"/>
     </div>
     <div class="box-body">

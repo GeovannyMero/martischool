@@ -22,7 +22,6 @@ appAdmin.controller('administradoresController', function administradoresControl
         },
         update: (key, values) => {
             let id = JSON.stringify(key['id']);
-            alert(id);
             if(id !== 0)
             {
                return $http.post("/escuela/administrador/actualizar/" + id, values)

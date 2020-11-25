@@ -153,3 +153,4 @@ Route::post('parciales/remove/{id}', 'ParcialController@remove');
 
 
 
+

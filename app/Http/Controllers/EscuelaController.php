@@ -23,7 +23,7 @@ class EscuelaController extends Controller
     }
 
     public function all(){
-        $escuela;
+        $escuela = null;
             try{
                 $escuela = Escuela::where('activo', true)->get();
             }catch(Exception $e){
@@ -120,8 +120,8 @@ class EscuelaController extends Controller
                 $personal = DB::table('personal')
                             ->join('users', 'personal.id_user', '=', 'users.id')
                             ->join('rol', 'users.rol_id', '=', 'rol_id')
-                            ->where('users.escuela_id', $id)
-                            ->select('personal.id as id', 'personal.cedula as cedula', 'personal.primerNombre as primerNombre', 'personal.segundoNombre as segundoNombre', 'personal.primerApellido as primerApellido', 'personal.segundoApellido as segundoApellido', 'personal.activo as activo', 'personal.id_rol as id_rol', 'rol.nombre as nombreRol', 'personal.id_user as id_user, users.name as nombreUsuario', 'personal.correo as correo', 'users.escuela_id as escuela_id')
+                            ->where('personal.id_escuela', $id)
+                            ->select('personal.id as id', 'personal.cedula as cedula', 'personal.primerNombre as primerNombre', 'personal.segundoNombre as segundoNombre', 'personal.primerApellido as primerApellido', 'personal.segundoApellido as segundoApellido', 'personal.activo as activo', 'personal.id_rol as id_rol', 'rol.nombre as nombreRol', 'personal.id_user as id_user, users.name as nombreUsuario', 'personal.correo as correo', 'personal.id_escuela as escuela_id')
                             ->get();
                             //dd($personal);
              }
@@ -145,7 +145,7 @@ class EscuelaController extends Controller
         }
      }
 
-     public function guardarAdministradores($idEscuela, Request $request)
+     public function guardarAdministradores(int $idEscuela, Request $request)
      {
         //dd($request);
         try {
@@ -161,7 +161,7 @@ class EscuelaController extends Controller
                 $usuario->email = $request->correo;
                 $usuario->password = bcrypt($request->cedula);
                 $usuario->activo = "true";
-                $usuario->escuela_id = $idEscuela;
+                //$usuario->escuela_id = $idEscuela;
                 $usuario->rol_id = 1;
                 $usuario->created_by = Auth::user()->name;
                 //$usuario->created_by = "default";
@@ -183,6 +183,7 @@ class EscuelaController extends Controller
                     $personal->telefono = "0967869571";
                     $personal->accesoSistema = 1;
                     $personal->id_rol = 1;
+                    $personal->id_escuela = $idEscuela;
                     $personal->id_user = $usuario->id;
                     $personal->created_by = Auth::user()->name;
                     $personal->update_by = Auth::user()->name;
@@ -221,7 +222,7 @@ class EscuelaController extends Controller
                     if($personal != null)
                     {
                         $personal->cedula = $request->cedula != null ? $request->cedula : $personal->cedula;
-                        $personal->primerNombre = $request->primerNombre != null ? $request->preimerNombre : $personal->primerNombre;
+                        $personal->primerNombre = $request->primerNombre != null ? $request->primerNombre : $personal->primerNombre;
                         $personal->segundoNombre = $request->segundoNombre != null ? $request->segundoNombre : $personal->segundoNombre;
                         $personal->primerApellido = $request->primerApellido != null ? $request->primerApellido : $personal->primerApellido;
                         $personal->segundoApellido = $request->segundoApellido != null ? $request->segundoApellido : $personal->segundoApellido;

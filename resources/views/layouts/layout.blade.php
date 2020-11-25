@@ -28,7 +28,7 @@
     <div class="wrapper">
         <header class="main-header">
             <a class="logo">
-                <span class="logo-mini">SGA</span>
+            <span class="logo-mini">SGA{{Auth::user()->name}}</span>
                 <span class="logo-lg">SGA</span>
             </a>
 
