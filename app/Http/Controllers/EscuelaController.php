@@ -152,9 +152,7 @@ class EscuelaController extends Controller
             $existeAdmin = $this->ExisteAdministrator($request->cedula);
             if(!$existeAdmin)
             {
-
                 DB::beginTransaction();
-
                 $usuario = new User;
                 $usuario->name = substr($request->primerNombre, 0, 1) . $request->primerApellido;
                 //$usuario->name = "gmero";

@@ -7,6 +7,7 @@ use PHPUnit\Framework\Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use \App\Modelos\Personal;
+use \App\Modelos\Escuela;
 use \App\User;
 use \App\Modelos\PersonalPlanificacion;
 
@@ -94,49 +95,61 @@ class PersonalController extends Controller
     public function insert(Request $request)
     {
         try {
-            //dd($request->id_rol[0]);
-            if (Auth::check()) {
-                if ($request != null) {
+            //dd($request->id_rol);
+            //dd(Auth::user()->id);
+            //dd(Personal::where("id_user", Auth::user()->id)->get());
+            if (Auth::check())
+            {
+                //Obtiene datos del personal mediante el usuario
+                $personalUsuario = Personal::where("id_user", Auth::user()->id)->first();
+                //dd($personalUsuario->id_escuela);
+                if ($request != null)
+                {
                     DB::beginTransaction();
                     $personal = new Personal;
                     $usuario = new User;
-                    $personal->cedula = $request->cedula;
-                    $personal->primerNombre = $request->primerNombre;
-                    $personal->segundoNombre = $request->segundoNombre;
-                    $personal->primerApellido = $request->primerApellido;
-                    $personal->segundoApellido = $request->segundoApellido;
-                    $personal->fechaNacimiento = $request->fechaNacimiento;
-                    $personal->Genero = $request->Genero;
-                    $personal->activo = true;
-                    $personal->direccion = $request->direccion;
-                    $personal->correo = $request->correo;
-                    $personal->telefono = $request->telefono;
-                    $personal->accesoSistema = $request->accesoSistema;
-                    $personal->id_rol = $request->id_rol;
-                    $personal->created_by = Auth::user()->name;
-                    $personal->update_by = Auth::user()->name;
-                    if ($personal->save()) {
-                        //Se crea el usuario
-                        $usuario->name = substr($request->primerNombre, 0, 1) . $request->primerApellido;
-                        $usuario->email = $request->correo;
-                        $usuario->password = bcrypt($request->cedula);
-                        $usuario->activo = true;
-                        $usuario->escuela_id = Auth::user()->escuela_id;
-                        $usuario->rol_id = $request->id_rol;
-                        $usuario->created_by = Auth::user()->name;
-                        $usuario->update_by = Auth::user()->name;
-                        if ($usuario->save()) {
-
-                            if ($request->planificiacion_id > 0) {
+                    //Se crea el usuario
+                    $usuario->name = substr($request->primerNombre, 0, 1) . $request->primerApellido;
+                    $usuario->email = $request->correo;
+                    $usuario->password = bcrypt($request->cedula);
+                    $usuario->activo = "true";
+                    $usuario->rol_id = $request->id_rol;
+                    $usuario->created_by = Auth::user()->name;
+                    $usuario->update_by = Auth::user()->name;
+                    if ($usuario->save())
+                    {
+                        $personal->cedula = $request->cedula;
+                        $personal->primerNombre = $request->primerNombre;
+                        $personal->segundoNombre = $request->segundoNombre;
+                        $personal->primerApellido = $request->primerApellido;
+                        $personal->segundoApellido = $request->segundoApellido;
+                        $personal->fechaNacimiento = $request->fechaNacimiento;
+                        $personal->Genero = $request->Genero;
+                        $personal->activo = true;
+                        $personal->id_escuela = $personalUsuario->id_escuela;
+                        $personal->id_user = $usuario->id;
+                        $personal->direccion = $request->direccion;
+                        $personal->correo = $request->correo;
+                        $personal->telefono = $request->telefono;
+                        $personal->accesoSistema = $request->accesoSistema;
+                        $personal->id_rol = $request->id_rol;
+                        $personal->created_by = Auth::user()->name;
+                        $personal->update_by = Auth::user()->name;
+                        if ($personal->save())
+                        {
+                            if ($request->planificiacion_id > 0)
+                            {
                                 $planificacionPersonal = new PersonalPlanificacion;
                                 $planificacionPersonal->personal_id = $personal->id;
                                 $planificacionPersonal->planificacion_id = $request->planificacion_id;
                                 $planificacionPersonal->timestamps = false;
-                                if ($planificacionPersonal->save()) {
+                                if ($planificacionPersonal->save())
+                                {
                                     DB::commit();
                                     return response()->json(["mensaje" => "Se guardó correctamente."]);
                                 }
-                            } else {
+                            } else
+                            {
                                 DB::commit();
                                 return response()->json(["mensaje" => "Se guardó correctamente."]);
                             }

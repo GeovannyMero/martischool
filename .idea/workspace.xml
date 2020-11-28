@@ -33,19 +33,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/martischool.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/martischool.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EscuelaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EscuelaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/escuela/indexAdministrador.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/escuela/indexAdministrador.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/General/Escuela/administradores.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/General/Escuela/administradores.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PersonalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PersonalController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProfesorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProfesorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/General/Rol/Index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/General/Rol/Index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -177,6 +176,7 @@
       <updated>1606237543950</updated>
       <workItem from="1606237554163" duration="323000" />
       <workItem from="1606247287356" duration="7793000" />
+      <workItem from="1606536989021" duration="1359000" />
     </task>
     <servers />
   </component>
