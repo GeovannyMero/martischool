@@ -22,7 +22,8 @@ class EscuelaController extends Controller
         }
     }
 
-    public function all(){
+    public function all()
+    {
         $escuela = null;
             try{
                 $escuela = Escuela::where('activo', true)->get();
