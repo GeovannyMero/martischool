@@ -45,7 +45,8 @@ var  guardar = () => {
             "success",
             6000
         );
-        window.location = '/estudiante';
+        console.log(result);
+        //window.location = '/estudiante';
     })
     .fail(error => {
         console.log(error);

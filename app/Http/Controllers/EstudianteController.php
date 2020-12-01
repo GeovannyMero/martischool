@@ -15,6 +15,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use App;
 use Illuminate\Support\Facades\Auth;
 use App\Modelos\EstudiantesRepresentante;
+use \App\Modelos\Personal;
 class EstudianteController extends Controller
 {
     public function index()
@@ -58,7 +59,7 @@ class EstudianteController extends Controller
     {
        //dd($request->id);
         try {
-
+            $personalUsuario = Personal::where("id_user", Auth::user()->id)->first();
             if ($request->id == null || $request->id == 0)
             {
                 $estudiante = new Estudiantes;
@@ -79,41 +80,45 @@ class EstudianteController extends Controller
                 $estudiante->fechaMatricula = $request->fechaMatricula;
                 $estudiante->idCurso = $request->idCurso;
                 $estudiante->idParalelo = $request->idParalelo;
-                if ($estudiante->save()) {
-                    if(count($request->representantes) > 0)
-                    {
-                        //guarda en la tabla de representantes
-                        foreach($request->representantes as $item)
-                        {
-                            //dd($this->$request->representantes[$i]['cedula']);
-                            //dd($item[0]['nombre']);
-                            $representante = new Representante;
-                            $representante->cedula = $item[0]['cedula'];
-                            $representante->nombre = $item[0]['nombre'];
-                            $representante->apellidos = $item[0]['apellidos'];
-                            $representante->parentesco = $item[0]['parentesco'];
-                            $representante->telefonoMovil = $item[0]['telefonoMovil'];
-                            $representante->telefonoFijo = $item[0]['telefonoFijo'];
-                            $representante->correo = $item[0]['correo'];
-                            $representante->activo = true;
-                            $representante->created_by = Auth::user()->name;
-                            $representante->updated_by = Auth::user()->name;
-                            if($representante->save()){
-                                $alumnoRepresentante = new EstudiantesRepresentante;
-                                $alumnoRepresentante->estudiantes_id = $estudiante->id;
-                                $alumnoRepresentante->representante_id = $representante->id;
-                                $alumnoRepresentante->timestamps = false;
-                                if($alumnoRepresentante->save())
-                                {
-                                    return response()->json(["mensaje" => "Se guardo correctamente"]);
-                                }
+                $estudiante->id_escuela = $personalUsuario->id_escuela;
+                if ($estudiante->save())
+                {
+                    return response()->json(["mensaje" => "Se guardo correctamente"]);
+                    // if(count($request->representantes) > 0)
+                    // {
+                    //     //guarda en la tabla de representantes
+                    //     foreach($request->representantes as $item)
+                    //     {
+                    //         //dd($this->$request->representantes[$i]['cedula']);
+                    //         //dd($item[0]['nombre']);
+                    //         $representante = new Representante;
+                    //         $representante->cedula = $item[0]['cedula'];
+                    //         $representante->nombre = $item[0]['nombre'];
+                    //         $representante->apellidos = $item[0]['apellidos'];
+                    //         $representante->parentesco = $item[0]['parentesco'];
+                    //         $representante->telefonoMovil = $item[0]['telefonoMovil'];
+                    //         $representante->telefonoFijo = $item[0]['telefonoFijo'];
+                    //         $representante->correo = $item[0]['correo'];
+                    //         $representante->activo = true;
+                    //         $representante->created_by = Auth::user()->name;
+                    //         $representante->updated_by = Auth::user()->name;
+                    //         if($representante->save()){
+                    //             $alumnoRepresentante = new EstudiantesRepresentante;
+                    //             $alumnoRepresentante->estudiantes_id = $estudiante->id;
+                    //             $alumnoRepresentante->representante_id = $representante->id;
+                    //             $alumnoRepresentante->timestamps = false;
+                    //             if($alumnoRepresentante->save())
+                    //             {
+                    //                 return response()->json(["mensaje" => "Se guardo correctamente"]);
+                    //             }
 
-                            }
-                        }
-                    }
+                    //         }
+                    //     }
+                    // }
 
                 }
-            }else{
+            }else
+            {
                 //actualizar
                 if($request->id > 0){
                     $estudiante = Estudiantes::where('id', '=', $request->id)

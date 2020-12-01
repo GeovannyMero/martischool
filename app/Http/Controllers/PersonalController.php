@@ -41,7 +41,7 @@ class PersonalController extends Controller
         return $personal;
     }
 
-    public function update(Request $request,  int $id, int $planificacion_id)
+    public function update(int $id, int $planificacion_id, Request $request)
     {
         //dd($planificacion_id);
         try {
@@ -64,9 +64,11 @@ class PersonalController extends Controller
                         $personal->accesoSistema = $request->accesoSistema ? $request->accesoSistema : $personal->accesoSistema;
                         $personal->id_rol = $request->id_rol != null ? $request->id_rol : $personal->id_rol;
                         $personal->update_by = Auth::user()->name;
-                        if ($personal->save()) {
+                        if ($personal->save())
+                        {
                             //dd($planificacion_id);
-                            if ($planificacion_id > 0) {
+                            if ($planificacion_id > 0)
+                            {
 
                                 //buscar planificacion
                                 $planificacion = PersonalPlanificacion::where('personal_id', $personal->id)
@@ -82,6 +84,12 @@ class PersonalController extends Controller
                                     }
                                 }
                             }
+                            else
+                            {
+                                DB::commit();
+                                return response()->json(["mensaje" => "Se actualizó correctamente."]);
+                            }
+
                         }
                     }
                 }
