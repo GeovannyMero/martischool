@@ -51,7 +51,7 @@ class PersonalController extends Controller
                     $personal = Personal::find($id);
                     if ($personal != null) {
                         $personal->cedula = $request->cedula != null ? $request->cedula : $personal->cedula;
-                        $personal->primerNombre = $request->primerNombre != null ? $request->primerNombr : $personal->primerNombre;
+                        $personal->primerNombre = $request->primerNombre != null ? $request->primerNombre : $personal->primerNombre;
                         $personal->segundoNombre = $request->segundoNombre != null ? $request->segundoNombre : $personal->segundoNombre;
                         $personal->primerApellido = $request->primerApellido != null ? $request->primerApellido : $personal->primerApellido;
                         $personal->segundoApellido = $request->segundoApellido != null ? $request->segundoApellido : $personal->segundoApellido;

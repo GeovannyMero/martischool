@@ -30,14 +30,12 @@ var  guardar = () => {
         ]
     }
     var dataToSend = {
-
             "_token": "{{ csrf_token() }}",
             estudiante: estudiante,
-
-
     }
     //alert(JSON.stringify(estudiante));
     //debugger;
+    console.log(JSON.stringify(estudiante));
     $.post('/estudiante/saveEstudiante', estudiante)
     .done(result => {
             DevExpress.ui.notify(

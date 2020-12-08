@@ -83,38 +83,40 @@ class EstudianteController extends Controller
                 $estudiante->id_escuela = $personalUsuario->id_escuela;
                 if ($estudiante->save())
                 {
-                    return response()->json(["mensaje" => "Se guardo correctamente"]);
-                    // if(count($request->representantes) > 0)
-                    // {
-                    //     //guarda en la tabla de representantes
-                    //     foreach($request->representantes as $item)
-                    //     {
-                    //         //dd($this->$request->representantes[$i]['cedula']);
-                    //         //dd($item[0]['nombre']);
-                    //         $representante = new Representante;
-                    //         $representante->cedula = $item[0]['cedula'];
-                    //         $representante->nombre = $item[0]['nombre'];
-                    //         $representante->apellidos = $item[0]['apellidos'];
-                    //         $representante->parentesco = $item[0]['parentesco'];
-                    //         $representante->telefonoMovil = $item[0]['telefonoMovil'];
-                    //         $representante->telefonoFijo = $item[0]['telefonoFijo'];
-                    //         $representante->correo = $item[0]['correo'];
-                    //         $representante->activo = true;
-                    //         $representante->created_by = Auth::user()->name;
-                    //         $representante->updated_by = Auth::user()->name;
-                    //         if($representante->save()){
-                    //             $alumnoRepresentante = new EstudiantesRepresentante;
-                    //             $alumnoRepresentante->estudiantes_id = $estudiante->id;
-                    //             $alumnoRepresentante->representante_id = $representante->id;
-                    //             $alumnoRepresentante->timestamps = false;
-                    //             if($alumnoRepresentante->save())
-                    //             {
-                    //                 return response()->json(["mensaje" => "Se guardo correctamente"]);
-                    //             }
+                    //return response()->json(["mensaje" => "Se guardo correctamente"]);
+                     if(count($request->representantes) > 0)
+                     {
+                         //guarda en la tabla de representantes
+                         foreach($request->representantes as $item)
+                         {
+                             //dd($this->$request->representantes[$i]['cedula']);
+                             //dd($item[0]['nombre']);
+                             $representante = new Representante;
+                             $representante->id_tipo_familiar = $item[0]['id_tipo_familiar'];
+                             $representante->id_tipo_identificacion = $item[0]['id_tipo_identificacion'];
+                             $representante->identificacion = $item[0]['identificacion'];
+                             $representante->nombre = $item[0]['nombre'];
+                             $representante->apellidos = $item[0]['apellidos'];
+                             $representante->parentesco = $item[0]['parentesco'];
+                             $representante->telefonoMovil = $item[0]['telefonoMovil'];
+                             $representante->telefonoFijo = $item[0]['telefonoFijo'];
+                             $representante->correo = $item[0]['correo'];
+                             $representante->activo = true;
+                             $representante->created_by = Auth::user()->name;
+                             $representante->updated_by = Auth::user()->name;
+                             if($representante->save()){
+                                 $alumnoRepresentante = new EstudiantesRepresentante;
+                                 $alumnoRepresentante->estudiantes_id = $estudiante->id;
+                                 $alumnoRepresentante->representante_id = $representante->id;
+                                 $alumnoRepresentante->timestamps = false;
+                                 if($alumnoRepresentante->save())
+                                 {
+                                     return response()->json(["mensaje" => "Se guardo correctamente"]);
+                                 }
 
-                    //         }
-                    //     }
-                    // }
+                             }
+                         }
+                    }
 
                 }
             }else

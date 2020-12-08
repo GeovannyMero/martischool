@@ -151,6 +151,12 @@ Route::post('/parciales/update/{id}', 'ParcialController@update');
 Route::get('/parciales/parciales', 'ParcialController@parciales');
 Route::post('parciales/remove/{id}', 'ParcialController@remove');
 
+//Tipo Familiares
+Route::post('/tipofamiliar/all', 'TipoFamiliarController@ObtenerTipoFamiliar');
+
+//tipo Identificacion
+Route::post('/tipoIdentificacion/all', 'TipoIdentificacionController@ObtenerTipoIdentificacion');
+
 
 
 
