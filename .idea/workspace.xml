@@ -38,13 +38,13 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="">
+    <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="CRUD Estudiante">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EstudianteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EstudianteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/NotasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/NotasController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PersonalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PersonalController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/estudiante/detallesEstudiante.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/estudiante/detallesEstudiante.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/estudiante/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/estudiante/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/personal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/personal/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +190,9 @@
       <workItem from="1606832111958" duration="3974000" />
       <workItem from="1606883825334" duration="4322000" />
       <workItem from="1606958634597" duration="603000" />
-      <workItem from="1607400814499" duration="5775000" />
+      <workItem from="1607400814499" duration="7446000" />
+      <workItem from="1607747691333" duration="3272000" />
+      <workItem from="1607829650958" duration="5633000" />
     </task>
     <task id="LOCAL-00001" summary="Update Method Insert Personal">
       <created>1606538638645</created>
@@ -206,7 +208,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606538765850</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="CRUD Estudiante">
+      <created>1607406787949</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607406787949</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,13 +247,14 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Update Method Insert Personal" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Method Insert Personal" />
+    <MESSAGE value="CRUD Estudiante" />
+    <option name="LAST_COMMIT_MESSAGE" value="CRUD Estudiante" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="389" y="140" key="#Log_Highlighting_(ideolog)" timestamp="1606254893123">
+    <state x="389" y="140" width="763" height="458" key="#Log_Highlighting_(ideolog)" timestamp="1607408088323">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="389" y="140" key="#Log_Highlighting_(ideolog)/0.0.1366.738@0.0.1366.738" timestamp="1606254893123" />
+    <state x="389" y="140" width="763" height="458" key="#Log_Highlighting_(ideolog)/0.0.1366.738@0.0.1366.738" timestamp="1607408088323" />
     <state x="463" y="124" key="FileChooserDialogImpl" timestamp="1606278000359">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -253,9 +263,9 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="184" y="14" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1606883620370" />
-    <state x="275" y="89" key="Vcs.Push.Dialog.v2" timestamp="1606538782767">
+    <state x="275" y="89" key="Vcs.Push.Dialog.v2" timestamp="1607406803612">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="89" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1606538782767" />
+    <state x="275" y="89" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1607406803612" />
   </component>
 </project>

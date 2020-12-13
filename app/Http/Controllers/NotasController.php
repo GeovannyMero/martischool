@@ -20,6 +20,7 @@ class NotasController extends Controller
     }
 
     public function cursos(){
+        $curso = null;
         try {
             if(Auth::check())
             {
@@ -31,12 +32,13 @@ class NotasController extends Controller
                 ->where('personal_planificacion.personal_id',5)
                 ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id')
                 ->select('curso.nombre as curso','curso.id as idCurso','paralelo.id as idParalelo','paralelo.nombre as paralelo', DB::raw('count(estudiante.id) as cantEstudiante'))
-                ->get();
-               //dd($curso);
+                ->toSql();
+               dd($curso);
             }
         } catch (Exception $e) {
             return response()->json(["mensaje" => $e->getMessage()]);
         }
+
         return $curso;
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Modelos\Planificacion;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\Exception;
 use Illuminate\Support\Facades\Auth;
@@ -43,12 +44,13 @@ class PersonalController extends Controller
 
     public function update(int $id, int $planificacion_id, Request $request)
     {
-        //dd($planificacion_id);
+        //dd($request);
         try {
             if (Auth::check()) {
                 if ($id != 0) {
                     DB::beginTransaction();
                     $personal = Personal::find($id);
+
                     if ($personal != null) {
                         $personal->cedula = $request->cedula != null ? $request->cedula : $personal->cedula;
                         $personal->primerNombre = $request->primerNombre != null ? $request->primerNombre : $personal->primerNombre;
@@ -66,13 +68,14 @@ class PersonalController extends Controller
                         $personal->update_by = Auth::user()->name;
                         if ($personal->save())
                         {
-                            //dd($planificacion_id);
+
                             if ($planificacion_id > 0)
                             {
-
+                                //dd($planificacion_id);
                                 //buscar planificacion
                                 $planificacion = PersonalPlanificacion::where('personal_id', $personal->id)
-                                    ->where('planificacion_id', $planificacion_id)->first();
+                                    ->where('planificacion_id', $planificacion_id)
+                                    ->first();
                                 //dd($planificacion);
                                 if ($planificacion != null) {
                                     //TODO::validar que tenga un cambio para ctualizar
@@ -82,6 +85,18 @@ class PersonalController extends Controller
                                         DB::commit();
                                         return response()->json(["mensaje" => "Se actualizó correctamente."]);
                                     }
+                                }
+                                else{
+                                    $personalPlanificacion = new PersonalPlanificacion();
+                                    $personalPlanificacion->planificacion_id = $planificacion_id;
+                                    $personalPlanificacion->personal_id = $personal->id;
+                                    $personalPlanificacion->timestamps = false;
+                                    if($personalPlanificacion->save())
+                                    {
+                                        DB::commit();
+                                        return response()->json(["mensaje" => "Se actualizó correctamente."]);
+                                    }
+
                                 }
                             }
                             else

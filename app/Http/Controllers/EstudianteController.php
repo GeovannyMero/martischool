@@ -57,7 +57,7 @@ class EstudianteController extends Controller
     //GUARDAR
     public function saveEstudiante(Request $request)
     {
-       //dd($request->id);
+       dd($request);
         try {
             $personalUsuario = Personal::where("id_user", Auth::user()->id)->first();
             if ($request->id == null || $request->id == 0)
@@ -122,7 +122,8 @@ class EstudianteController extends Controller
             }else
             {
                 //actualizar
-                if($request->id > 0){
+                if($request->id > 0)
+                {
                     $estudiante = Estudiantes::where('id', '=', $request->id)
                                     ->with(['representantes'])
                                     ->first();
