@@ -28,7 +28,7 @@
     <div class="wrapper">
         <header class="main-header">
             <a class="logo">
-                <span class="logo-mini">SGA</span>
+            <span class="logo-mini">SGA{{Auth::user()->name}}</span>
                 <span class="logo-lg">SGA</span>
             </a>
 
@@ -81,6 +81,13 @@
                             <i class="fa fa-dashboard"></i>
                             <span>Dashboard</span>
                             <span class="pull-right-container"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/escuela">
+                            <i class="fa fa-institution"></i>
+                            <span>Escuela</span>
+
                         </a>
                     </li>
                     <!-- Seguridad -->

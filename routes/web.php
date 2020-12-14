@@ -50,6 +50,9 @@ Route::post('/escuela/update/{id}', 'EscuelaController@update');
 Route::post('/escuela/delete/{id}', 'EscuelaController@delete');
 Route::get('/escuela/administrador/{id}', 'EscuelaController@administrador');
 Route::post('/escuela/administradores/{id}', 'EscuelaController@administradores');
+Route::post('/escuela/administrador/insertar/{idEscuela}', 'EscuelaController@guardarAdministradores');
+Route::post('/escuela/administrador/actualizar/{id}', 'EscuelaController@actualizar');
+Route::post('/escuela/administrador/eliminar/{id}', 'EscuelaController@eliminar');
 
 //Roles
 Route::get('/rol', 'RolController@index')->middleware('auth');;
@@ -77,6 +80,7 @@ Route::get('/cursoNiveleducativo/niveles', 'CursoController@niveles');
 Route::post('/curso/update/{id}', 'CursoController@update');
 Route::post('/curso/insert','CursoController@insert');
 Route::post('/curso/remove/{id}', 'CursoController@remove');
+Route::post('/curso/Total', 'CursoController@TotalCurso');
 
 //Paralelos
 Route::get('/paralelo', 'ParaleloController@Index');
@@ -147,6 +151,13 @@ Route::post('/parciales/insert', 'ParcialController@insert');
 Route::post('/parciales/update/{id}', 'ParcialController@update');
 Route::get('/parciales/parciales', 'ParcialController@parciales');
 Route::post('parciales/remove/{id}', 'ParcialController@remove');
+
+//Tipo Familiares
+Route::post('/tipofamiliar/all', 'TipoFamiliarController@ObtenerTipoFamiliar');
+
+//tipo Identificacion
+Route::post('/tipoIdentificacion/all', 'TipoIdentificacionController@ObtenerTipoIdentificacion');
+
 
 
 

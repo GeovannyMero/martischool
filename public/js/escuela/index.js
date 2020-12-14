@@ -3,7 +3,7 @@ var app = angular.module('EscuelaModule', ['dx']);
 
 app.controller('escuelaController', function escuelaController($scope, $http){
     var escuela = new DevExpress.data.CustomStore({
-        load: ()=>{
+        load: () => {
             return $http.post('/escuela/all')
             .then((response)=>{
                 return response.data;
@@ -90,6 +90,7 @@ app.controller('escuelaController', function escuelaController($scope, $http){
             dataField: 'activo',
             caption: 'Estado',
             width: 70,
+            dataType: 'boolean',
             validationRules: [
                 {
                     type: 'required',
@@ -125,12 +126,13 @@ app.controller('escuelaController', function escuelaController($scope, $http){
                         var datos = e.row.data;
                         //alert(datos["id"]);
                         var id = datos["id"];
-                        $http.get("/escuela/administrador/" + id)
-                        .then(response => {
-                            $('#pages').html("");
-                            $('#pages').html(response.data);
-                        })
-                        .catch(error => console.error(error));
+                        // $http.get("/escuela/administrador/" + id)
+                        // .then(response => {
+                        //     $('#pages').html("");
+                        //     $('#pages').html(response.data);
+                        // })
+                        // .catch(error => console.error(error));
+                        window.location = "/escuela/administrador/" + id;
 
 
                         // popup = null;

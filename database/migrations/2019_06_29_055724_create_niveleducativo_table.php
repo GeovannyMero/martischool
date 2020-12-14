@@ -31,6 +31,6 @@ class CreateNiveleducativoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('niveleducativo');
+        Schema::dropIfExists('nivel_educativo');
     }
 }

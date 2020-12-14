@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
 
             //nuevos campos
             $table->boolean('activo')->nullable($values = false);
-            $table->integer('escuela_id')->unsigned();
+            // $table->integer('escuela_id')->unsigned();
             $table->integer('rol_id');
 
             //auditoria

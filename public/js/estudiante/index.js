@@ -89,7 +89,36 @@ app.controller("appController", function estudianteController(
                 });
         }
     });
-
+    //lookup tipo familiares
+    var tipoFamiliar = new  DevExpress.data.CustomStore({
+        key: "id",
+        loadMode: "raw",
+        load: () => {
+            return $http.post("/tipofamiliar/all")
+                .then(response => {
+                    console.log(response.data);
+                    return response.data;
+                })
+                .catch(error => {
+                    DevExpress.ui.notify(error.data, "error", 5000);
+                })
+        }
+    });
+    //Looup tipo de identificacion
+    var tipoIdentificacion = new DevExpress.data.CustomStore({
+       key: 'id',
+       loadMode: 'raw',
+       load: () => {
+           return $http.post("/tipoIdentificacion/all")
+               .then(response => {
+                   console.log(response.data);
+                   return response.data;
+               })
+               .catch(error => {
+                   DevExpress.ui.notify(error.data, "error", 5000);
+               })
+       }
+    });
     //planificacion paralelos
     var paralelo = new DevExpress.data.CustomStore({
         key: "id",
@@ -427,6 +456,7 @@ app.controller("appController", function estudianteController(
                         }
                     },
                     {
+                        //Boton editar
                         icon: "edit",
                         visible: true,
                         onClick: e => {
@@ -456,7 +486,7 @@ app.controller("appController", function estudianteController(
                                                     items: [
                                                         {
                                                             dataField: "id",
-                                                            //visible: false
+                                                            //visible: false,
                                                             editorOptions: {
                                                                 disabled: true
                                                             }
@@ -570,8 +600,7 @@ app.controller("appController", function estudianteController(
                                                         // },
                                                         {
                                                             dataField: "genero",
-                                                            editorType:
-                                                                "dxRadioGroup",
+                                                            editorType: "dxRadioGroup",
                                                             validationRules: [
                                                                 {
                                                                     type:
@@ -693,7 +722,7 @@ app.controller("appController", function estudianteController(
                                                 visible: false
                                             },
                                             {
-                                                dataField: "cedula",
+                                                dataField: "identificacion",
                                                 caption: "Cédula",
                                                 //width: 30,
                                                 validationRules: [
@@ -1709,7 +1738,37 @@ app.controller("appController", function estudianteController(
                                                 visible: false
                                             },
                                             {
-                                                dataField: "cedula",
+                                              dataField: "id_tipo_familiar",
+                                              caption: "Tipo Familiar",
+                                              validationRules: [
+                                                  {
+                                                      type: "required",
+                                                      message: "El campo es obligatorio"
+                                                  }
+                                              ],
+                                                lookup: {
+                                                    dataSource: tipoFamiliar,
+                                                    displayExpr: 'descripcion',
+                                                    valueExpr: 'id'
+                                                }
+                                            },
+                                            {
+                                              dataField: "id_tipo_identificacion",
+                                              caption: "Tipo Identificación",
+                                              validationRules: [
+                                                  {
+                                                      type: "required",
+                                                      message: "El campo es requerido"
+                                                  }
+                                              ],
+                                                lookup: {
+                                                  dataSource: tipoIdentificacion,
+                                                  displayExpr: 'descripcion',
+                                                  valueExpr: 'id'
+                                                }
+                                            },
+                                            {
+                                                dataField: "identificacion",
                                                 caption: "Cédula",
                                                 //width: 30,
                                                 validationRules: [
@@ -1953,20 +2012,11 @@ app.controller("appController", function estudianteController(
                                                 "#gridContainer"
                                             ).dxDataGrid("getDataSource")._items
                                                 .length;
-                                            if (
-                                                result.isValid &&
-                                                resultPeriodo.isValid
-                                            ) {
-                                                if (
-                                                    cantidadRepresentantes > 0
-                                                ) {
-                                                    console.log(
-                                                        $(
-                                                            "#gridContainer"
-                                                        ).dxDataGrid(
-                                                            "getDataSource"
-                                                        )._items
-                                                    );
+                                            if (result.isValid && resultPeriodo.isValid)
+                                            {
+                                                if ( cantidadRepresentantes > 0)
+                                                {
+                                                    console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
                                                     guardar();
                                                 } else {
                                                     DevExpress.ui.notify(
@@ -1988,48 +2038,5 @@ app.controller("appController", function estudianteController(
             );
         }
     };
-    // $scope.representanteDataGridOptions = {
-    //     dataSource: {
-    //         store: representantes
-    //     },
-    //     showColumnLines: true,
-    //     showRowLines: true,
-    //     showBorders: true,
-    // }
-    /*$scope.dataGridOptionsR = {
-        dataSource: {
-            store: representantes
-        },
-        showColumnLines: true,
-        showRowLines: true,
-        showBorders: true,
-        editing: {
-            mode: "batch",
-            allowAdding: true,
-            allowUpdating: true
-        },
-        columns: [
-            {
-                dataField: "cedula",
-                caption: "Identificación"
-            },
-            {
-                dataField: "nombre",
-                caption: "Nombres"
-            },
-            {
-                dataField: "apellidos",
-                caption: "Apellidos"
-            },
-            {
-                dataField: "parentesco",
-                caption: "Parentesco"
-            },
-            {
-                dataField: "activo",
-                caption: "Activo",
-                dataType: "boolean"
-            }
-        ]
-    };*/
+
 });

@@ -26,7 +26,7 @@ app.controller('personalController', function($scope, $http){
         key: 'id',
         loadMode: 'raw',
         load: () => {
-            return $http.post('/planificacion/periodoActual/2019')
+            return $http.post('/planificacion/periodoActual/2020')
             .then((response) => {
                 return response.data;
             })
@@ -52,13 +52,17 @@ app.controller('personalController', function($scope, $http){
         },
         update: (key, values) => {
             //debugger;
+            //alert(values['planificacion_id']);
+           // debugger;
+            //console.log(key["planificacion_id"] == null ? 0 : 1);
             let id = JSON.stringify(key['id']);
             //let planificacion = ;
             // let datos = {
             //     planificacion_id: JSON.stringify(key['planificacion_id']),
             //     data: values
             // }
-            let planificacion = JSON.stringify(key['planificacion_id']);
+
+            let planificacion = key['planificacion_id'] == null ? values['planificacion_id'] : key['planificacion_id'];
             if(id !== 0)
             {
                 return $http.post('/personal/update/' + id + "/" + planificacion, values)

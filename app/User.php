@@ -43,6 +43,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Modelos\Rol');
     }
+
+    //personal
+    public function personal()
+    {
+        return $this->belongsTo('App\Modelos\Personal');
+    }
+
     public function authorizeRoles($roles)
     {
         if ($this->hasAnyRole($roles)) {
