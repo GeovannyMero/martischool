@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Modelos\Curso;
+use App\Modelos\Personal;
 use Illuminate\Http\Request;
 use App\Modelos\Rol;
 
@@ -28,6 +30,9 @@ class HomeController extends Controller
         $rol_id = $request->user()->rol_id;
         //dd(Rol::find($id_rol)->nombre);
         $rol = Rol::find($rol_id)->nombre;
-        return view('home');
+
+        $totalCursos = Curso::where('activo', 'true')->count();
+        $personal = Personal::where('activo', true)->count();
+        return view('home')->with('totalCursos',$totalCursos)->with('personal', $personal);
     }
 }

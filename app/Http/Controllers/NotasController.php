@@ -29,11 +29,11 @@ class NotasController extends Controller
                 ->join('curso', 'planificacion.curso_id', '=', 'curso.id')
                 ->join('paralelo', 'planificacion.paralelo_id', '=', 'paralelo.id')
                 ->join('estudiante','curso.id', '=', 'estudiante.idCurso')
-                ->where('personal_planificacion.personal_id',5)
+                ->where('personal_planificacion.personal_id',1)
                 ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id')
                 ->select('curso.nombre as curso','curso.id as idCurso','paralelo.id as idParalelo','paralelo.nombre as paralelo', DB::raw('count(estudiante.id) as cantEstudiante'))
-                ->toSql();
-               dd($curso);
+                ->get();
+               //dd($curso);
             }
         } catch (Exception $e) {
             return response()->json(["mensaje" => $e->getMessage()]);

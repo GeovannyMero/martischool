@@ -13,29 +13,36 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
+    <!--Referencia AdminLTE -->
+    <link rel="stylesheet" href="{{ asset('Bootstrap/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('font-awesome-4.7.0/css/font-awesome.min.css')}}" />
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"> --}}
+    <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/AdminLTE.min.css') }}" />
+<!-- <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/skins/_all-skins.min.css')}}" /> -->
+    <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/skins/skin-blue.css')}}" />
+    <link rel="stylesheet" href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}"/>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
+
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{-- {{ config('app.name', 'MartiSchool') }} --}}
-                    MartiSchool
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+{{--                <a class="navbar-brand" href="{{ url('/') }}">--}}
+{{--                    --}}{{-- {{ config('app.name', 'MartiSchool') }} --}}
+{{--                    MartiSchool--}}
+{{--                </a>--}}
+{{--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">--}}
+{{--                    <span class="navbar-toggler-icon"></span>--}}
+{{--                </button>--}}
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+                <!--  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    Left Side Of Navbar -->
+<!--                    <ul class="navbar-nav mr-auto">
 
-                    </ul>
+                    </ul>-->
 
                     <!-- Right Side Of Navbar -->
                     {{-- <ul class="navbar-nav ml-auto">
@@ -68,8 +75,8 @@
                                 </div>
                             </li>
                         @endguest
-                    </ul> --}}
-                </div>
+                    </ul>
+                </div>--}}
             </div>
         </nav>
 

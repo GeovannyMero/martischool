@@ -80,6 +80,7 @@ Route::get('/cursoNiveleducativo/niveles', 'CursoController@niveles');
 Route::post('/curso/update/{id}', 'CursoController@update');
 Route::post('/curso/insert','CursoController@insert');
 Route::post('/curso/remove/{id}', 'CursoController@remove');
+Route::post('/curso/Total', 'CursoController@TotalCurso');
 
 //Paralelos
 Route::get('/paralelo', 'ParaleloController@Index');

@@ -128,4 +128,17 @@ class CursoController extends Controller
             return response()->json(['mensaje' => $e->getMessage()]);
         }
     }
+
+    public  function TotalCurso()
+    {
+        $totalCurso = null;
+        try {
+            $totalCurso = Curso::where('activo', 'True')->count();
+
+        }catch (Exception $e)
+        {
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+        return $totalCurso;
+    }
 }
