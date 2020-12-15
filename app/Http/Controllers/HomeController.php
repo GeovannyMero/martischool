@@ -6,6 +6,7 @@ use App\Modelos\Curso;
 use App\Modelos\Personal;
 use Illuminate\Http\Request;
 use App\Modelos\Rol;
+use App\Modelos\Periodo;
 
 class HomeController extends Controller
 {
@@ -33,6 +34,8 @@ class HomeController extends Controller
 
         $totalCursos = Curso::where('activo', 'true')->count();
         $personal = Personal::where('activo', true)->count();
-        return view('home')->with('totalCursos',$totalCursos)->with('personal', $personal);
+        $periodoActual = Periodo::where('activo', true)->where('periodo_inicio', '2020')->select('periodo_inicio')->first();
+
+        return view('home')->with('totalCursos',$totalCursos)->with('personal', $personal)->with('periodoActual', $periodoActual);
     }
 }

@@ -120,13 +120,15 @@ class EscuelaController extends Controller
              {
                 $personal = DB::table('personal')
                             ->join('users', 'personal.id_user', '=', 'users.id')
-                            ->join('rol', 'users.rol_id', '=', 'rol_id')
+                            ->join('rol', 'users.rol_id', '=', 'rol.id')
                             ->where('personal.id_escuela', $id)
+                            ->where('users.rol_id' , '=', '1')
                             ->select('personal.id as id', 'personal.cedula as cedula', 'personal.primerNombre as primerNombre', 'personal.segundoNombre as segundoNombre', 'personal.primerApellido as primerApellido', 'personal.segundoApellido as segundoApellido', 'personal.activo as activo', 'personal.id_rol as id_rol', 'rol.nombre as nombreRol', 'personal.id_user as id_user, users.name as nombreUsuario', 'personal.correo as correo', 'personal.id_escuela as escuela_id')
                             ->get();
                             //dd($personal);
              }
-         } catch (Exception $e) {
+         } catch (Exception $e)
+         {
             return response()->json(["mensaje" => $e->getMessage()]);
          }
          return $personal;

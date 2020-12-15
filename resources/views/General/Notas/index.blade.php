@@ -24,9 +24,9 @@
         <li class="active">
             Notas
         </li>
-        <li class='active'>
-           Paralelos
-        </li>
+{{--        <li class='active'>--}}
+{{--           Paralelos--}}
+{{--        </li>--}}
     </ol>
 </section>
 </br>
@@ -34,7 +34,7 @@
 
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">Cursos</h3>
+        <h3 class="box-title">Cursos Asignados</h3>
     </div>
     <div class="box-body" ng-app='notasModule'>
         <curso-Component></curso-Component>

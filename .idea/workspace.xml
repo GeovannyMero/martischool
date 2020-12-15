@@ -38,17 +38,15 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="planificacion personal">
-      <change afterPath="$PROJECT_DIR$/public/js/Home/Index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/login.blade2.php" afterDir="false" />
+    <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="Dashboard, notas, layout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CursoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CursoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EscuelaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EscuelaController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/NotasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/NotasController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/notas/notasCursos.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/notas/notasCursos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/General/Notas/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/General/Notas/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -204,7 +202,9 @@
       <workItem from="1607400814499" duration="7446000" />
       <workItem from="1607747691333" duration="3272000" />
       <workItem from="1607829650958" duration="13237000" />
-      <workItem from="1607920168959" duration="3247000" />
+      <workItem from="1607920168959" duration="3908000" />
+      <workItem from="1607983372551" duration="2883000" />
+      <workItem from="1608004130212" duration="7762000" />
     </task>
     <task id="LOCAL-00001" summary="Update Method Insert Personal">
       <created>1606538638645</created>
@@ -234,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607884037141</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="login new">
+      <created>1607923482790</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1607923482791</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,13 +276,18 @@
     <MESSAGE value="CRUD Estudiante" />
     <MESSAGE value="planificacion personal" />
     <MESSAGE value="login new" />
-    <option name="LAST_COMMIT_MESSAGE" value="login new" />
+    <MESSAGE value="Dashboard, notas, layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dashboard, notas, layout" />
   </component>
   <component name="WindowStateProjectService">
     <state x="389" y="140" width="763" height="458" key="#Log_Highlighting_(ideolog)" timestamp="1607408088323">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="389" y="140" width="763" height="458" key="#Log_Highlighting_(ideolog)/0.0.1366.738@0.0.1366.738" timestamp="1607408088323" />
+    <state x="413" y="124" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608005201646">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="413" y="124" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1608005201646" />
     <state x="463" y="124" key="FileChooserDialogImpl" timestamp="1606278000359">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -284,10 +296,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="184" y="14" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1606883620370" />
-    <state x="275" y="89" key="Vcs.Push.Dialog.v2" timestamp="1607884053696">
+    <state x="275" y="89" key="Vcs.Push.Dialog.v2" timestamp="1607923577181">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="89" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1607884053696" />
+    <state x="275" y="89" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1607923577181" />
     <state x="339" y="165" key="run.anything.popup" timestamp="1607921746335">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
