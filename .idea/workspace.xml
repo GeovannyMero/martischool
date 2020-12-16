@@ -40,9 +40,7 @@
   <component name="ChangeListManager">
     <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="Dashboard, notas, layout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +199,7 @@
       <workItem from="1607983372551" duration="2883000" />
       <workItem from="1608004130212" duration="8225000" />
       <workItem from="1608012846781" duration="284000" />
-      <workItem from="1608085760698" duration="9165000" />
+      <workItem from="1608085760698" duration="10278000" />
     </task>
     <task id="LOCAL-00001" summary="Update Method Insert Personal">
       <created>1606538638645</created>
@@ -245,7 +243,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608011931146</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Custom Login">
+      <created>1608097155808</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1608097155808</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,32 +286,7 @@
     <MESSAGE value="planificacion personal" />
     <MESSAGE value="login new" />
     <MESSAGE value="Dashboard, notas, layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dashboard, notas, layout" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="389" y="140" width="763" height="458" key="#Log_Highlighting_(ideolog)" timestamp="1607408088323">
-      <screen x="0" y="0" width="1366" height="738" />
-    </state>
-    <state x="389" y="140" width="763" height="458" key="#Log_Highlighting_(ideolog)/0.0.1366.738@0.0.1366.738" timestamp="1607408088323" />
-    <state x="413" y="124" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608005201646">
-      <screen x="0" y="0" width="1366" height="738" />
-    </state>
-    <state x="413" y="124" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1608005201646" />
-    <state x="463" y="124" key="FileChooserDialogImpl" timestamp="1606278000359">
-      <screen x="0" y="0" width="1366" height="738" />
-    </state>
-    <state x="463" y="124" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1606278000359" />
-    <state x="184" y="14" key="SettingsEditor" timestamp="1606883620370">
-      <screen x="0" y="0" width="1366" height="738" />
-    </state>
-    <state x="184" y="14" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1606883620370" />
-    <state x="275" y="89" key="Vcs.Push.Dialog.v2" timestamp="1608011945809">
-      <screen x="0" y="0" width="1366" height="738" />
-    </state>
-    <state x="275" y="89" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1608011945809" />
-    <state x="339" y="165" key="run.anything.popup" timestamp="1607921746335">
-      <screen x="0" y="0" width="1366" height="738" />
-    </state>
-    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1607921746335" />
+    <MESSAGE value="Custom Login" />
+    <option name="LAST_COMMIT_MESSAGE" value="Custom Login" />
   </component>
 </project>

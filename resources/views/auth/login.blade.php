@@ -4,7 +4,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     @if ( session('error'))
-        <div class="alert alert-danger alert-dismissible">
+        <div class="callout callout-danger" role="alert">
             <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
             <h4>
                 <i class="fa fa-warning"></i>
@@ -62,3 +62,10 @@
 </body>
 
 @endsection
+<script type="text/javascript">
+    window.setTimeout(function() {
+        $(".callout").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+        });
+    }, 3000);
+</script>
