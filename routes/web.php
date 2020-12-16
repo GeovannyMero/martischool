@@ -19,6 +19,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//Login
+Route::post('/login',  'AuthController@Login');
+
+//Home
 Route::get('/home', 'HomeController@index');
 
 //Estudiantes
