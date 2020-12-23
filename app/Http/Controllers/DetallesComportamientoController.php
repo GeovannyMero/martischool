@@ -16,20 +16,23 @@ class DetallesComportamientoController extends Controller
 
     public function guardarDetalles(Request $request)
     {
+        //dd($request);
         try {
             if($request != null)
             {
                 if($request->comportamientoId > 0)
                 {
+
                     $detalles = new DetallesComportamiento();
                     $detalles->fecha = $request->fecha;
-                    $detalles->tipo = $request->tipo = 'Positivo' ? 'P' : 'N';
+                    $detalles->tipo = strtoupper($request->tipo) == 'POSITIVO' ? 'P' : 'N';
                     $detalles->comentario = $request->comentario;
                     $detalles->comportamiento_id = $request->comportamientoId;
                     $detalles->created_by = Auth::user()->name;
                     $detalles->updated_by = Auth::user()->name;
                     if($detalles->save())
                     {
+
                         return response()->json(['mensaje' => 'Se guardo con exito.']);
                     }
                 }

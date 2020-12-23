@@ -51,11 +51,9 @@ appNotas.component('cursoComponent', {//TODO:Se tiene que agregar un loop para r
         $http.post('/notas/cursos')
         .then(response => {
             vm.cursos = response.data;
-            console.log(response.data);
-            console.log(response.data.length);
         })
         .catch(error => {
-            alert(error);
+            console.error(error);
         })
     }
 })

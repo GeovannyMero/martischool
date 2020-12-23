@@ -40,7 +40,12 @@
   <component name="ChangeListManager">
     <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="Dashboard, notas, layout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DetallesComportamientoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DetallesComportamientoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/NotasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/NotasController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/notas/comportamiento.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/notas/comportamiento.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/notas/notasCursos.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/notas/notasCursos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/General/Notas/comportamiento.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/General/Notas/comportamiento.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +204,11 @@
       <workItem from="1607983372551" duration="2883000" />
       <workItem from="1608004130212" duration="8225000" />
       <workItem from="1608012846781" duration="284000" />
-      <workItem from="1608085760698" duration="10278000" />
+      <workItem from="1608085760698" duration="11824000" />
+      <workItem from="1608320324497" duration="3658000" />
+      <workItem from="1608491196675" duration="4902000" />
+      <workItem from="1608521275666" duration="5480000" />
+      <workItem from="1608677663103" duration="2302000" />
     </task>
     <task id="LOCAL-00001" summary="Update Method Insert Personal">
       <created>1606538638645</created>
@@ -250,7 +259,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608097155808</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Set TimeOut error login">
+      <created>1608098499096</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1608098499096</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,6 +303,7 @@
     <MESSAGE value="login new" />
     <MESSAGE value="Dashboard, notas, layout" />
     <MESSAGE value="Custom Login" />
-    <option name="LAST_COMMIT_MESSAGE" value="Custom Login" />
+    <MESSAGE value="Set TimeOut error login" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set TimeOut error login" />
   </component>
 </project>

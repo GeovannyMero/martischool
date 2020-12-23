@@ -214,13 +214,19 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                                                     useSubmitBehavior: true,
                                                     onClick: function () {
                                                         debugger;
-                                                        alert('Obtener datos');
+                                                       // alert('Obtener datos');
                                                         var form = $("#formDetalles").dxForm("instance");
                                                         var data = form.option("formData");
-                                                        alert(JSON.stringify(data));
+                                                        //alert(JSON.stringify(data));
                                                         $http.post('/detallesComportamiento/guardarDetalles', data)
                                                         .then(response => {
                                                             alert(JSON.stringify(response.data));
+                                                            console.log(response.data);
+                                                            DevExpress.ui.notify(
+                                                                response.data,
+                                                                "success",
+                                                                6000
+                                                            );
                                                         })
                                                         .catch(error => {
                                                             alert(error);
@@ -281,7 +287,13 @@ appNotas.controller('comportamientoController', function comportamientoControlle
            //$scope.selectedEmployee = selectedItems.selectedRowsData[0];
            //obtener la nota
            debugger;
-           let nota = selectedItems.selectedRowsData.length > 0 ? selectedItems.selectedRowsData[0].nota : 0;
+           //let nota = selectedItems.selectedRowsData.length > 0 ? selectedItems.selectedRowsData[0].nota : 0;
+            let nota = 0
+           if (selectedItems.selectedRowsData.length > 0)
+           {
+             nota = selectedItems.selectedRowsData[0].nota == null ? 0 : selectedItems.selectedRowsData[0].nota;
+           }
+
             //alert(nota);
            //alert(JSON.stringify(selectedItems.selectedRowsData[0]));
            $('#calificacion').html('Calificación');
@@ -393,6 +405,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
            if(comportamientoId > 0)
            {
                debugger;
+               $('#detallesComportamientoEstudiante').css("display", "");
                 let detalles = $http.post('/detallesComportamiento/detalles/' + comportamientoId)
                 .then(response => {
                     $scope.detallesComportamiento = response.data;
@@ -436,7 +449,8 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                     alert(JSON.stringify(error));
                 })
            }else{
-               DevExpress.ui.notify('ERROR');
+               $('#detallesComportamientoEstudiante').css("display", "none");
+               DevExpress.ui.notify('No tiene calificaciones por el momento');
            }
 
         },

@@ -75,7 +75,7 @@ class NotasController extends Controller
             //$estudiantesPorCurso = Estudiantes::where('idCurso', $idcurso)->get();
             $estudiantesPorCurso = DB::table('estudiante')
             ->leftjoin('comportamiento', 'estudiante.id', '=', 'comportamiento.estudiante_id')
-            ->select('estudiante.id', 'estudiante.primerNombre',
+            ->select('estudiante.id', 'estudiante.primerNombre','estudiante.segundoNombre', 'estudiante.primerApellido','estudiante.segundoApellido',
             'comportamiento.id as comportamientoId', 'comportamiento.parcial_id', 'comportamiento.nota', 'estudiante.activo')
             ->get();
             //dd($estudiantesPorCurso);
