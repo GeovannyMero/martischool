@@ -3,6 +3,16 @@
 @section('content')
 <body class="hold-transition login-page">
 <div class="login-box">
+    @if ( session('error'))
+        <div class="callout callout-danger" role="alert">
+            <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+            <h4>
+                <i class="fa fa-warning"></i>
+                Alerta!
+            </h4>
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="login-logo">
         <a href="#">Marti<b>School</b></a>
     </div>
@@ -52,3 +62,10 @@
 </body>
 
 @endsection
+<script type="text/javascript">
+    window.setTimeout(function() {
+        $(".callout").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+        });
+    }, 3000);
+</script>

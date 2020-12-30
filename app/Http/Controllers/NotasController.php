@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Modelos\Personal;
+use App\Modelos\PersonalPlanificacion;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,16 +26,26 @@ class NotasController extends Controller
         try {
             if(Auth::check())
             {
-                $curso = DB::table('planificacion')
-                ->join('personal_planificacion', 'planificacion.id', '=', 'personal_planificacion.planificacion_id')
-                ->join('curso', 'planificacion.curso_id', '=', 'curso.id')
-                ->join('paralelo', 'planificacion.paralelo_id', '=', 'paralelo.id')
-                ->join('estudiante','curso.id', '=', 'estudiante.idCurso')
-                ->where('personal_planificacion.personal_id',1)
-                ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id')
-                ->select('curso.nombre as curso','curso.id as idCurso','paralelo.id as idParalelo','paralelo.nombre as paralelo', DB::raw('count(estudiante.id) as cantEstudiante'))
-                ->get();
-               //dd($curso);
+                //Obtiene datos del personal mediante el usuario
+                $personalUsuario = Personal::where("id_user", Auth::user()->id)->first();
+                //$personalplanificacion = PersonalPlanificacion::where("personal_id", $personalUsuario->id)->first();
+                //dd($personalUsuario);
+                if($personalUsuario != null){
+                    if($personalUsuario->id > 0)
+                    {
+                        $curso = DB::table('planificacion')
+                            ->join('personal_planificacion', 'planificacion.id', '=', 'personal_planificacion.planificacion_id')
+                            ->join('curso', 'planificacion.curso_id', '=', 'curso.id')
+                            ->join('paralelo', 'planificacion.paralelo_id', '=', 'paralelo.id')
+                            ->join('estudiante','curso.id', '=', 'estudiante.idCurso')
+                            ->where('personal_planificacion.personal_id',$personalUsuario->id)
+                            ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id')
+                            ->select('curso.nombre as curso','curso.id as idCurso','paralelo.id as idParalelo','paralelo.nombre as paralelo', DB::raw('count(estudiante.id) as cantEstudiante'))
+                            ->get();
+                        //dd($curso);
+                    }
+                }
+
             }
         } catch (Exception $e) {
             return response()->json(["mensaje" => $e->getMessage()]);
@@ -63,7 +75,7 @@ class NotasController extends Controller
             //$estudiantesPorCurso = Estudiantes::where('idCurso', $idcurso)->get();
             $estudiantesPorCurso = DB::table('estudiante')
             ->leftjoin('comportamiento', 'estudiante.id', '=', 'comportamiento.estudiante_id')
-            ->select('estudiante.id', 'estudiante.primerNombre',
+            ->select('estudiante.id', 'estudiante.primerNombre','estudiante.segundoNombre', 'estudiante.primerApellido','estudiante.segundoApellido',
             'comportamiento.id as comportamientoId', 'comportamiento.parcial_id', 'comportamiento.nota', 'estudiante.activo')
             ->get();
             //dd($estudiantesPorCurso);

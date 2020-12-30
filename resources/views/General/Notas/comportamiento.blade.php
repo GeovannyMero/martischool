@@ -58,7 +58,7 @@
                         {{-- <div dx-text-box="@{{selectedEmployee.primerNombre}}"></div> --}}
                         <label for="calificacion" id="calificacion"></label>
                         <div id="nota"></div>
-                        <div class="col-lg-12" style="padding-top: 20px">
+                        <div class="col-lg-12" style="padding-top: 20px" id="detallesComportamientoEstudiante">
                         {{-- <p>@{{detallesComportamiento[0].fecha}}</p>
                         <p ng-repeat='item in detallesComportamiento'>
                             @{{item.fecha}}

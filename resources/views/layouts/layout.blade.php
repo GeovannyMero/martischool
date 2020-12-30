@@ -76,13 +76,14 @@
             <section class="sidebar">
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">Main Navegation</li>
-                    <li class="treeview">
+                    <li >
                         <a href="/home">
                             <i class="fa fa-dashboard"></i>
                             <span>Dashboard</span>
-                            <span class="pull-right-container"></span>
+{{--                            <span class="pull-right-container"></span>--}}
                         </a>
                     </li>
+                    @if(Auth::user()->hasRol("Administrador"))
                     <li>
                         <a href="/escuela">
                             <i class="fa fa-institution"></i>
@@ -90,6 +91,7 @@
 
                         </a>
                     </li>
+                    @endif
                     <!-- Seguridad -->
                     @if(Auth::user()->hasRol("Administrador"))
                     <li class="treeview">
@@ -119,7 +121,7 @@
                     </li>
                     @endif
                     <!--Estudiante-->
-                    @if(Auth::user()->hasRol("Profesor") || Auth::user()->hasRol("Administrador"))
+                    @if(Auth::user()->hasRol("Administrador"))
                     <li>
                         <a href="/estudiante">
                             <i class="fa fa-users"></i>
@@ -210,7 +212,7 @@
                     </li>
                     @endif
                     <!--Calificaciones-->
-                    @if(Auth::user()->hasRol("Administrador"))
+                    @if(Auth::user()->hasRol("Profesor"))
                     <li>
                         <a href="{{ url('/notas')}}">
                             <i class="fa fa-pencil"></i>
@@ -220,7 +222,7 @@
                     </li>
                     @endif
                     <!--Reportes-->
-                    @if(Auth::user()->hasRol("Profesor") || Auth::user()->hasRol("Administrador"))
+                    @if(Auth::user()->hasRol("Administrador"))
                     <li class="treeview">
                         <a href="{{ url('/notas')}}">
                             <i class="fa fa-file-text-o"></i>

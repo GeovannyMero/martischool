@@ -19,7 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Login
+Route::post('/login',  'AuthController@Login');
+
+//Home
+Route::get('/home', 'HomeController@index');
 
 //Estudiantes
 Route::get('/estudiante','EstudianteController@index');
