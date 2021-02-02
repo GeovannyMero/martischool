@@ -130,7 +130,7 @@ Route::post('/personal/remove/{id}', 'PersonalController@remove');
 
 
 //Notas
-Route::get('/notas', 'NotasController@index');
+Route::get('/notas', 'NotasController@index')->middleware("notas");
 Route::post('/notas/cursos', 'NotasController@cursos');
 Route::get('/notas/comportamiento/{idCurso}/{idParalelo}', 'NotasController@comportamiento');
 Route::post('/notas/comportamientoPorCurso/{idCurso}', 'NotasController@comportamientoPorCurso');
