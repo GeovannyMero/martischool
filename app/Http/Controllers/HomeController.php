@@ -37,6 +37,6 @@ class HomeController extends Controller
         $periodoActual = Periodo::where('activo', true)->where('periodo_inicio', '2020')->select('periodo_inicio')->first();*/
 
         //return view('home')->with('totalCursos',$totalCursos)->with('personal', $personal)->with('periodoActual', $periodoActual);
-        return  view('hone');
+        return  view('home');
     }
 }

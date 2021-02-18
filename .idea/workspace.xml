@@ -38,10 +38,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="middleware notas">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="home change">
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +209,7 @@
       <workItem from="1612238118789" duration="210000" />
       <workItem from="1612238557377" duration="6596000" />
       <workItem from="1612302166768" duration="36000" />
-      <workItem from="1613620852440" duration="346000" />
+      <workItem from="1613620852440" duration="686000" />
     </task>
     <task id="LOCAL-00001" summary="Update Method Insert Personal">
       <created>1606538638645</created>
@@ -283,7 +281,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612247552502</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="home change">
+      <created>1613621256469</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1613621256469</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -323,6 +328,7 @@
     <MESSAGE value="Set TimeOut error login" />
     <MESSAGE value="notas y mensajes de login" />
     <MESSAGE value="middleware notas" />
-    <option name="LAST_COMMIT_MESSAGE" value="middleware notas" />
+    <MESSAGE value="home change" />
+    <option name="LAST_COMMIT_MESSAGE" value="home change" />
   </component>
 </project>
