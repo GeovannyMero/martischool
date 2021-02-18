@@ -228,7 +228,7 @@ class EstudianteController extends Controller
 
         // return $pdf->download('mi-archivo.pdf');
         return PDF::loadView('General.Estudiante.fichaEstudiante')
-            ->download('fichaEstudiantil.pdf');
+            ->stream('fichaEstudiantil.pdf');
 
         // $pdf = App::make('dompdf.wrapper');
         // $pdf->loadHTML('<h1>Test</h1>');
