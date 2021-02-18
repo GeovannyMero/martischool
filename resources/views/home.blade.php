@@ -26,7 +26,7 @@
                 </span>
                 <div class="info-box-content">
                     <span class="info-box-text">Total de Cursos</span>
-                    <span class="info-box-number">{{ $totalCursos }}</span>
+                    {{--<span class="info-box-number">{{ $totalCursos }}</span>--}}
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 </span>
                 <div class="info-box-content">
                     <span class="info-box-text">Personal Educativo</span>
-                    <span class="info-box-number">{{ $personal }}</span>
+                    {{--<span class="info-box-number">{{ $personal }}</span>--}}
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                 </span>
                 <div class="info-box-content">
                     <span class="info-box-text">Periodo Lectivo</span>
-                    <span class="info-box-number">{{ $periodoActual->periodo_inicio }}</span>
+                    {{--<span class="info-box-number">{{ $periodoActual->periodo_inicio }}</span>--}}
                 </div>
             </div>
         </div>
