@@ -83,7 +83,7 @@
 {{--                            <span class="pull-right-container"></span>--}}
                         </a>
                     </li>
-                    @if(Auth::user()->hasRol("Administrador"))
+                    @if(Auth::user()->hasRol("Master"))
                     <li>
                         <a href="/escuela">
                             <i class="fa fa-institution"></i>
