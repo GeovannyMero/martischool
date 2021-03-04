@@ -176,7 +176,7 @@ class EscuelaController extends Controller
                     $personal->segundoNombre = $request->segundoNombre;
                     $personal->primerApellido = $request->primerApellido;
                     $personal->segundoApellido = $request->segundoApellido;
-                    $personal->fechaNacimiento = date("Y-m-d H:i:s");
+                    $personal->fechaNacimiento = date("Y-m-d");
                     $personal->Genero = "M";
                     $personal->activo = "true";
                     $personal->direccion = "fragata";
