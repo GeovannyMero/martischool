@@ -38,8 +38,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="home change">
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+    <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="home change2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +210,8 @@
       <workItem from="1612238118789" duration="210000" />
       <workItem from="1612238557377" duration="6596000" />
       <workItem from="1612302166768" duration="36000" />
-      <workItem from="1613620852440" duration="686000" />
+      <workItem from="1613620852440" duration="1159000" />
+      <workItem from="1614822062563" duration="738000" />
     </task>
     <task id="LOCAL-00001" summary="Update Method Insert Personal">
       <created>1606538638645</created>
@@ -288,7 +290,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613621256469</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="home change2">
+      <created>1613621561187</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1613621561187</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -329,6 +338,7 @@
     <MESSAGE value="notas y mensajes de login" />
     <MESSAGE value="middleware notas" />
     <MESSAGE value="home change" />
-    <option name="LAST_COMMIT_MESSAGE" value="home change" />
+    <MESSAGE value="home change2" />
+    <option name="LAST_COMMIT_MESSAGE" value="home change2" />
   </component>
 </project>
