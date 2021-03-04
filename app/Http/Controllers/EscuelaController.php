@@ -182,7 +182,7 @@ class EscuelaController extends Controller
                     $personal->direccion = "fragata";
                     $personal->correo = $request->correo;
                     $personal->telefono = "0967869571";
-                    $personal->accesoSistema = 1;
+                    $personal->accesoSistema = true;
                     $personal->id_rol = 1;
                     $personal->id_escuela = $idEscuela;
                     $personal->id_user = $usuario->id;
