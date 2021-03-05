@@ -4,7 +4,6 @@ php:
 
 before_script:
   - cp .env.travis .env
-  - composer install --prefer-source --no-interaction --dev
   - php artisan key:generate
   - php artisan migrate
 
