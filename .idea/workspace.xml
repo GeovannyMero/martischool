@@ -212,7 +212,7 @@
       <workItem from="1612302166768" duration="36000" />
       <workItem from="1613620852440" duration="1159000" />
       <workItem from="1614822062563" duration="4390000" />
-      <workItem from="1614920725000" duration="1165000" />
+      <workItem from="1614920725000" duration="2147000" />
     </task>
     <task id="LOCAL-00001" summary="Update Method Insert Personal">
       <created>1606538638645</created>
@@ -333,7 +333,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614826638668</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="travis1">
+      <created>1614922285232</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1614922285232</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -379,6 +386,7 @@
     <MESSAGE value="change school" />
     <MESSAGE value="access to school" />
     <MESSAGE value="date format" />
-    <option name="LAST_COMMIT_MESSAGE" value="date format" />
+    <MESSAGE value="travis1" />
+    <option name="LAST_COMMIT_MESSAGE" value="travis1" />
   </component>
 </project>
