@@ -9,6 +9,5 @@ before_script:
   - php artisan key:generate
   - php artisan migrate
 
-script:
-  - phpunit
+
 
