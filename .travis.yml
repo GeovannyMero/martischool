@@ -1,12 +1,10 @@
 language: php
 php:
-- 7.1
+  - 7.1
 
+install:
+  - composer install
 before_script:
   - cp .env.travis .env
-  - composer install --prefer-source --no-interaction --dev
-  - php artisan key:generate
-  - php artisan migrate
-
 
 
