@@ -122,9 +122,10 @@ class EscuelaController extends Controller
                             ->join('users', 'personal.id_user', '=', 'users.id')
                             ->join('rol', 'users.rol_id', '=', 'rol.id')
                             ->where('personal.id_escuela', $id)
-                            ->where('users.rol_id' , '=', '1')
+                            ->where('rol.nombre' , '=', 'Administrador')
                             ->select('personal.id as id', 'personal.cedula as cedula', 'personal.primerNombre as primerNombre', 'personal.segundoNombre as segundoNombre', 'personal.primerApellido as primerApellido', 'personal.segundoApellido as segundoApellido', 'personal.activo as activo', 'personal.id_rol as id_rol', 'rol.nombre as nombreRol', 'personal.id_user as id_user, users.name as nombreUsuario', 'personal.correo as correo', 'personal.id_escuela as escuela_id')
                             ->get();
+                 //->toSql();
                             //dd($personal);
              }
          } catch (Exception $e)
