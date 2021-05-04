@@ -16,7 +16,7 @@
         </li>
     </ol>
 </section>
-</br>
+<br/>
 <div class="container">
     <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
@@ -26,10 +26,11 @@
                 </span>
                 <div class="info-box-content">
                     <span class="info-box-text">Total de Cursos</span>
-                    {{--<span class="info-box-number">{{ $totalCursos }}</span>--}}
+                    <span class="info-box-number">{{ $plani }}</span>
                 </div>
             </div>
         </div>
+        @if(Auth::user()->hasRol("Administrador"))
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-green-active">
@@ -41,6 +42,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-yellow-active">

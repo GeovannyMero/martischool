@@ -93,7 +93,7 @@
                     </li>
                     @endif
                     <!-- Seguridad -->
-                    @if(Auth::user()->hasRol("Administrador"))
+                    @if(Auth::user()->hasRol("Master"))
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-cog"></i>

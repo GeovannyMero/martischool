@@ -1,6 +1,6 @@
 
 var  guardar = () => {
-    debugger;
+    //debugger;
     var formInstance = $("#form-estudiante");
     //let datosEstudiante = JSON.parse($('#estudiante').val());
     let formEstudiante= $('#form-estudiante').serializeArray();
@@ -38,12 +38,22 @@ var  guardar = () => {
     console.log(JSON.stringify(estudiante));
     $.post('/estudiante/saveEstudiante', estudiante)
     .done(result => {
-            DevExpress.ui.notify(
-            result.mensaje,
-            "success",
-            6000
-        );
         console.log(result);
+        if(result.codigo === 0){
+            DevExpress.ui.notify(
+                result.mensaje,
+                "success",
+                6000
+            );
+        }else{
+            DevExpress.ui.notify(
+                result.mensaje,
+                "error",
+                6000
+            );
+        }
+
+
         //window.location = '/estudiante';
     })
     .fail(error => {

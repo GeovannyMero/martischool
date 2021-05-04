@@ -74,10 +74,16 @@ class NotasController extends Controller
         try {
             //$estudiantesPorCurso = Estudiantes::where('idCurso', $idcurso)->get();
             $estudiantesPorCurso = DB::table('estudiante')
-            ->leftjoin('comportamiento', 'estudiante.id', '=', 'comportamiento.estudiante_id')
+            ->leftjoin('comportamiento',function($join){
+                $join->on('estudiante.id', '=', 'comportamiento.estudiante_id')
+                    ->where("comportamiento.parcial_id", "=", "1");
+            })// 'estudiante.id', '=', 'comportamiento.estudiante_id')
             ->select('estudiante.id', 'estudiante.primerNombre','estudiante.segundoNombre', 'estudiante.primerApellido','estudiante.segundoApellido',
             'comportamiento.id as comportamientoId', 'comportamiento.parcial_id', 'comportamiento.nota', 'estudiante.activo')
+                ->where("estudiante.activo", "=", true)
+                ->distinct()
             ->get();
+            //->toSql();
             //dd($estudiantesPorCurso);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()]);
@@ -116,7 +122,7 @@ class NotasController extends Controller
                 }
 
                 if($comportamiento->save()){
-                    return response()->json(['mensaje' => 'Se guardo con exito']);
+                    return response()->json(['codigo' => 0, 'mensaje' => 'Se guardo con exito']);
                 }
             }
         } catch (Exception $e) {

@@ -7,6 +7,9 @@ use App\Modelos\Personal;
 use Illuminate\Http\Request;
 use App\Modelos\Rol;
 use App\Modelos\Periodo;
+use App\Modelos\PersonalPlanificacion;
+use App\Modelos\Planificacion;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -27,6 +30,18 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $plani = 0;
+        if(Auth::check()){
+            if (Auth::user()->hasRol("Profesor"))
+            {
+
+                $personal = Personal::where("id_user", "=", Auth::user()->id)->first();
+                $planificacion = PersonalPlanificacion::where("personal_id", "=", $personal->id)->first();
+                $plani = Planificacion::where("id", "=", $planificacion->planificacion_id)->count();
+                //dd($plani);
+
+            }
+        }
         //$request->user()->authorizeRoles(['user', 'admin']);
         /*$rol_id = $request->user()->rol_id;
         //dd(Rol::find($id_rol)->nombre);
@@ -37,6 +52,6 @@ class HomeController extends Controller
         $periodoActual = Periodo::where('activo', true)->where('periodo_inicio', '2020')->select('periodo_inicio')->first();*/
 
         //return view('home')->with('totalCursos',$totalCursos)->with('personal', $personal)->with('periodoActual', $periodoActual);
-        return  view('home');
+        return  view('home')->with("plani", $plani);
     }
 }
