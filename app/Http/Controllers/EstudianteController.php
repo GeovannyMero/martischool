@@ -57,9 +57,13 @@ class EstudianteController extends Controller
     //GUARDAR
     public function saveEstudiante(Request $request)
     {
-       dd($request);
+       //dd($request);
         try {
             $personalUsuario = Personal::where("id_user", Auth::user()->id)->first();
+            //dd(Auth::user()->id);
+            if($personalUsuario == null){
+                return response()->json(["codigo" => 999, "mensaje" => "No existe información de usuario asignada a una escuela"]);
+            }
             if ($request->id == null || $request->id == 0)
             {
                 $estudiante = new Estudiantes;
@@ -111,7 +115,7 @@ class EstudianteController extends Controller
                                  $alumnoRepresentante->timestamps = false;
                                  if($alumnoRepresentante->save())
                                  {
-                                     return response()->json(["mensaje" => "Se guardo correctamente"]);
+                                     return response()->json(["codigo" =>  0,"mensaje" => "Se guardo correctamente"]);
                                  }
 
                              }
@@ -155,7 +159,7 @@ class EstudianteController extends Controller
     ///estudiante/update/
     public function update(Request $request, $id)
     {
-        dd($request);
+        //dd($request);
         try {
             if ($id != 0) {
                 dd($id);

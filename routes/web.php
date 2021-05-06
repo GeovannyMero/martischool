@@ -162,6 +162,10 @@ Route::post('/tipofamiliar/all', 'TipoFamiliarController@ObtenerTipoFamiliar');
 //tipo Identificacion
 Route::post('/tipoIdentificacion/all', 'TipoIdentificacionController@ObtenerTipoIdentificacion');
 
+//Reportes
+Route::get('/informe_comportamiento', 'ReportesController@InformeComportamiento');
+Route::post("/ObtenerDatosComportamiento", 'ReportesController@ObtenerDatosComportamiento');
+
 
 
 

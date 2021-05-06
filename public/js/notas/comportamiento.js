@@ -71,7 +71,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                     grouped: true,
                     value: 1,
 
-                    onValueChanged: function(args) {
+                   /* onValueChanged: function(args) {
                             estudiantesPorCurso.load()
                                 .done(function (data) {
                                     //debugger;
@@ -91,7 +91,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                                 });
 
                         estudiantesPorCurso.load();
-                    }
+                    }*/
                 }
             },
             {
@@ -227,6 +227,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                                                                 "success",
                                                                 6000
                                                             );
+                                                            $("#detallesPopup").dxPopup("hide");
                                                         })
                                                         .catch(error => {
                                                             alert(error);
@@ -259,7 +260,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
     };
     //grid
 
-    //opciones Grid
+    //TODO: opciones Grid
     $scope.dataGridOptions = {
         dataSource: {
             store: estudiantesPorCurso
@@ -279,7 +280,7 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                 calculateCellValue: function(data) {
                     return [
                         data.primerNombre, data.segundoNombre, data.primerApellido, data.segundoApellido]
-                        .join(" ");
+                        .join(" ").toUpperCase();
                 },
             }
         ],
@@ -296,10 +297,13 @@ appNotas.controller('comportamientoController', function comportamientoControlle
 
             //alert(nota);
            //alert(JSON.stringify(selectedItems.selectedRowsData[0]));
+
+            //TODO:Ingreso de notas
            $('#calificacion').html('Calificación');
            $('#nota').dxTextBox({
                value: nota,
                width: 90,
+               mask: '99.99',
                buttons: [{
                 name: "password",
                 location: "after",
@@ -370,8 +374,19 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                                                     //alert(JSON.stringify(data));
                                                     $http.post('/notas/guardarNota', data)
                                                     .then(response => {
-                                                        response.data;
+                                                        console.log(response.data.codigo);
+                                                        var codigo = response.data.codigo;
+                                                        if(codigo === 0){
+                                                            DevExpress.ui.notify(response.data.mensaje, 'success', 5000);
+                                                        }else{
+                                                            DevExpress.ui.notify("Ocurrio un error al guardar nota", 'error', 5000);
+                                                        }
+                                                        //response.data;
                                                         $("#notaPopup").dxPopup("hide");
+                                                        console.log(data);
+                                                        $("#nota").dxTextBox({
+                                                            value: data.nota
+                                                        });
                                                     })
                                                     .catch(error => {
                                                         DevExpress.ui.notify(error.data, 'error', 5000);
