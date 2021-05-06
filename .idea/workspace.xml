@@ -39,14 +39,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="home change2">
+      <change afterPath="$PROJECT_DIR$/public/js/reportes/comportamiento.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/General/Reportes/informe_comportamiento.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EstudianteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EstudianteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/NotasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/NotasController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/estudiante/detallesEstudiante.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/estudiante/detallesEstudiante.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/notas/comportamiento.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/notas/comportamiento.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,6 +163,9 @@
       <path value="$PROJECT_DIR$/vendor/jakub-onderka/php-console-color" />
     </include_path>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
+  </component>
   <component name="ProjectId" id="1kkHBlBfFP7eboAH3Wj4D0cRJxb" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -230,7 +230,11 @@
       <workItem from="1615856643601" duration="3756000" />
       <workItem from="1620097713242" duration="631000" />
       <workItem from="1620098838471" duration="9921000" />
-      <workItem from="1620146178406" duration="520000" />
+      <workItem from="1620146178406" duration="1619000" />
+      <workItem from="1620159893750" duration="3689000" />
+      <workItem from="1620178578920" duration="11048000" />
+      <workItem from="1620191371258" duration="625000" />
+      <workItem from="1620260996017" duration="4958000" />
     </task>
     <task id="LOCAL-00001" summary="Update Method Insert Personal">
       <created>1606538638645</created>
@@ -379,7 +383,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615863408894</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Notas">
+      <created>1620146801532</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1620146801532</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

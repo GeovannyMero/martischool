@@ -223,12 +223,19 @@
                     @endif
                     <!--Reportes-->
                     @if(Auth::user()->hasRol("Administrador"))
-                    <li class="treeview">
-                        <a href="{{ url('/notas')}}">
+                    <li class="treeview menu-open">
+                        <a href="#">
                             <i class="fa fa-file-text-o"></i>
                             <span>Reportes</span>
                             <span class="pull-right-container"></span>
                         </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="{{ url('/informe_comportamiento')}}">
+                                    <i class="fa fa-circle-o"></i>Informe comportamiento
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     @endif
                     <!-- Parametros -->
