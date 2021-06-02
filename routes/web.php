@@ -33,7 +33,7 @@ Route::post('/estudiante/update/{id}','EstudianteController@update');
 Route::get('/estudiante/detail/{id?}', 'EstudianteController@detail');
 Route::post('/estudiante/getInformation/{id}', 'EstudianteController@getInformation' );
 Route::post('/estudiante/representantes/{id}', 'EstudianteController@representantes');
-Route::get('/estudiante/fichaEstudiante', 'EstudianteController@fichaEstudiante');
+Route::get('/estudiante/fichaEstudiante/{idEstudiante}', 'EstudianteController@fichaEstudiante');
 Route::post('/estudiante/delete/{id}', 'EstudianteController@delete');
 // Route::get('/estudiante/fichaEstudiante', function(){
 //     $pdf = \PDF::loadHTML('<h1>Test</h1>');

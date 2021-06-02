@@ -1,6 +1,6 @@
 var app = angular.module("App", ["dx", "ngRoute"]);
 
-app.config(function($routeProvider, $locationProvider) {
+app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix("");
     $routeProvider
         .when("/estudiante/detail/:id", {
@@ -8,7 +8,7 @@ app.config(function($routeProvider, $locationProvider) {
             //template: '<div><strong>GEo</strong></div>'
             templateUrl: "/js/estudiante/template/detalles.html"
         })
-        .otherwise({ redirectTo: "/" });
+        .otherwise({redirectTo: "/"});
 });
 
 app.controller("appController", function estudianteController(
@@ -19,25 +19,25 @@ app.controller("appController", function estudianteController(
     var representantes = [];
     var estudiantes = new DevExpress.data.CustomStore({
         //load
-        load: function() {
+        load: function () {
             return $http.post("/estudiante/all").then(
-                function(response) {
+                function (response) {
                     //debugger;
                     //console.log(JSON.stringify(response.data));
                     return response.data;
                 },
-                function(response) {
+                function (response) {
                     alert(JSON.stringify(response.data));
                 }
             );
         },
         //insert
-        insert: function(values) {
+        insert: function (values) {
             debugger;
             //console.log(JSON.stringify(values));}
             return $http
                 .post("/estudiante/saveEstudiante", values)
-                .then(function(response) {
+                .then(function (response) {
                     console.log(response.data.mensaje);
                     //return response.data;
                     DevExpress.ui.notify(
@@ -46,20 +46,20 @@ app.controller("appController", function estudianteController(
                         6000
                     );
                 })
-                .catch(function(err) {
+                .catch(function (err) {
                     console.log(err);
                     DevExpress.ui.notify(err.data, "error", 6000);
                     //return err;
                 });
         },
         //Update
-        update: function(key, values) {
+        update: function (key, values) {
             debugger;
             var id = JSON.stringify(key["id"]);
             //DevExpress.ui.notify(id,"success",6000);
             return $http
                 .post("/estudiante/update/" + id, values)
-                .then(function(response) {
+                .then(function (response) {
                     console.log(response);
                     DevExpress.ui.notify(
                         response.data["mensaje"],
@@ -67,7 +67,7 @@ app.controller("appController", function estudianteController(
                         6000
                     );
                 })
-                .catch(function(err) {
+                .catch(function (err) {
                     DevExpress.ui.notify(err.data, "error", 6000);
                 });
         }
@@ -90,7 +90,7 @@ app.controller("appController", function estudianteController(
         }
     });
     //lookup tipo familiares
-    var tipoFamiliar = new  DevExpress.data.CustomStore({
+    var tipoFamiliar = new DevExpress.data.CustomStore({
         key: "id",
         loadMode: "raw",
         load: () => {
@@ -106,18 +106,18 @@ app.controller("appController", function estudianteController(
     });
     //Looup tipo de identificacion
     var tipoIdentificacion = new DevExpress.data.CustomStore({
-       key: 'id',
-       loadMode: 'raw',
-       load: () => {
-           return $http.post("/tipoIdentificacion/all")
-               .then(response => {
-                   console.log(response.data);
-                   return response.data;
-               })
-               .catch(error => {
-                   DevExpress.ui.notify(error.data, "error", 5000);
-               })
-       }
+        key: 'id',
+        loadMode: 'raw',
+        load: () => {
+            return $http.post("/tipoIdentificacion/all")
+                .then(response => {
+                    console.log(response.data);
+                    return response.data;
+                })
+                .catch(error => {
+                    DevExpress.ui.notify(error.data, "error", 5000);
+                })
+        }
     });
     //planificacion paralelos
     var paralelo = new DevExpress.data.CustomStore({
@@ -162,7 +162,7 @@ app.controller("appController", function estudianteController(
         showRowLines: true,
         showBorders: true,
 
-        onEditorPreparing: function(e) {
+        onEditorPreparing: function (e) {
             if (e.parentType === "dataRow" && e.dataField === "idParalelo") {
                 e.editorOptions.disabled =
                     typeof e.row.data.idCurso !== "number";
@@ -362,7 +362,7 @@ app.controller("appController", function estudianteController(
                     }
                 ],
 
-                setCellValue: function(rowData, value) {
+                setCellValue: function (rowData, value) {
                     rowData.idCurso = value;
                     rowData.idParalelo = null;
                 },
@@ -401,7 +401,7 @@ app.controller("appController", function estudianteController(
                 dataField: "representantes",
                 caption: "Representantes",
                 visible: true,
-                calculateDisplayValue: function(rowData) {
+                calculateDisplayValue: function (rowData) {
                     return JSON.stringify(rowData.representantes);
                 }
             },
@@ -418,7 +418,7 @@ app.controller("appController", function estudianteController(
                             var datos = e.row.data;
                             $http
                                 .post("/estudiante/delete/" + datos["id"])
-                                .then(function(response) {
+                                .then(function (response) {
                                     DevExpress.ui.notify(
                                         response.data["mensaje"],
                                         "success",
@@ -438,21 +438,28 @@ app.controller("appController", function estudianteController(
                         icon: "exportpdf",
                         visible: true,
                         hint: "Descargar ficha estudiante",
-                        onClick: () => {
+                        onClick: e => {
+                            var datos = e.row.data;
+                            console.log(datos.id);
                             //TODO:PDF
-                            $http
-                                .get("/estudiante/fichaEstudiante")
-                                .then(result => {
-                                    //console.log(JSON.stringify(result));
-                                    // window.open(result, '_blank');
-                                    var res = result;
-                                    console.log(res.config.url);
-                                    location.assign(res.config.url);
-                                    // result;
-                                })
-                                .catch(error => {
-                                    alert(error);
-                                });
+                            if (datos.id > 0) {
+                                $http
+                                    .get("/estudiante/fichaEstudiante/"+datos.id)
+                                    .then(result => {
+                                        //console.log(JSON.stringify(result));
+                                        // window.open(result, '_blank');
+                                        var res = result;
+                                        console.log(res.config.url);
+                                        location.assign(res.config.url);
+                                        // result;
+                                    })
+                                    .catch(error => {
+                                        alert(error);
+                                    });
+                            } else {
+                                console.error("No se encontro registro");
+                            }
+
                         }
                     },
                     {
@@ -464,7 +471,7 @@ app.controller("appController", function estudianteController(
                             var datos = e.row.data;
                             $http
                                 .get("/estudiante/detail/" + datos["id"])
-                                .then(function(result) {
+                                .then(function (result) {
                                     //TODO: DETALLES  DE ESTUDIANTES.
                                     //debugger;
                                     document.getElementById("pages").innerHTML =
@@ -709,7 +716,7 @@ app.controller("appController", function estudianteController(
                                     //REPRESENTANTES
                                     $("#gridContainer").dxDataGrid({
                                         dataSource:
-                                            datosEstudiante[0].representantes,
+                                        datosEstudiante[0].representantes,
                                         rowAlternationEnabled: false,
                                         //columnHidingEnabled: true,
                                         columnAutoWidth: true,
@@ -881,7 +888,7 @@ app.controller("appController", function estudianteController(
                                                     dataSource: curso,
                                                     valueExpr: "id",
                                                     displayExpr: "nombre",
-                                                    onValueChanged: function(
+                                                    onValueChanged: function (
                                                         e
                                                     ) {
                                                         var form = $(
@@ -951,7 +958,7 @@ app.controller("appController", function estudianteController(
                                             //console.log(resultPeriodo);
                                             //console.log($("#gridContainer").dxDataGrid("getDataSource")._items.length);
                                             let cantidadRepresentantes = $("#gridContainer").dxDataGrid("getDataSource")._items.length;
-                                            if (result.isValid &&resultPeriodo.isValid) {
+                                            if (result.isValid && resultPeriodo.isValid) {
                                                 if (cantidadRepresentantes > 0) {
                                                     // debugger;
                                                     // alert("ok");
@@ -974,7 +981,7 @@ app.controller("appController", function estudianteController(
                                         }
                                     });
                                 })
-                                .catch(function(error) {
+                                .catch(function (error) {
                                     DevExpress.ui.notify(
                                         error.data,
                                         "error",
@@ -1008,15 +1015,15 @@ app.controller("appController", function estudianteController(
         //MASTER DETAIL
         masterDetail: {
             enabled: true,
-            template: function(container, options) {
+            template: function (container, options) {
                 var currentStudentData = options.data;
                 $("<div>")
                     .addClass("master-detail-caption")
                     .text(
-                        "Representantes del alumno: " +
-                            currentStudentData.primerNombre +
-                            " " +
-                            currentStudentData.primerApellido
+                        "Representantes del estudiante: " +
+                        currentStudentData.primerNombre +
+                        " " +
+                        currentStudentData.primerApellido
                     )
                     .appendTo(container);
 
@@ -1136,7 +1143,7 @@ app.controller("appController", function estudianteController(
         headerFilter: {
             visible: true
         },
-        filterPanel: { visible: true },
+        filterPanel: {visible: true},
         scrolling: {
             columnRenderingMode: "virtual"
         },
@@ -1198,7 +1205,7 @@ app.controller("appController", function estudianteController(
                                     maxLength: 10,
                                     placeholder: "Cédula",
                                     mask: "0000000000",
-                                    maskRules: { X: /[0-9]/ }
+                                    maskRules: {X: /[0-9]/}
                                 }
                             },
                             {
@@ -1247,7 +1254,7 @@ app.controller("appController", function estudianteController(
                                 editorOptions: {
                                     showClearButton: true,
                                     mask: "0000000",
-                                    maskRules: { X: /[0-9]/ }
+                                    maskRules: {X: /[0-9]/}
                                 }
                             },
                             {
@@ -1340,7 +1347,7 @@ app.controller("appController", function estudianteController(
                                 items: [
                                     {
                                         dataField: "representantes[].nombre",
-                                        template: function(data, itemElement) {
+                                        template: function (data, itemElement) {
                                             debugger;
                                             console.log(
                                                 data.component.option(
@@ -1440,7 +1447,7 @@ app.controller("appController", function estudianteController(
         rowAlternationEnabled: true,
 
         //TODO: TOOLBAR
-        onToolbarPreparing: function(e) {
+        onToolbarPreparing: function (e) {
             var dataGrid = e.component;
 
             e.toolbarOptions.items.unshift(
@@ -1453,7 +1460,7 @@ app.controller("appController", function estudianteController(
                     options: {
                         icon: "refresh",
                         //type: "success",
-                        onClick: function() {
+                        onClick: function () {
                             dataGrid.refresh();
                         }
                     }
@@ -1738,14 +1745,14 @@ app.controller("appController", function estudianteController(
                                                 visible: false
                                             },
                                             {
-                                              dataField: "id_tipo_familiar",
-                                              caption: "Tipo Familiar",
-                                              validationRules: [
-                                                  {
-                                                      type: "required",
-                                                      message: "El campo es obligatorio"
-                                                  }
-                                              ],
+                                                dataField: "id_tipo_familiar",
+                                                caption: "Tipo Familiar",
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message: "El campo es obligatorio"
+                                                    }
+                                                ],
                                                 lookup: {
                                                     dataSource: tipoFamiliar,
                                                     displayExpr: 'descripcion',
@@ -1753,18 +1760,18 @@ app.controller("appController", function estudianteController(
                                                 }
                                             },
                                             {
-                                              dataField: "id_tipo_identificacion",
-                                              caption: "Tipo Identificación",
-                                              validationRules: [
-                                                  {
-                                                      type: "required",
-                                                      message: "El campo es requerido"
-                                                  }
-                                              ],
+                                                dataField: "id_tipo_identificacion",
+                                                caption: "Tipo Identificación",
+                                                validationRules: [
+                                                    {
+                                                        type: "required",
+                                                        message: "El campo es requerido"
+                                                    }
+                                                ],
                                                 lookup: {
-                                                  dataSource: tipoIdentificacion,
-                                                  displayExpr: 'descripcion',
-                                                  valueExpr: 'id'
+                                                    dataSource: tipoIdentificacion,
+                                                    displayExpr: 'descripcion',
+                                                    valueExpr: 'id'
                                                 }
                                             },
                                             {
@@ -1928,7 +1935,7 @@ app.controller("appController", function estudianteController(
                                                     dataSource: curso,
                                                     valueExpr: "id",
                                                     displayExpr: "nombre",
-                                                    onValueChanged: function(
+                                                    onValueChanged: function (
                                                         e
                                                     ) {
                                                         var form = $(
@@ -2012,10 +2019,8 @@ app.controller("appController", function estudianteController(
                                                 "#gridContainer"
                                             ).dxDataGrid("getDataSource")._items
                                                 .length;
-                                            if (result.isValid && resultPeriodo.isValid)
-                                            {
-                                                if ( cantidadRepresentantes > 0)
-                                                {
+                                            if (result.isValid && resultPeriodo.isValid) {
+                                                if (cantidadRepresentantes > 0) {
                                                     console.log($("#gridContainer").dxDataGrid("getDataSource")._items);
                                                     guardar();
                                                 } else {

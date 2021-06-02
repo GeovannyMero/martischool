@@ -16,6 +16,7 @@ use App;
 use Illuminate\Support\Facades\Auth;
 use App\Modelos\EstudiantesRepresentante;
 use \App\Modelos\Personal;
+
 class EstudianteController extends Controller
 {
     public function index()
@@ -42,30 +43,28 @@ class EstudianteController extends Controller
         return $estudiantes->toArray();
     }
 
-    public function secuencialCodigoEstudiante(){
+    public function secuencialCodigoEstudiante()
+    {
         $secuencial = "";
-        try
-        {
+        try {
             $secuencial = DB::table('estudiante')->count('id');
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return response()->json(["mensaje" => $e->getMessage()]);
         }
         return $secuencial + 1;
     }
+
     //GUARDAR
     public function saveEstudiante(Request $request)
     {
-       //dd($request);
+        //dd($request);
         try {
             $personalUsuario = Personal::where("id_user", Auth::user()->id)->first();
             //dd(Auth::user()->id);
-            if($personalUsuario == null){
+            if ($personalUsuario == null) {
                 return response()->json(["codigo" => 999, "mensaje" => "No existe información de usuario asignada a una escuela"]);
             }
-            if ($request->id == null || $request->id == 0)
-            {
+            if ($request->id == null || $request->id == 0) {
                 $estudiante = new Estudiantes;
                 $estudiante->codigo = str_pad(self::secuencialCodigoEstudiante(), 4, "0", STR_PAD_LEFT);
                 $estudiante->cedula = $request->cedula;
@@ -85,52 +84,46 @@ class EstudianteController extends Controller
                 $estudiante->idCurso = $request->idCurso;
                 $estudiante->idParalelo = $request->idParalelo;
                 $estudiante->id_escuela = $personalUsuario->id_escuela;
-                if ($estudiante->save())
-                {
+                if ($estudiante->save()) {
                     //return response()->json(["mensaje" => "Se guardo correctamente"]);
-                     if(count($request->representantes) > 0)
-                     {
-                         //guarda en la tabla de representantes
-                         foreach($request->representantes as $item)
-                         {
-                             //dd($this->$request->representantes[$i]['cedula']);
-                             //dd($item[0]['nombre']);
-                             $representante = new Representante;
-                             $representante->id_tipo_familiar = $item[0]['id_tipo_familiar'];
-                             $representante->id_tipo_identificacion = $item[0]['id_tipo_identificacion'];
-                             $representante->identificacion = $item[0]['identificacion'];
-                             $representante->nombre = $item[0]['nombre'];
-                             $representante->apellidos = $item[0]['apellidos'];
-                             $representante->parentesco = $item[0]['parentesco'];
-                             $representante->telefonoMovil = $item[0]['telefonoMovil'];
-                             $representante->telefonoFijo = $item[0]['telefonoFijo'];
-                             $representante->correo = $item[0]['correo'];
-                             $representante->activo = true;
-                             $representante->created_by = Auth::user()->name;
-                             $representante->updated_by = Auth::user()->name;
-                             if($representante->save()){
-                                 $alumnoRepresentante = new EstudiantesRepresentante;
-                                 $alumnoRepresentante->estudiantes_id = $estudiante->id;
-                                 $alumnoRepresentante->representante_id = $representante->id;
-                                 $alumnoRepresentante->timestamps = false;
-                                 if($alumnoRepresentante->save())
-                                 {
-                                     return response()->json(["codigo" =>  0,"mensaje" => "Se guardo correctamente"]);
-                                 }
+                    if (count($request->representantes) > 0) {
+                        //guarda en la tabla de representantes
+                        foreach ($request->representantes as $item) {
+                            //dd($this->$request->representantes[$i]['cedula']);
+                            //dd($item[0]['nombre']);
+                            $representante = new Representante;
+                            $representante->id_tipo_familiar = $item[0]['id_tipo_familiar'];
+                            $representante->id_tipo_identificacion = $item[0]['id_tipo_identificacion'];
+                            $representante->identificacion = $item[0]['identificacion'];
+                            $representante->nombre = $item[0]['nombre'];
+                            $representante->apellidos = $item[0]['apellidos'];
+                            $representante->parentesco = $item[0]['parentesco'];
+                            $representante->telefonoMovil = $item[0]['telefonoMovil'];
+                            $representante->telefonoFijo = $item[0]['telefonoFijo'];
+                            $representante->correo = $item[0]['correo'];
+                            $representante->activo = true;
+                            $representante->created_by = Auth::user()->name;
+                            $representante->updated_by = Auth::user()->name;
+                            if ($representante->save()) {
+                                $alumnoRepresentante = new EstudiantesRepresentante;
+                                $alumnoRepresentante->estudiantes_id = $estudiante->id;
+                                $alumnoRepresentante->representante_id = $representante->id;
+                                $alumnoRepresentante->timestamps = false;
+                                if ($alumnoRepresentante->save()) {
+                                    return response()->json(["codigo" => 0, "mensaje" => "Se guardo correctamente"]);
+                                }
 
-                             }
-                         }
+                            }
+                        }
                     }
 
                 }
-            }else
-            {
+            } else {
                 //actualizar
-                if($request->id > 0)
-                {
+                if ($request->id > 0) {
                     $estudiante = Estudiantes::where('id', '=', $request->id)
-                                    ->with(['representantes'])
-                                    ->first();
+                        ->with(['representantes'])
+                        ->first();
                     $estudiante->cedula = $request->cedula;
                     $estudiante->primerNombre = $request->primerNombre;
                     $estudiante->segundoNombre = $request->segundoNombre;
@@ -147,7 +140,7 @@ class EstudianteController extends Controller
                     $estudiante->fechaMatricula = $request->fechaMatricula;
                     $estudiante->idCurso = $request->idCurso;
                     $estudiante->idParalelo = $request->idParalelo;
-                    if($estudiante->save()){
+                    if ($estudiante->save()) {
                         return response()->json(["mensaje" => "Se guardo correctamente"]);
                     }
                 }
@@ -156,6 +149,7 @@ class EstudianteController extends Controller
             return response()->json(["mensaje" => $e->getMessage()]);
         }
     }
+
     ///estudiante/update/
     public function update(Request $request, $id)
     {
@@ -179,14 +173,11 @@ class EstudianteController extends Controller
     public function delete(int $id)
     {
         try {
-            if($id > 0)
-            {
+            if ($id > 0) {
                 $estudiante = Estudiantes::find($id);
-                if($estudiante != null)
-                {
+                if ($estudiante != null) {
                     $estudiante->activo = false;
-                    if($estudiante->save())
-                    {
+                    if ($estudiante->save()) {
                         return response()->json(["mensaje" => "Se actualizo correctamente"]);
                     }
                 }
@@ -199,16 +190,13 @@ class EstudianteController extends Controller
 
     public function detail(int $idEstudiante)
     {
-        if($idEstudiante > 0)
-        {
+        if ($idEstudiante > 0) {
             //$estudiante = Estudiantes::find($idEstudiante)->get();
             $estudiante = Estudiantes::where('id', '=', $idEstudiante)
-                            ->with(['representantes'])
-                            ->get();
+                ->with(['representantes'])
+                ->get();
             //dd($estudiante);
-        }
-        else
-        {
+        } else {
             $estudiante = null;
         }
 
@@ -224,18 +212,26 @@ class EstudianteController extends Controller
         return $estudi;
     }
 
-    public function fichaEstudiante()
+    public function fichaEstudiante(int $idEstudiante)
     {
+        //dd($idEstudiante);
+        try {
+            if ($idEstudiante > 0) {
+                $estudiante = Estudiantes::where('id', '=', $idEstudiante)
+                    ->with(['representantes'])
 
-         $pdf = App::make('dompdf.wrapper');
-        // $pdf->loadHTML('<h1>Styde.net</h1>');
-
-        // return $pdf->download('mi-archivo.pdf');
-        return PDF::loadView('General.Estudiante.fichaEstudiante')
-            ->stream('fichaEstudiantil.pdf');
-
-        // $pdf = App::make('dompdf.wrapper');
-        // $pdf->loadHTML('<h1>Test</h1>');
-        // return $pdf->download('Despacho.pdf');
+                    ->get();
+                //dd($estudiante);
+                if ($estudiante != null) {
+                    $pdf = App::make('dompdf.wrapper');
+                    return PDF::loadView('General.Estudiante.fichaEstudiante', ['data' => $estudiante])
+                        ->stream('fichaEstudiantil.pdf');
+                }
+            } else {
+                return response()->json(["mensaje" => "Error al obtener información de estudiante."]);
+            }
+        }catch (Exception $e){
+            return response()->json(["mensaje" => $e->getMessage()]);
+        }
     }
 }
