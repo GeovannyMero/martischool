@@ -23,33 +23,33 @@ class ReportesController extends Controller
         return view("General.Reportes.informe_comportamiento");
     }
 
-    public function ObtenerDatosComportamiento()
+    public function ObtenerDatosComportamiento(int $idCurso)
     {
         $datosComportamiento = null;
         try {
             $rol = Auth::user()->rol->nombre;
             if (strtoupper($rol) == "ADMINISTRADOR" || strtoupper($rol) == "PROFESOR") {
-                $idCurso = self::ObtenerCursoPorPersonal(7);
+                //$idCurso = self::ObtenerCursoPorPersonal(7);
 
                 if ($idCurso > 0) {
                     $estudiantesPorCurso = DB::table('estudiante')
                         ->leftjoin('comportamiento', 'estudiante.id', '=', 'comportamiento.estudiante_id')
-                        ->leftjoin("parcial", function ($join){
-                          $join->on("parcial.id", "=", "comportamiento.parcial_id")
-                          ->where("parcial.activo", "=", true);
+                        ->leftjoin("parcial", function ($join) {
+                            $join->on("parcial.id", "=", "comportamiento.parcial_id")
+                                ->where("parcial.activo", "=", true);
                         })
-                        ->leftjoin("catalogo", function($join){
-                            $join->on("catalogo.id", "=","parcial.catalogo_id")
-                                ->where("catalogo.activo","=",true);
+                        ->leftjoin("catalogo", function ($join) {
+                            $join->on("catalogo.id", "=", "parcial.catalogo_id")
+                                ->where("catalogo.activo", "=", true);
                         })
                         //->select('estudiante.id', 'estudiante.primerNombre', 'estudiante.segundoNombre', 'estudiante.primerApellido', 'estudiante.segundoApellido',
-                          //  'comportamiento.id as comportamientoId', 'comportamiento.parcial_id', 'comportamiento.nota', 'estudiante.activo', "parcial.nombre as parcial", "catalogo.nombre as quintil")
-                        ->select(DB::raw("UPPER(CONCAT(estudiante.\"primerNombre\",' ' ,estudiante.\"segundoNombre\", ' ', estudiante.\"primerApellido\", ' ', estudiante.\"segundoApellido\")) as alumno"), DB::raw("case when comportamiento.\"nota\" is null then 0 else comportamiento.\"nota\" end as nota"),DB::raw("case when parcial.\"nombre\" is null then 'Parcial1' else parcial.\"nombre\" end as parcial"), DB::raw("case when catalogo.\"nombre\" is null then 'Quintil' else catalogo.\"nombre\" end as quintil"))//Quintil
+                        //  'comportamiento.id as comportamientoId', 'comportamiento.parcial_id', 'comportamiento.nota', 'estudiante.activo', "parcial.nombre as parcial", "catalogo.nombre as quintil")
+                        ->select(DB::raw("UPPER(CONCAT(estudiante.\"primerNombre\",' ' ,estudiante.\"segundoNombre\", ' ', estudiante.\"primerApellido\", ' ', estudiante.\"segundoApellido\")) as alumno"), DB::raw("case when comportamiento.\"nota\" is null then 0 else comportamiento.\"nota\" end as nota"), DB::raw("case when parcial.\"nombre\" is null then 'Parcial1' else parcial.\"nombre\" end as parcial"), DB::raw("case when catalogo.\"nombre\" is null then 'Quintil' else catalogo.\"nombre\" end as quintil"))//Quintil
                         ->where("estudiante.activo", "=", true)
                         ->where("estudiante.idCurso", "=", $idCurso)
                         ->get();
                     //dd($estudiantesPorCurso);
-                    return  $estudiantesPorCurso;
+                    return $estudiantesPorCurso;
                 } else {
                     dd("NO");
                 }
@@ -85,6 +85,20 @@ class ReportesController extends Controller
             }
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
+        }
+    }
+    public function ComportamientoCurso(int $idcurso, int $idParalelo)
+    {
+        try {
+            if(Auth::check())
+            {
+                if($idcurso > 0 && $idParalelo > 0)
+                {
+                    return view ('General.Reportes.ComportamientoCurso')->with(['idCurso' => $idcurso])->with(["idParalelo" => $idParalelo]);
+                }
+            }
+        } catch (Exception $e) {
+            return  response()->json(["mensaje" => $e.getMessage()]);
         }
     }
 }
