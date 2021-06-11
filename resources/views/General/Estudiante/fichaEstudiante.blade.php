@@ -28,9 +28,7 @@
             top: 20px;
         }
 
-        .contenedorHijo {
-            border: solid #3c8dbc 2px;
-        }
+
 
         .body tr th {
             text-align: left;
@@ -46,9 +44,14 @@
 <div>
     <!--CABECERA-->
     <div>
+        <!--LOGO-->
+        <div id="logo" style="width: 15%; height: 10%;background-size: cover; position: absolute">
+            <img src="{{public_path()."\Images\LOGO_JOSE_MARTI.jpg"}}" style="width: 100%">
+        </div>
+
         <table style="width: 100%;" class="head">
             <tr style="text-align: center">
-                <th style="color:black; font-size: 22px;">ESCUELA PARTICULAR "JOSÉ MARTI"</th>
+                <th style="color:black; font-size: 22px;">ESCUELA PARTICULAR "JOSÉ MARTÍ"</th>
             </tr>
             <tr style="">
                 <td style="text-align: center;">Dirección:</td>
@@ -60,7 +63,7 @@
                 <td style="text-align: center;">Email: <a href="#">josemarti@gmail.com</a></td>
             </tr>
             <tr style="text-align: center;">
-                <th style="font-size: 18px">FICHA ESTUDIANTIL</th>
+                <th style="font-size: 18px; text-decoration: underline">FICHA ESTUDIANTIL</th>
             </tr>
             <tr style="text-align: center;">
                 <th style="font-size: 14px">AÑO LECTIVO 2021 - 2022</th>
@@ -70,6 +73,10 @@
     <!--CUERPO-->
     <div class="contenedor">
         <table style="width: 100%;">
+            <tr>
+                <th colspan="3" style="font-size: 16px">Año de Educación Básica:</th>
+                <td colspan="3">{{$curso}}. de educación básica . {{$paralelo}}</td>
+            </tr>
             <tr>
                 <th colspan="4" style="font-size: 16px">DATOS DEL ESTUDIANTE:</th>
             </tr>
@@ -95,46 +102,11 @@
                 <th colspan="2">Fecha de nacimiento:</th>
                 <td colspan="2">{{ $data[0]["fechaNacimiento"] }}</td>
             </tr>
+            <tr>
+                <th>Dirección:</th>
+                <td>{{$data[0]["direccion"]}}</td>
+            </tr>
         </table>
-        <!-- <p>Datos del Estudiante:</p>
-         <div class="contenedorHijo">
-             <table style="width: 100%" class="body">
-                 <tr style="border: 1px solid red">
-                     <th style="width: 155px">Apellidos y Nombres:</th>
-                     <td colspan="4">Mero Baque Geovanny Jefferson</td>
-                 </tr>
-                 <tr>
-                     <th>Cédula:</th>
-                     <td>0931254569</td>
-                     <th colspan="2">Grado Básico o Bachillerato:</th>
-                     <td colspan="3"> 1er año de eduación básica</td>
-                 </tr>
-                 <tr>
-                     <th>Fecha de Nacimiento: </th>
-                     <td>19/11/1993</td>
-                     <th>Nacionalidad: </th>
-                     <td>Ecuatoriano</td>
-                 </tr>
-                 <tr>
-                     <th colspan="2">Dirección del Domicilio: </th>
-                     <td colspan="2">Fragata Mz 40 V7</td>
-                 </tr>
-                 <tr>
-                     <th colspan="3">A quién llamar en caso de emergencia: </th>
-                     <td colspan="3">Gissell Johanna Robles Balaz</td>
-                 </tr>
-                 <tr>
-                     <th>Teléfono: </th>
-                     <td>09677869571</td>
-                     <th>Parentesco: </th>
-                     <td>Madre</td>
-                     <th colspan="3">Dirección de Domicilio: </th>
-                     <td>Fragata</td>
-                 </tr>
-
-             </table>
-         </div>-->
-
     </div>
     <!--FAMILIARES-->
     <br>

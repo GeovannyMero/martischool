@@ -6,6 +6,7 @@ use \App\Modelos\Estudiantes;
 use Illuminate\Http\Request;
 use  \App\Http\Controllers\Controller;
 use App\Modelos\Representante;
+use App\Modelos\Curso;
 use App\Modelos\AlumnoRepresentante;
 use Illuminate\Support\Facades\DB;
 use Response;
@@ -16,6 +17,7 @@ use App;
 use Illuminate\Support\Facades\Auth;
 use App\Modelos\EstudiantesRepresentante;
 use \App\Modelos\Personal;
+use \App\Modelos\Paralelos;
 
 class EstudianteController extends Controller
 {
@@ -219,12 +221,13 @@ class EstudianteController extends Controller
             if ($idEstudiante > 0) {
                 $estudiante = Estudiantes::where('id', '=', $idEstudiante)
                     ->with(['representantes'])
-
                     ->get();
-                //dd($estudiante);
+                $curso = Curso::where("id", "=", $estudiante[0]->idCurso)->first();
+                $paralelo = Paralelos::where("id", "=", $estudiante[0]->idParalelo)->first();
+                //dd($paralelo->nombre);
                 if ($estudiante != null) {
                     $pdf = App::make('dompdf.wrapper');
-                    return PDF::loadView('General.Estudiante.fichaEstudiante', ['data' => $estudiante])
+                    return PDF::loadView('General.Estudiante.fichaEstudiante', ['data' => $estudiante, "curso" => $curso->nombre, "paralelo" => $paralelo->nombre])
                         ->stream('fichaEstudiantil.pdf');
                 }
             } else {

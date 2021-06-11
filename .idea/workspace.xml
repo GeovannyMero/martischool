@@ -38,11 +38,19 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="pivot notas">
+    <list default="true" id="16c3ff18-7e9a-4ef4-bb08-315304603bb0" name="Default Changelist" comment="ficha - curso - comportamiento informe">
+      <change afterPath="$PROJECT_DIR$/public/Images/LOGO_JOSE_MARTI.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/reportes/cursosComportamiento.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/General/Reportes/ComportamientoCurso.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade_copy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EstudianteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EstudianteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/estudiante/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/estudiante/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/NotasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/NotasController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/reportes/comportamiento.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/reportes/comportamiento.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/General/Estudiante/fichaEstudiante.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/General/Estudiante/fichaEstudiante.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/General/Reportes/informe_comportamiento.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/General/Reportes/informe_comportamiento.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -175,13 +183,15 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/auth" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/auth/passwords" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jeffe\source\repos\martischool\resources\views\auth\passwords" />
+      <recent name="C:\Users\jeffe\source\repos\martischool\public\Images" />
       <recent name="C:\Users\jeffe\source\repos\martischool\resources\views\auth" />
     </key>
   </component>
@@ -236,6 +246,9 @@
       <workItem from="1620191371258" duration="625000" />
       <workItem from="1620260996017" duration="5188000" />
       <workItem from="1622607951267" duration="9194000" />
+      <workItem from="1623260711874" duration="1283000" />
+      <workItem from="1623264251143" duration="610000" />
+      <workItem from="1623363518565" duration="22054000" />
     </task>
     <task id="LOCAL-00001" summary="Update Method Insert Personal">
       <created>1606538638645</created>
@@ -449,6 +462,7 @@
     <MESSAGE value="user administrator" />
     <MESSAGE value="Notas" />
     <MESSAGE value="pivot notas" />
-    <option name="LAST_COMMIT_MESSAGE" value="pivot notas" />
+    <MESSAGE value="ficha - curso - comportamiento informe" />
+    <option name="LAST_COMMIT_MESSAGE" value="ficha - curso - comportamiento informe" />
   </component>
 </project>

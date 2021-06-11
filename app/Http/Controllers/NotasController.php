@@ -26,25 +26,46 @@ class NotasController extends Controller
         try {
             if(Auth::check())
             {
-                //Obtiene datos del personal mediante el usuario
-                $personalUsuario = Personal::where("id_user", Auth::user()->id)->first();
-                //$personalplanificacion = PersonalPlanificacion::where("personal_id", $personalUsuario->id)->first();
-                //dd($personalUsuario);
-                if($personalUsuario != null){
-                    if($personalUsuario->id > 0)
-                    {
-                        $curso = DB::table('planificacion')
-                            ->join('personal_planificacion', 'planificacion.id', '=', 'personal_planificacion.planificacion_id')
-                            ->join('curso', 'planificacion.curso_id', '=', 'curso.id')
-                            ->join('paralelo', 'planificacion.paralelo_id', '=', 'paralelo.id')
-                            ->join('estudiante','curso.id', '=', 'estudiante.idCurso')
-                            ->where('personal_planificacion.personal_id',$personalUsuario->id)
-                            ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id')
-                            ->select('curso.nombre as curso','curso.id as idCurso','paralelo.id as idParalelo','paralelo.nombre as paralelo', DB::raw('count(estudiante.id) as cantEstudiante'))
-                            ->get();
-                        //dd($curso);
+                //obtiene el rol del usuario
+                $rol = Auth::user()->rol->nombre;
+
+                if (strtoupper($rol) == "PROFESOR") {
+                    //Obtiene datos del personal mediante el usuario
+                    $personalUsuario = Personal::where("id_user", Auth::user()->id)->first();
+                    //$personalplanificacion = PersonalPlanificacion::where("personal_id", $personalUsuario->id)->first();
+                    //dd($personalUsuario);
+                    if($personalUsuario != null){
+                        if($personalUsuario->id > 0)
+                        {
+                            $curso = DB::table('planificacion')
+                                ->join('personal_planificacion', 'planificacion.id', '=', 'personal_planificacion.planificacion_id')
+                                ->join('curso', 'planificacion.curso_id', '=', 'curso.id')
+                                ->join('paralelo', 'planificacion.paralelo_id', '=', 'paralelo.id')
+                                ->join('estudiante','curso.id', '=', 'estudiante.idCurso')
+                                ->where('personal_planificacion.personal_id',$personalUsuario->id)
+                                ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id')
+                                ->select('curso.nombre as curso','curso.id as idCurso','paralelo.id as idParalelo','paralelo.nombre as paralelo', DB::raw('count(estudiante.id) as cantEstudiante'))
+                                ->get();
+                            //->toSql();
+                            //dd($curso);
+                        }
                     }
+                }else if(strtoupper($rol) == "ADMINISTRADOR"){
+                    $anio = date("Y");
+                    $curso = DB::table("periodo")
+                        ->join("planificacion", "planificacion.id_periodo", "=", "periodo.id")
+                        ->join("curso", "curso.id", "=", "planificacion.curso_id")
+                        ->join("paralelo", "paralelo.id", "=", "planificacion.paralelo_id")
+                        ->leftJoin("estudiante", "curso.id", "=", "estudiante.idCurso")
+                        ->where("periodo.activo", "=", true)
+                        ->where("planificacion.activo", "=", true)
+                        ->where("periodo_inicio", "=", $anio)
+                        ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id')
+                        ->select("curso.nombre as curso", "curso.id as idCurso", "paralelo.id as idParalelo", "paralelo.nombre as paralelo", DB::raw('count(estudiante.id) as cantEstudiante'))
+                        ->get();
+                    //dd($curso);
                 }
+
 
             }
         } catch (Exception $e) {

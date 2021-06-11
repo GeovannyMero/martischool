@@ -1,16 +1,23 @@
-var app = angular.module("comportamientoModule", ['dx']);
+var app = angular.module("comportamientoModule", ["ngRoute",'dx']);
 
-app.controller("title", function ($scope){
+/*app.controller("title", function ($scope){
     $scope.modulo = "Informe de comportamiento";
-})
+})*/
+
+app.config(function($routeProvider, $locationProvider){
+    $locationProvider.hashPrefix("");
+    $routeProvider.when("/informe/comportamiento/:idCurso/:idParalelo",{
+       templateUrl: "/resources\views\General\Reportes\comportamientoCurso.blade.php"
+   })
+});
 
 
 app.controller("informe_comportamientoController", function informe_comportamientoController($http, $scope){
     var datosEstudiantes = new DevExpress.data.CustomStore({
         load: () => {
-            return $http.post("/ObtenerDatosComportamiento")
+            var idCurso = $("#idCurso").val();
+            return $http.post("/ObtenerDatosComportamiento/"+idCurso)
                 .then((response) => {
-                    console.log(response);
                     return response.data;
                 })
                 .catch(error => {
@@ -70,3 +77,4 @@ app.controller("informe_comportamientoController", function informe_comportamien
         }
     }
 });
+

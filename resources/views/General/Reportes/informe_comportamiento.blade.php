@@ -10,10 +10,12 @@
 
     <!--Angular -->
     <script type="text/javascript" src="{{ asset('DevExtreme/js/angular.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('DevExtreme/js/angular-route.min.js')}}"></script>
     <!--script-->
     <script type="text/javascript" src="{{ asset('DevExtreme/js/dx.all.js')}}"></script>
 
     <script type="text/javascript" src="{{ asset('js/reportes/comportamiento.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/reportes/cursosComportamiento.js')}}"></script>
 
     <section class="content-header">
         <ol class="breadcrumb">
@@ -26,14 +28,16 @@
     </section>
     <br/>
     <br/>
-    <div class="box box-primary" ng-app='comportamientoModule' ng-controller='title'>
+    <div class="box box-primary" >
         <div class="box-header with-border">
-            <h3 class="box-title">@{{modulo}}</h3>
+            <h3 class="box-title">Informe de Comportamientos</h3>
         </div>
-        <div class="box-body">
-            <div class="gridRol demo-containder" ng-controller='informe_comportamientoController'>
+        <div class="box-body" ng-app='comportamientoModule' >
+            <!--<div class="gridRol demo-containder" ng-controller='informe_comportamientoController'>
                 <div id="pivotGridComportamiento" dx-pivot-grid="pivotGridOptions"></div>
-            </div>
+
+            </div>-->
+            <cursos-componet></cursos-componet>
         </div>
 
     </div>

@@ -55,8 +55,14 @@
                         {{ __('Ingresar') }}
                     </button>
                 </div>
+                <p class="col-xs-4">
+                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                        {{ __('¿Olvidó su contraseña?') }}
+                    </a>
+                </p>
             </div>
         </form>
+
     </div>
 </div>
 </body>
