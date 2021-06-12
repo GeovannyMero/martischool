@@ -26,7 +26,7 @@ app.controller('personalController', function($scope, $http){
         key: 'id',
         loadMode: 'raw',
         load: () => {
-            return $http.post('/planificacion/periodoActual/2020')
+            return $http.post('/planificacion/periodoActual/2021')
             .then((response) => {
                 return response.data;
             })

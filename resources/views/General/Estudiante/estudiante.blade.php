@@ -10,6 +10,7 @@
 <script type="text/javascript" src="{{ asset('DevExtreme/js/angular.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('DevExtreme/js/angular-route.min.js')}}"></script>
 <!--script-->
+<script type="text/javascript" src="{{ asset('DevExtreme/js/jszip.js')}}"></script>
 <script type="text/javascript" src="{{ asset('DevExtreme/js/dx.all.js')}}"></script>
 
 <script type="text/javascript" src="{{ asset('js/estudiante/index.js')}}"></script>

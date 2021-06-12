@@ -161,7 +161,10 @@ app.controller("appController", function estudianteController(
         showColumnLines: true,
         showRowLines: true,
         showBorders: true,
-
+        groupPanel: {
+            visible: true,
+            emptyPanelText:"Arrastre una o varias columnas para agrupar."
+        },
         onEditorPreparing: function (e) {
             if (e.parentType === "dataRow" && e.dataField === "idParalelo") {
                 e.editorOptions.disabled =
@@ -830,7 +833,7 @@ app.controller("appController", function estudianteController(
                                             placeholder: "Buscar"
                                         },
                                         editing: {
-                                            mode: "popup",
+                                            mode: "cell",
                                             allowAdding: true,
                                             allowUpdating: true,
                                             allowDeleting: true,

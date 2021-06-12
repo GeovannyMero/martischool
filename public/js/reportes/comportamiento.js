@@ -16,7 +16,8 @@ app.controller("informe_comportamientoController", function informe_comportamien
     var datosEstudiantes = new DevExpress.data.CustomStore({
         load: () => {
             var idCurso = $("#idCurso").val();
-            return $http.post("/ObtenerDatosComportamiento/"+idCurso)
+            var idParalelo = $("#idParalelo").val();
+            return $http.post("/ObtenerDatosComportamiento/"+idCurso+"/"+idParalelo)
                 .then((response) => {
                     return response.data;
                 })
