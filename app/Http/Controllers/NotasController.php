@@ -28,7 +28,7 @@ class NotasController extends Controller
             {
                 //obtiene el rol del usuario
                 $rol = Auth::user()->rol->nombre;
-
+                $anio = date("Y");
                 if (strtoupper($rol) == "PROFESOR") {
                     //Obtiene datos del personal mediante el usuario
                     $personalUsuario = Personal::where("id_user", Auth::user()->id)->first();
@@ -37,12 +37,15 @@ class NotasController extends Controller
                     if($personalUsuario != null){
                         if($personalUsuario->id > 0)
                         {
-                            $curso = DB::table('planificacion')
+                            $curso = DB::table("periodo")
+                            //$curso = DB::table('planificacion')
+                            ->join("planificacion", "planificacion.id_periodo", "=", "periodo.id")
                                 ->join('personal_planificacion', 'planificacion.id', '=', 'personal_planificacion.planificacion_id')
                                 ->join('curso', 'planificacion.curso_id', '=', 'curso.id')
                                 ->join('paralelo', 'planificacion.paralelo_id', '=', 'paralelo.id')
                                 ->join('estudiante','curso.id', '=', 'estudiante.idCurso')
                                 ->where('personal_planificacion.personal_id',$personalUsuario->id)
+                                ->where("periodo.periodo_inicio", "=", $anio)
                                 ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id')
                                 ->select('curso.nombre as curso','curso.id as idCurso','paralelo.id as idParalelo','paralelo.nombre as paralelo', DB::raw('count(estudiante.id) as cantEstudiante'))
                                 ->get();
@@ -51,7 +54,6 @@ class NotasController extends Controller
                         }
                     }
                 }else if(strtoupper($rol) == "ADMINISTRADOR"){
-                    $anio = date("Y");
                     $curso = DB::table("periodo")
                         ->join("planificacion", "planificacion.id_periodo", "=", "periodo.id")
                         ->join("curso", "curso.id", "=", "planificacion.curso_id")

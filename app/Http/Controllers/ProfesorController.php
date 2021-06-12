@@ -37,7 +37,9 @@ class ProfesorController extends Controller
         {
             if(Auth::check())
             {
-                $rol = Rol::where('activo', true)->get();
+                $rol = Rol::where('activo', true)
+                    ->where("nombre", "=", "Profesor")
+                    ->get();
             }
         }catch(Exception $e)
         {

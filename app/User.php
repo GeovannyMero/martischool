@@ -45,9 +45,13 @@ class User extends Authenticatable
     }
 
     //personal
-    public function personal()
+   /* public function personal()
     {
         return $this->belongsTo('App\Modelos\Personal');
+    }*/
+    public  function personal()
+    {
+        return $this->hasOne("App\Modelos\Personal", "id_user");
     }
 
     public function authorizeRoles($roles)
@@ -71,4 +75,6 @@ class User extends Authenticatable
         }
         return false;
     }
+
+
 }

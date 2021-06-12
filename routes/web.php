@@ -164,7 +164,7 @@ Route::post('/tipoIdentificacion/all', 'TipoIdentificacionController@ObtenerTipo
 
 //Reportes
 Route::get('/informe_comportamiento', 'ReportesController@InformeComportamiento');
-Route::post("/ObtenerDatosComportamiento/{idCurso}", 'ReportesController@ObtenerDatosComportamiento');
+Route::post("/ObtenerDatosComportamiento/{idCurso}/{idParalelo}", 'ReportesController@ObtenerDatosComportamiento');
 Route::get("/informe/comportamiento/{idCurso}/{idParalelo}", "ReportesController@ComportamientoCurso");
 
 

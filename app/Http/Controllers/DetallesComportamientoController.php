@@ -32,7 +32,6 @@ class DetallesComportamientoController extends Controller
                     $detalles->updated_by = Auth::user()->name;
                     if($detalles->save())
                     {
-
                         return response()->json(['mensaje' => 'Se guardo con exito.']);
                     }
                 }

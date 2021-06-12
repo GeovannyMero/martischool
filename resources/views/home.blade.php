@@ -17,7 +17,11 @@
     </ol>
 </section>
 <br/>
-<div class="container">
+
+<div class="">
+    <div style="position: absolute; top: 35%" class="text-center">
+        <img src="{{ asset('AdminLTE/dist/img/logo2.png')}}" style="width: 25%; opacity: 0.5;">
+    </div>
     <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
@@ -26,7 +30,7 @@
                 </span>
                 <div class="info-box-content">
                     <span class="info-box-text">Total de Cursos</span>
-                    <span class="info-box-number">{{ $plani }}</span>
+                    <span class="info-box-number">{{ $plani->cursos }}</span>
                 </div>
             </div>
         </div>
@@ -38,7 +42,7 @@
                 </span>
                 <div class="info-box-content">
                     <span class="info-box-text">Personal Educativo</span>
-                    {{--<span class="info-box-number">{{ $personal }}</span>--}}
+                    <span class="info-box-number">{{ $personal }}</span>
                 </div>
             </div>
         </div>
@@ -50,7 +54,7 @@
                 </span>
                 <div class="info-box-content">
                     <span class="info-box-text">Periodo Lectivo</span>
-                    {{--<span class="info-box-number">{{ $periodoActual->periodo_inicio }}</span>--}}
+                    <span class="info-box-number">{{ $periodo->periodo_inicio }} - {{$periodo->periodo_fin}}</span>
                 </div>
             </div>
         </div>

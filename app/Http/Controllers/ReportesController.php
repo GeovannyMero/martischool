@@ -23,7 +23,7 @@ class ReportesController extends Controller
         return view("General.Reportes.informe_comportamiento");
     }
 
-    public function ObtenerDatosComportamiento(int $idCurso)
+    public function ObtenerDatosComportamiento(int $idCurso, int $idParalelo)
     {
         $datosComportamiento = null;
         try {
@@ -47,6 +47,7 @@ class ReportesController extends Controller
                         ->select(DB::raw("UPPER(CONCAT(estudiante.\"primerNombre\",' ' ,estudiante.\"segundoNombre\", ' ', estudiante.\"primerApellido\", ' ', estudiante.\"segundoApellido\")) as alumno"), DB::raw("case when comportamiento.\"nota\" is null then 0 else comportamiento.\"nota\" end as nota"), DB::raw("case when parcial.\"nombre\" is null then 'Parcial1' else parcial.\"nombre\" end as parcial"), DB::raw("case when catalogo.\"nombre\" is null then 'Quintil' else catalogo.\"nombre\" end as quintil"))//Quintil
                         ->where("estudiante.activo", "=", true)
                         ->where("estudiante.idCurso", "=", $idCurso)
+                        ->where("estudiante.idParalelo", "=", $idParalelo)
                         ->get();
                     //dd($estudiantesPorCurso);
                     return $estudiantesPorCurso;
