@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Modelos\Curso;
 use App\Modelos\Personal;
 use Illuminate\Http\Request;
-use App\Modelos\Rol;
 use App\Modelos\Periodo;
 use App\Modelos\PersonalPlanificacion;
-use App\Modelos\Planificacion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -33,7 +30,6 @@ class HomeController extends Controller
     {
         $plani = 0;
         $periodo = 0;
-        $cursos = 0;
         $personal = 0;
         if(Auth::check()){
             $anio = date("Y");
@@ -62,6 +58,12 @@ class HomeController extends Controller
                     ->first();
                 //dd($plani->cursos);
 
+            }else{
+                $plani = DB::table("periodo")
+                    ->join("planificacion", "periodo.id", "=","planificacion.id_periodo")
+                    ->where("periodo.periodo_inicio", "=", $anio)
+                    ->select(DB::raw("count(curso_id) as cursos"))
+                    ->first();
             }
         }
         //$request->user()->authorizeRoles(['user', 'admin']);
