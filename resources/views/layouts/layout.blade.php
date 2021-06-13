@@ -54,7 +54,7 @@
                             <li class="user-header">
                                 <img src="{{ asset('AdminLTE/dist/img/avatar5.png')}}" class="img-circle"
                                      alt="User Image"/>
-                                @if(strtoupper(Auth::user()->getRolUser(Auth::user()->rol_id)) != "ADMINISTRADOR")
+                                @if(strtoupper(Auth::user()->getRolUser(Auth::user()->rol_id)) != "ADMINISTRADOR" && strtoupper(Auth::user()->getRolUser(Auth::user()->rol_id)) != "MASTER")
 
                                 <p>{{Auth::user()->personal()->get()[0]["primerNombre"]}} {{Auth::user()->personal()->get()[0]["primerApellido"]}}
                                     - {{strtoupper(Auth::user()->getRolUser(Auth::user()->rol_id))}}
