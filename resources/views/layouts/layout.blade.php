@@ -62,7 +62,7 @@
                                     {{--<p>{{Auth::user()->name}} - {{Auth::user()->getRolUser(Auth::user()->rol_id)}}</p>--}}
                                     <small>Escuela{{Auth::user()->escuela_id}}</small>
                                 </p>
-                                @else
+                                @elseif(strtoupper(Auth::user()->getRolUser(Auth::user()->rol_id)) == "ADMINISTRADOR")
                                     <p>{{Auth::user()->name}} - {{Auth::user()->getRolUser(Auth::user()->rol_id)}}</p>
                                     <small>Escuela{{Auth::user()->escuela_id}}</small>
                                 @endif
