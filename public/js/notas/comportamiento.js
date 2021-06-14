@@ -1,3 +1,16 @@
+let idParcial = 0;
+let idComportamiento = 0;
+async function getComportamiento ($http, idEstudiante, parcial){
+    return await  $http.post("/comportamiento/"+idEstudiante+"/"+parcial)
+        .then(response => {
+            //console.log(response.data.nota);
+            return response.data;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
 var parciales = {
     store: new DevExpress.data.CustomStore({
         key: 'id',
@@ -18,10 +31,11 @@ var parciales = {
 appNotas.controller('comportamientoController', function comportamientoController($http, $scope, $window){
 
     let idCurso = document.getElementById('idCurso').value;
+    let idParalelo = document.getElementById("idParalelo").value;
 
     var estudiantesPorCurso = new DevExpress.data.CustomStore({
         load: () => {
-            return $http.post('/notas/comportamientoPorCurso/' + idCurso)
+            return $http.post('/notas/comportamientoPorCurso/' + idCurso + "/" + idParalelo)
             .then(response => {
                 //console.log(response.data);
                 $scope.cantidadEstudiante = response.data.length;
@@ -70,6 +84,10 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                     valueExpr: "id",
                     grouped: true,
                     value: 1,
+                    onValueChanged: function(e){
+                        idParcial = e.value;
+
+                    },
 
                    /* onValueChanged: function(args) {
                             estudiantesPorCurso.load()
@@ -284,192 +302,195 @@ appNotas.controller('comportamientoController', function comportamientoControlle
                 },
             }
         ],
-        onSelectionChanged: function (selectedItems) {
-           //$scope.selectedEmployee = selectedItems.selectedRowsData[0];
-           //obtener la nota
-           debugger;
-           //let nota = selectedItems.selectedRowsData.length > 0 ? selectedItems.selectedRowsData[0].nota : 0;
+        onSelectionChanged: async function (selectedItems) {
+            //$scope.selectedEmployee = selectedItems.selectedRowsData[0];
+            //obtener la nota
+            //debugger;
+            //let nota = selectedItems.selectedRowsData.length > 0 ? selectedItems.selectedRowsData[0].nota : 0;
             let nota = 0
-           if (selectedItems.selectedRowsData.length > 0)
-           {
-             nota = selectedItems.selectedRowsData[0].nota == null ? 0 : selectedItems.selectedRowsData[0].nota;
-           }
+            if (selectedItems.selectedRowsData.length > 0) {
+                if (idParcial === 1 || idParcial === 0) {
+                    nota = selectedItems.selectedRowsData[0].nota == null ? 0 : selectedItems.selectedRowsData[0].nota;
+                } else {
+                    var comp = await getComportamiento($http, selectedItems.selectedRowsData[0].id, idParcial).then(value => {
+                        return value
+                    });
+                    nota = comp.nota;
+                    idComportamiento = comp.id;
+                }
+            }
 
             //alert(nota);
-           //alert(JSON.stringify(selectedItems.selectedRowsData[0]));
+            //alert(JSON.stringify(selectedItems.selectedRowsData[0]));
 
             //TODO:Ingreso de notas
-           $('#calificacion').html('Calificación');
-           $('#nota').dxTextBox({
-               value: nota,
-               width: 90,
-               mask: '99.99',
-               buttons: [{
-                name: "password",
-                location: "after",
-                options: {
-                    icon: "edit",
-                    stylingMode: "text",
-                    onClick: function() {
-                        $("#notaPopup").dxPopup({
-                            title: "Ingrese la Calificación",
-                            width: 280,
-                            height: 250,
-                            contentTemplate: function (e) {
-                                //TODO: NOTA.
-                                var formContainer = $("<div id='form'>");
-                                formContainer.dxForm({
-                                    formData: selectedItems.selectedRowsData[0],
-                                    showValidationSummary: true,
-                                    colCount: 2,
-                                    items: [
+            $('#calificacion').html('Calificación');
+            $('#nota').dxTextBox({
+                value: nota,
+                width: 90,
+                //mask: '99',
+                buttons: [{
+                    name: "password",
+                    location: "after",
+                    options: {
+                        icon: "edit",
+                        stylingMode: "text",
+                        onClick: function () {
+                            $("#notaPopup").dxPopup({
+                                title: "Ingrese la Calificación",
+                                width: 280,
+                                height: 250,
+                                contentTemplate: function (e) {
+                                    //TODO: NOTA.
+                                    var formContainer = $("<div id='form'>");
+                                    formContainer.dxForm({
+                                        formData: selectedItems.selectedRowsData[0],
+                                        showValidationSummary: true,
+                                        colCount: 2,
+                                        items: [
 
-                                        {
-                                            dataField: 'id',
-                                            visible: false
-                                        },
-                                        {
-                                            dataField: 'parcial_id',
-                                            caption: 'Parcial',
-                                            colSpan: 2,
-                                            editorType: 'dxSelectBox',
-                                            editorOptions: {
-                                                dataSource: parciales,
-                                                displayExpr: 'nombre',
-                                                valueExpr: "id",
-                                                grouped: true,
-                                                displayExpr: "nombre",
+                                            {
+                                                dataField: 'id',
+                                                visible: false
+                                            },
+                                            {
+                                                dataField: 'parcial_id',
+                                                caption: 'Parcial',
+                                                colSpan: 2,
+                                                editorType: 'dxSelectBox',
+                                                editorOptions: {
+                                                    dataSource: parciales,
+                                                    displayExpr: 'nombre',
+                                                    valueExpr: "id",
+                                                    grouped: true,
+                                                    displayExpr: "nombre",
                                                 },
-                                            validationRules: [
-                                                {
-                                                    type: 'required',
-                                                    message: 'El campo es requerido.'
+                                                validationRules: [
+                                                    {
+                                                        type: 'required',
+                                                        message: 'El campo es requerido.'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                dataField: 'nota',
+                                                colSpan: 2,
+                                                validationRules: [
+                                                    {
+                                                        type: 'required',
+                                                        message: 'El campo es requerido'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                itemType: 'empty',
+                                                colSpan: 2
+                                            },
+                                            {
+                                                itemType: 'button',
+                                                alignment: "right",
+                                                buttonOptions: {
+                                                    text: "Guardar",
+                                                    useSubmitBehavior: true,
+                                                    onClick: function () {
+                                                        // var a = $('#nota').dxTextBox('instance').option('value');
+                                                        var form = $("#form").dxForm("instance");
+                                                        var data = form.option("formData")
+                                                        //alert(JSON.stringify(data));
+                                                        $http.post('/notas/guardarNota', data)
+                                                            .then(response => {
+                                                                console.log(response.data.codigo);
+                                                                var codigo = response.data.codigo;
+                                                                if (codigo === 0) {
+                                                                    DevExpress.ui.notify(response.data.mensaje, 'success', 5000);
+                                                                } else {
+                                                                    DevExpress.ui.notify("Ocurrio un error al guardar nota", 'error', 5000);
+                                                                }
+                                                                //response.data;
+                                                                $("#notaPopup").dxPopup("hide");
+                                                                console.log(data);
+                                                                $("#nota").dxTextBox({
+                                                                    value: data.nota
+                                                                });
+                                                            })
+                                                            .catch(error => {
+                                                                DevExpress.ui.notify(error.data, 'error', 5000);
+                                                            })
+                                                    }
                                                 }
-                                            ]
-                                        },
-                                        {
-                                            dataField: 'nota',
-                                            colSpan: 2,
-                                            validationRules: [
-                                                {
-                                                    type: 'required',
-                                                    message: 'El campo es requerido'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            itemType: 'empty',
-                                            colSpan: 2
-                                        },
-                                        {
-                                            itemType: 'button',
-                                            alignment: "right",
-                                            buttonOptions: {
-                                                text: "Guardar",
-                                                useSubmitBehavior: true,
-                                                onClick: function () {
-                                                   // var a = $('#nota').dxTextBox('instance').option('value');
-                                                    var form = $("#form").dxForm("instance");
-                                                    var data = form.option("formData")
-                                                    //alert(JSON.stringify(data));
-                                                    $http.post('/notas/guardarNota', data)
-                                                    .then(response => {
-                                                        console.log(response.data.codigo);
-                                                        var codigo = response.data.codigo;
-                                                        if(codigo === 0){
-                                                            DevExpress.ui.notify(response.data.mensaje, 'success', 5000);
-                                                        }else{
-                                                            DevExpress.ui.notify("Ocurrio un error al guardar nota", 'error', 5000);
-                                                        }
-                                                        //response.data;
+                                            },
+                                            {
+                                                itemType: 'button',
+                                                alignment: "left",
+                                                buttonOptions: {
+                                                    text: 'Cancelar',
+                                                    onClick: () => {
                                                         $("#notaPopup").dxPopup("hide");
-                                                        console.log(data);
-                                                        $("#nota").dxTextBox({
-                                                            value: data.nota
-                                                        });
-                                                    })
-                                                    .catch(error => {
-                                                        DevExpress.ui.notify(error.data, 'error', 5000);
-                                                    })
+                                                    }
                                                 }
                                             }
-                                        },
-                                        {
-                                            itemType: 'button',
-                                            alignment: "left",
-                                            buttonOptions: {
-                                                text: 'Cancelar',
-                                                onClick: () =>{
-                                                    $("#notaPopup").dxPopup("hide");
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }).dxForm('instance');
-                                e.append(formContainer);
-                             }
-                        });
-                        $("#notaPopup").dxPopup("show");
-                    }
-                }
-            }]
-
-           });
-           //TODO: componente para detalles
-           let comportamientoId = selectedItems.selectedRowsData[0].comportamientoId;
-           if(comportamientoId > 0)
-           {
-               debugger;
-               $('#detallesComportamientoEstudiante').css("display", "");
-                let detalles = $http.post('/detallesComportamiento/detalles/' + comportamientoId)
-                .then(response => {
-                    $scope.detallesComportamiento = response.data;
-                    $('#detalles').dxDataGrid({
-                        dataSource: response.data,
-                        // onCellPrepared: function(options){
-                        //   var fieldData = options.value;
-                        //     var fieldHtml = "";
-                        //       //if(fieldData && fieldData.value){
-                        //         if(fieldData === 'P'){
-                        //             fieldHtml += "<span style = 'color: red'>POSITIVO</span>";
-                        //         }
-                        //         options.cellElement.html(fieldHtml);
-                        //      //}
-
-
-                        // },
-                        columns: [
-                            {
-                                dataField: 'fecha',
-                            },
-                            {
-                                dataField: 'tipo',
-                                cellTemplate: (container, options) => {
-
-                                    if(options.data.tipo == 'P'){
-                                        debugger;
-                                        return $("<span style='color: white; background-color: green'>Positivo</span>");
-                                    }else{
-                                        return $("<span style='color: white; background-color: red'>Negativo</span>");
-                                    }
+                                        ]
+                                    }).dxForm('instance');
+                                    e.append(formContainer);
                                 }
-                            },
-                            {
-                                dataField: 'comentario'
-                            }
-                        ]
+                            });
+                            $("#notaPopup").dxPopup("show");
+                        }
+                    }
+                }]
+
+            });
+            //TODO: componente para detalles
+            let comportamientoId = (idParcial === 1 || idParcial === 0) ? selectedItems.selectedRowsData[0].comportamientoId : idComportamiento;
+            if (comportamientoId > 0) {
+                $('#detallesComportamientoEstudiante').css("display", "");
+                let detalles = $http.post('/detallesComportamiento/detalles/' + comportamientoId)
+                    .then(response => {
+                        $scope.detallesComportamiento = response.data;
+                        $('#detalles').dxDataGrid({
+                            dataSource: response.data,
+                            // onCellPrepared: function(options){
+                            //   var fieldData = options.value;
+                            //     var fieldHtml = "";
+                            //       //if(fieldData && fieldData.value){
+                            //         if(fieldData === 'P'){
+                            //             fieldHtml += "<span style = 'color: red'>POSITIVO</span>";
+                            //         }
+                            //         options.cellElement.html(fieldHtml);
+                            //      //}
+
+
+                            // },
+                            columns: [
+                                {
+                                    dataField: 'fecha',
+                                },
+                                {
+                                    dataField: 'tipo',
+                                    cellTemplate: (container, options) => {
+
+                                        if (options.data.tipo == 'P') {
+                                            debugger;
+                                            return $("<span style='color: white; background-color: green'>Positivo</span>");
+                                        } else {
+                                            return $("<span style='color: white; background-color: red'>Negativo</span>");
+                                        }
+                                    }
+                                },
+                                {
+                                    dataField: 'comentario'
+                                }
+                            ]
+                        })
                     })
-                })
-                .catch(error => {
-                    alert(JSON.stringify(error));
-                })
-           }else{
-               $('#detallesComportamientoEstudiante').css("display", "none");
-               DevExpress.ui.notify('No tiene calificaciones por el momento');
-           }
+                    .catch(error => {
+                        alert(JSON.stringify(error));
+                    })
+            } else {
+                $('#detallesComportamientoEstudiante').css("display", "none");
+                DevExpress.ui.notify('No tiene calificaciones por el momento');
+            }
 
         },
     }
-
-
 });

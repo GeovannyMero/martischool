@@ -28,9 +28,10 @@ appNotas.component('cursoComponent', {//TODO:Se tiene que agregar un loop para r
                 "<div class='icon'>"+
                     "<i class='fa fa-user'></i>"+
                 "</div>"+
-                    "<a href='/notas/comportamiento/{{item.idCurso}}/{{item.idParalelo}}' class='small-box-footer'>Más información"+
+                    "<a ng-if='item.cantestudiante > 0' href='/notas/comportamiento/{{item.idCurso}}/{{item.idParalelo}}' class='small-box-footer'>Más información"+
                         "<i class='fa fa-arrow-circle-right'></i>"+
                     "</a>"+
+                    "<div class='small-box-footer' ng-if='item.cantestudiante == 0'>Sin Estudiantes</div>"+
             "</div>"+
             "</div></div>"+
         "</div>"+

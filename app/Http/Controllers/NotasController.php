@@ -46,8 +46,12 @@ class NotasController extends Controller
                                 ->join('estudiante','curso.id', '=', 'estudiante.idCurso')
                                 ->where('personal_planificacion.personal_id',$personalUsuario->id)
                                 ->where("periodo.periodo_inicio", "=", $anio)
-                                ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id')
-                                ->select('curso.nombre as curso','curso.id as idCurso','paralelo.id as idParalelo','paralelo.nombre as paralelo', DB::raw('count(estudiante.id) as cantEstudiante'))
+                                ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id', 'planificacion.paralelo_id', 'planificacion.curso_id')
+                                ->select('curso.nombre as curso','curso.id as idCurso','paralelo.id as idParalelo',
+                                    'paralelo.nombre as paralelo',
+                                    //DB::raw('count(estudiante.id) as cantEstudiante')
+                                   DB::raw("(select count(1) from estudiante where estudiante.\"idParalelo\" = planificacion.\"paralelo_id\" and estudiante.\"idCurso\" = planificacion.\"curso_id\") as cantEstudiante")
+                                )
                                 ->get();
                             //->toSql();
                             //dd($curso);
@@ -84,7 +88,7 @@ class NotasController extends Controller
             {
                 if($idcurso > 0 && $idParalelo > 0)
                 {
-                    return view ('General.Notas.comportamiento')->with(['idCurso' => $idcurso]);
+                    return view ('General.Notas.comportamiento')->with(['idCurso' => $idcurso])->with(["idParalelo" => $idParalelo]);
                 }
             }
         } catch (Exception $e) {
@@ -92,8 +96,9 @@ class NotasController extends Controller
         }
     }
 
-    public function comportamientoPorCurso(int $idcurso)
+    public function comportamientoPorCurso(int $idcurso, int $idParalelo)
     {
+        //dd($idParalelo);
         try {
             //$estudiantesPorCurso = Estudiantes::where('idCurso', $idcurso)->get();
             $estudiantesPorCurso = DB::table('estudiante')
@@ -104,6 +109,8 @@ class NotasController extends Controller
             ->select('estudiante.id', 'estudiante.primerNombre','estudiante.segundoNombre', 'estudiante.primerApellido','estudiante.segundoApellido',
             'comportamiento.id as comportamientoId', 'comportamiento.parcial_id', 'comportamiento.nota', 'estudiante.activo')
                 ->where("estudiante.activo", "=", true)
+                ->where("estudiante.idCurso", "=", $idcurso)
+                ->where("estudiante.idParalelo", "=", $idParalelo)
                 ->distinct()
             ->get();
             //->toSql();
@@ -152,6 +159,17 @@ class NotasController extends Controller
             return response()->json(['mensaje' => $e->getMessage()]);
         }
     }
+
+    public function ObtnerComportamientoPorEstudianteParcial(int $idEstudiante, int $idParcial){
+        try {
+            $comportamiento = Comportamiento::where("parcial_id", "=", $idParcial)->where("estudiante_id", "=", $idEstudiante)->first();
+        }catch (Exception $e){
+            return response()->json(['mensaje' => $e->getMessage()]);
+        }
+        return $comportamiento;
+
+    }
+
 
 
 }
