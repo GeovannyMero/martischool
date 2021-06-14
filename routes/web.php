@@ -133,12 +133,13 @@ Route::post('/personal/remove/{id}', 'PersonalController@remove');
 Route::get('/notas', 'NotasController@index')->middleware("notas");
 Route::post('/notas/cursos', 'NotasController@cursos');
 Route::get('/notas/comportamiento/{idCurso}/{idParalelo}', 'NotasController@comportamiento');
-Route::post('/notas/comportamientoPorCurso/{idCurso}', 'NotasController@comportamientoPorCurso');
+Route::post('/notas/comportamientoPorCurso/{idCurso}/{idParalelo}', 'NotasController@comportamientoPorCurso');
 Route::post('/notas/guardarNota', 'NotasController@guardarNota');
 
 //detalles de comportamiento
 Route::post('/detallesComportamiento/guardarDetalles', 'DetallesComportamientoController@guardarDetalles');
 Route::post('/detallesComportamiento/detalles/{comportamientoId}', 'DetallesComportamientoController@detalles');
+Route::post("/comportamiento/{idEstudiante}/{idParcial}", "NotasController@ObtnerComportamientoPorEstudianteParcial");
 
 //Parametros
 Route::get('/parametros', 'ParametrosController@index');
