@@ -46,8 +46,8 @@ app.controller("informe_comportamientoController", function informe_comportamien
             enabled: false
         },
         onContentReady: function(e) {
-            e.element.find(".dx-pivotgrid-horizontal-headers .dx-grandtotal").first().text("Promedio");
-            e.element.find(".dx-pivotgrid-vertical-headers .dx-grandtotal").first().text("Promedio");
+            e.element.find(".dx-pivotgrid-horizontal-headers .dx-grandtotal").first().text("Total");
+            e.element.find(".dx-pivotgrid-vertical-headers .dx-grandtotal").first().text("Total");
         },
         dataSource: {
             fields: [{
