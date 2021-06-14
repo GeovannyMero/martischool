@@ -66,8 +66,11 @@ class NotasController extends Controller
                         ->where("periodo.activo", "=", true)
                         ->where("planificacion.activo", "=", true)
                         ->where("periodo_inicio", "=", $anio)
-                        ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id')
-                        ->select("curso.nombre as curso", "curso.id as idCurso", "paralelo.id as idParalelo", "paralelo.nombre as paralelo", DB::raw('count(estudiante.id) as cantEstudiante'))
+                        ->groupBy('curso.nombre','paralelo.nombre', 'curso.id', 'paralelo.id', 'planificacion.paralelo_id', 'planificacion.curso_id')
+                        ->select("curso.nombre as curso", "curso.id as idCurso", "paralelo.id as idParalelo", "paralelo.nombre as paralelo",
+                            //DB::raw('count(estudiante.id) as cantEstudiante')
+                            DB::raw("(select count(1) from estudiante where estudiante.\"idParalelo\" = planificacion.\"paralelo_id\" and estudiante.\"idCurso\" = planificacion.\"curso_id\") as cantEstudiante")
+                        )
                         ->get();
                     //dd($curso);
                 }
